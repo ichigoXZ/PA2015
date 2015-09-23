@@ -39,7 +39,7 @@ static int cmd_q(char *args) {
 static int cmd_si(char *args){
     if(!args)
         cpu_exec(1);
-    else if(isdigit(args))
+    else
         cpu_exec(atoi(args));
 	return 0;
 }
