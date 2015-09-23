@@ -40,7 +40,7 @@ static int cmd_si(char *args){
     if(!args)
         cpu_exec(1);
     else
-        cpu_exec(10);
+        cpu_exec(atoi(args));
 	return 0;
 }
 
