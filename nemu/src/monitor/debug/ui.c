@@ -37,7 +37,10 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args){
-    cpu_exec(1);
+    if(!args)
+        cpu_exec(1);
+    else
+        cpu_exec(atoi(args));
 	return 0;
 }
 
@@ -107,7 +110,6 @@ void ui_mainloop() {
 		int i;
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
-                printf("%s",args);
 				if(cmd_table[i].handler(args) < 0) {return; }
 				break;
 			}
