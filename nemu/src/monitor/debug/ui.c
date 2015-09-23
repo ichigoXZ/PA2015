@@ -44,6 +44,15 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static int cmd_info(char *args)
+{
+    if('c'==*args)
+        printf("eax: 0X%x",cpu.eax);
+    else
+        printf("unknown command.");
+    return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -56,7 +65,8 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 
 	/* TODO: Add more commands */
-	{"si","do a single step",cmd_si}
+	{"si","do a single step",cmd_si},
+	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info}
 
 };
 
