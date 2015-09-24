@@ -61,11 +61,13 @@ static int cmd_info(char *args)
     return 0;
 }
 
-/*static int cmd_x(char *args)
+static int cmd_x(char *args)
 {
-   	
-	return 0;	
-}*/
+    char *len = strtok(args," ");
+	char *expr = len + strlen(len) + 1;
+	printf("0x%.8x",swaddr_read(atoi(expr),atoi(len)));
+	return 0;
+}
 
 static int cmd_help(char *args);
 
@@ -80,8 +82,8 @@ static struct {
 
 	/* TODO: Add more commands */
 	{"si","do a single step",cmd_si},
-	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info }
-//	{"x","N EXPR:求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x }; 
+	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info },
+	{"x","N EXPR:求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x } 
 
 };
 
@@ -110,8 +112,8 @@ static int cmd_help(char *args) {
 	return 0;
 }
 
-void ui_mainloop() {
-	while(1) {
+void ui_mainloop()  {
+	while(1) { 
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
 
