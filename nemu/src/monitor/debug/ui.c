@@ -57,7 +57,7 @@ static int cmd_info(char *args)
         printf("edi: 0X%8x\n",cpu.edi);
     }
     else
-        printf("unknown command.");
+        printf("unknown command.\n");
     return 0;
 }
 
