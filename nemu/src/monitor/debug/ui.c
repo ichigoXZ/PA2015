@@ -68,8 +68,10 @@ static int cmd_x(char *args)
 	int i = 0;
 	int addr = (int)strtol(expr,NULL,16);
 	printf("0x%x:\t",addr);
-	for( ; i < atoi(len); i++)
+	for( ; i < atoi(len); i++){
 	printf("0x%.8x\t",swaddr_read(addr+i,4));
+	if(i%4==1) printf("\n");
+	}
 	printf("\n");
 	return 0;
 }
