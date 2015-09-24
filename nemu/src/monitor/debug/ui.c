@@ -47,14 +47,14 @@ static int cmd_si(char *args){
 static int cmd_info(char *args)
 {
     if('r'==*args){    
-        printf("eax: %#8.x\n",cpu.eax);
-        printf("ecx: %#.8x\n",cpu.ecx);
-        printf("edx: %#.8x\n",cpu.edx);
-        printf("ebx: %#.8x\n",cpu.ebx);
-        printf("esp: %#.8x\n",cpu.esp);
-        printf("ebp: %#.8x\n",cpu.ebp);
-        printf("esi: %#.8x\n",cpu.esi);
-        printf("edi: %#.8x\n",cpu.edi);
+        printf("eax: 0x%.8x\n",cpu.eax);
+        printf("ecx: 0x%.8x\n",cpu.ecx);
+        printf("edx: 0x%.8x\n",cpu.edx);
+        printf("ebx: 0x%.8x\n",cpu.ebx);
+        printf("esp: 0x%.8x\n",cpu.esp);
+        printf("ebp: 0x%.8x\n",cpu.ebp);
+        printf("esi: 0x%.8x\n",cpu.esi);
+        printf("edi: 0x%.8x\n",cpu.edi);
     }
     else
         printf("unknown command.\n");
