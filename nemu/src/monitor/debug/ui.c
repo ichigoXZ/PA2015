@@ -70,7 +70,7 @@ static int cmd_x(char *args)
 	printf("0x%x:\t",addr);
 	for( ; i < atoi(len); i++){
 	printf("0x%.8x\t",swaddr_read(addr+i,4));
-	if(i%4&&!i) printf("\n\t\t");
+	if(i%4==0&&!i) printf("\n\t\t");
 	}
 	printf("\n");
 	return 0;
