@@ -19,7 +19,7 @@ char asm_buf[128];
 /* Used with exception handling. */
 jmp_buf jbuf;
 
-void print_bin_instr(swaddr_t eip, int len) {
+void print_bin_instr (swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);
 	for(i = 0; i < len; i ++) {
@@ -29,13 +29,13 @@ void print_bin_instr(swaddr_t eip, int len) {
 }
 
 /* This function will be called when an `int3' instruction is being executed. */
-void do_int3() {
+void do_int3() { 
 	printf("\nHit breakpoint at eip = 0x%08x\n", cpu.eip);
 	nemu_state = STOP;
 }
 
 /* Simulate how the CPU works. */
-void cpu_exec(volatile uint32_t n) {
+void cpu_exec (volatile uint32_t n) {
 	if(nemu_state == END) {
 		printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
 		return;
@@ -48,16 +48,16 @@ void cpu_exec(volatile uint32_t n) {
 
 	setjmp(jbuf);
 
-	for(; n > 0; n --) {
+	for(; n > 0;  n --) {
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
-		if((n & 0xffff) == 0) {
+		if((n &  0xffff) == 0) {
 			/* Output some dots while executing the program. */
 			fputc('.', stderr);
 		}
 #endif
 
-		/* Execute one instruction, including instruction fetch,
+		/* Execu te one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
 
