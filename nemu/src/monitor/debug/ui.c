@@ -66,9 +66,9 @@ static int cmd_x(char *args)
     char *len = strtok(args," ");
 	char *expr = len + strlen(len) + 1;
 	int i = 0;
-	printf("0x%.8x:/t",atoi(expr));
+	printf("0x%.8x:/t",atoi(expr+2));
 	for( ; i < atoi(len); i++)
-	printf("0x%.8x\n",swaddr_read(atoi(expr)+i,4));
+	printf("0x%.8x\n",swaddr_read(atoi(expr+2)+i,4));
 	return 0;
 }
 
