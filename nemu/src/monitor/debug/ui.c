@@ -66,9 +66,10 @@ static int cmd_x(char *args)
     char *len = strtok(args," ");
 	char *expr = len + strlen(len) + 1;
 	int i = 0;
-	printf("0x%.8x:\t",(int)strtol(expr,NULL,16));
+	int addr = (int)strtol(expr,NULL,16);
+	printf("0x%x:\t",addr);
 	for( ; i < atoi(len); i++)
-	printf("0x%.8x\t",swaddr_read(atoi(expr)+i,4));
+	printf("0x%.8x\t",swaddr_read(addr+i,4));
 	printf("\n");
 	return 0;
 }
