@@ -46,8 +46,8 @@ static int cmd_si(char *args){
 
 static int cmd_info(char *args)
 {
-    if('r'==*args){
-        printf("eax: 0X%8x\n",cpu.eax);
+    if('r'==*args){    
+        printf("eax: 0X%#08x\n",cpu.eax);
         printf("ecx: 0X%8x\n",cpu.ecx);
         printf("edx: 0X%8x\n",cpu.edx);
         printf("ebx: 0X%8x\n",cpu.ebx);
@@ -60,6 +60,12 @@ static int cmd_info(char *args)
         printf("unknown command.\n");
     return 0;
 }
+
+/*static int cmd_x(char *args)
+{
+   	
+	return 0;	
+}*/
 
 static int cmd_help(char *args);
 
@@ -74,7 +80,8 @@ static struct {
 
 	/* TODO: Add more commands */
 	{"si","do a single step",cmd_si},
-	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info}
+	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info }
+//	{"x","N EXPR:求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x }; 
 
 };
 
