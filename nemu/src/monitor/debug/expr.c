@@ -176,15 +176,19 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 		switch(tokens[pos].type){
 			case PLUS : stack[i].position = pos;
 						stack[i++].op = 1;
+						printf("%d\t",pos);
 						break;
 		    case SUB  : stack[i].position = pos;
 						stack[i++].op = 1;
+						printf("%d\t",pos);
 						break;
 			case MUL  : stack[i].position = pos;
 						stack[i++].op = 0;
+						printf("%d\t",pos);
 						break;
 			case DIVIDE:stack[i].position = pos;
 						stack[i++].op = 0; 
+						printf("%d\t",pos);
 						break;
 			default: break;
 			}
