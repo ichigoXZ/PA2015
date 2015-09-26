@@ -166,7 +166,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 
 uint32_t dominant_operator(uint32_t p,uint32_t q){
 	uint32_t pos = p+1;
-	uint32_t i = 0,j = 0;
+	uint32_t i = 0,j = 0,flag = 0;
 	typedef struct mark{
 		uint32_t position;
 		uint32_t op;
@@ -190,10 +190,13 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						break;
 			default: break;
 			}
-	for(j = i-1 ;j >= 0;j--)
+	for(j = --i ;j >= 0;j--)
 		if(stack[j].op==1)
-			return stack[j].position;
-	return stack[i-1].position;
+			flag = 1;
+	if(flag)
+		return stack[j].position;
+	else 
+		return stack[i].position;
 }
 
 bool check_parentheses(uint32_t p, uint32_t q){
