@@ -165,7 +165,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 }
 
 uint32_t dominant_operator(uint32_t p,uint32_t q){
-	uint32_t pos = p;
+	int  pos = p;
 	int  i = 0,j = 0;
 	typedef struct mark{
 		int position;
