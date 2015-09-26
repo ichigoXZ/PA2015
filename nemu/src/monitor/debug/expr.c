@@ -166,7 +166,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 
 uint32_t dominant_operator(uint32_t p,uint32_t q){
 	uint32_t pos = p+1;
-	uint32_t i = 0,j = 0,flag = 0;
+	uint32_t i = 0,j = 0;
 	typedef struct mark{
 		uint32_t position;
 		uint32_t op;
@@ -192,10 +192,8 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			}
 	for(j = --i ;j >= 0;j--)
 		if(stack[j].op==1)
-			flag = 1;
-	if(flag)
-		return stack[j].position;
-	else 
+			return stack[j].position;
+	if(j < 0)
 		return stack[i].position;
 }
 
