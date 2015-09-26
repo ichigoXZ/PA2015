@@ -193,7 +193,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 							pos++;
 						 printf("%d",pos);
 						 }while(tokens[pos].type != RIGHT_R && pos<q);
-						 printf("%d\n",pos);
 						 break;
 			default: break;
 			}
