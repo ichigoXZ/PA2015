@@ -188,7 +188,7 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						break;
 			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
 						break;
-			default:assert(0);
+			default: break;
 			}
 	for(j = i ;j >= 0;j--)
 		if(stack[j].op==1)
