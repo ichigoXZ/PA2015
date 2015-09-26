@@ -192,8 +192,9 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 		printf("%d\t%d\n",stack[j].op,stack[j].position);
 	printf("i-1=%d\n",i);
 	for(j = i-1 ;j >= 0;j--)
-		if(stack[j].op==1)
-			return stack[j].position;
+		if(stack[j].op==1){
+			printf("iii\n");
+			return stack[j].position;}
 	return stack[i-1].position;
 }
 
