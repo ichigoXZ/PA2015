@@ -3,6 +3,7 @@
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
+#include <stdlib.h>
 #include <sys/types.h>
 #include <regex.h>
 
@@ -98,7 +99,7 @@ static bool make_token(char *e) {
 					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
 								  break;
 					case NUM: tokens[nr_token].type = NUM;
-							  strcpy(tokens[nr_token].str,substr_start);
+							  strncpy(tokens[nr_token].str,substr_start,substr_len);
 							  nr_token++;
 							  break;
 					default: panic("please implement me");
@@ -118,6 +119,10 @@ static bool make_token(char *e) {
 	return true; 
 }
 
+uint32_t eval(uint32_t p,uint32_t q);
+uint32_t dominant_operator(uint32_t p,uint32_t q);
+bool check_parentheses(uint32_t p,uint32_t q);
+
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
@@ -129,11 +134,53 @@ uint32_t expr(char *e, bool *success) {
 	return 0;
 }
 
+uint32_t eval(uint32_t p,uint32_t q){
+	if(p > q){
+		printf("Bad expression./n");
+		assert(0);}
+	else if(p == q) 		//single token
+		return (uint32_t)atoi(tokens[p].str);
+	else if(check_parentheses(p,q) == true)		//throw away the parentheses
+		return eval(p+1,q-1);
+	else{
+		uint32_t op = dominant_operator(p,q);
+		uint32_t val1 = eval(p,op-1);
+  	    uint32_t val2 = eval(op+1,q);
 
+		switch(tokens[op].type){
+			case PLUS: return val1 + val2;
+			case SUB:  return val1 - val2;
+			case MUL:  return val1 * val2;
+			case DIVIDE: if(!val2){
+							printf("divided by 0.");
+						    assert(0);}	
+    					 else              
+    					    return val1 / val2;
+			default: printf("not surported");
+					 assert(0);
+		}
+	}
+}
 
-int check_parentheses(int p, int q){
+uint32_t dominant_operator(uint32_t p,uint32_t q){
+	uint32_t pos = p+1;
+	uint32_t mark = 0,flag = 0;
+	for( ;pos < q;pos++)
+		switch(tokens[pos].type){
+			case PLUS : return pos;
+		    case SUB  : return pos;
+			case MUL  : if(!flag) mark = pos;
+			case DIVIDE: if(!flag) mark = pos;
+			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
+			default : printf("can't find dominant operator.");
+					  assert(0);
+			}
+	return mark;
+}
+
+bool check_parentheses(uint32_t p, uint32_t q){
 	int flag = 1;
-	int pos = p+1;
+	uint32_t pos = p+1;
 	if(tokens[p].type != LEFT_R)
 		return false;
 	else{
