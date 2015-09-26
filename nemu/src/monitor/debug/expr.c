@@ -99,7 +99,8 @@ static bool make_token(char *e) {
 					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
 								  break;
 					case NUM: tokens[nr_token].type = NUM;
-							  strncpy(tokens[nr_token].str,substr_start,substr_len);
+							  strncpy(tokens[nr_token].str,substr_start,substr_len);		
+							  
 							  nr_token++;
 							  break;
 					default: panic("please implement me");
@@ -131,6 +132,8 @@ uint32_t expr(char *e, bool *success) {
 
 	/* TODO: Insert codes to evaluate the expression. */
    	//panic("please implement me");
+	
+	eval(0,nr_token-1);
 	return 0;
 }
 
