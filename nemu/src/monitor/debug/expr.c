@@ -100,7 +100,6 @@ static bool make_token(char *e) {
 								  break;
 					case NUM: tokens[nr_token].type = NUM;
 							  strncpy(tokens[nr_token].str,substr_start,substr_len);		
-							  
 							  nr_token++;
 							  break;
 					default: panic("please implement me");
@@ -167,16 +166,34 @@ uint32_t eval(uint32_t p,uint32_t q){
 
 uint32_t dominant_operator(uint32_t p,uint32_t q){
 	uint32_t pos = p+1;
-	uint32_t mark = 0,flag = 0;
+	uint32_t i = 0,j = 0;
+	typedef struct mark{
+		uint32_t position;
+		uint32_t op;
+	}Mark;
+	Mark stack[32];
 	for( ;pos < q;pos++)
 		switch(tokens[pos].type){
-			case PLUS : return pos;
-		    case SUB  : return pos;
-			case MUL  : if(!flag) mark = pos;
-			case DIVIDE: if(!flag) mark = pos;
+			case PLUS : stack[i].position = pos;
+						stack[i++].op = 1;
+						break;
+		    case SUB  : stack[i].position = pos;
+						stack[i++].op = 1;
+						break;
+			case MUL  : stack[i].position = pos;
+						stack[i++].op = 2;
+						break;
+			case DIVIDE:stack[i].position = pos;
+						stack[i++].op = 2; 
+						break;
 			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
+						break;
+			default:assert(0);
 			}
-	return mark;
+	for(j = i ;j >= 0;j--)
+		if(stack[j].op==1)
+			return stack[j].position;
+	return stack[i].position;
 }
 
 bool check_parentheses(uint32_t p, uint32_t q){
