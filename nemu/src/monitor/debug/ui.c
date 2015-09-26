@@ -77,10 +77,10 @@ static int cmd_x(char *args){
 static int cmd_p(char *args) {
 	bool success;
 	uint32_t result = expr(args,&success);	
-    if(success)
-		printf("result:%d",result);
-	else
-		printf("Bad expression.");
+    //if(success)
+		printf("result:%d\n",result);
+	//else
+	//	printf("Bad expression.");
 	return 0;
  }
 
