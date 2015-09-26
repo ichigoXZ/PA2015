@@ -7,10 +7,9 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ
+	NUM,LEFT_R,RIGHT_R,PLUS,SUB,MUL,DIVIDE,NOTYPE = 256, EQ
 
 	/* TODO: Add more token types */
-
 };
 
 static struct rule {
@@ -22,8 +21,14 @@ static struct rule {
 	 * Pay attention to the precedence level of different rules.
 	 */
 
-	{" +",	NOTYPE},				// spaces
-	{"\\+", '+'},					// plus
+	{"\\(", LEFT_R},					// left parentheses
+	{"\\)", RIGHT_R},					// right parentheses
+	{"\[0-9]+",  NUM},					// number			  
+	{" +",  NOTYPE},				// spaces
+	{"\\+", PLUS},					// plus
+	{"\\-", SUB},						// substract
+	{"\\*", MUL},					// multiply
+	{"\\/", DIVIDE},					// divide
 	{"==", EQ}						// equal
 };
 
@@ -31,7 +36,7 @@ static struct rule {
 
 static regex_t re[NR_REGEX];
 
-/* Rules are used for many times.
+/* Rules  are used for many times.
  * Therefore we compile them only once before any usage.
  */
 void init_regex() {
@@ -79,7 +84,25 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
+					case NOTYPE:  break;
+					case LEFT_R:  tokens[nr_token++].type = LEFT_R;
+							  	  break;
+				    case RIGHT_R: tokens[nr_token++].type = RIGHT_R;
+  								  break;
+					case PLUS:    tokens[nr_token++].type = PLUS;
+								  break;
+					case SUB: 	  tokens[nr_token++].type = SUB;
+								  break;
+				    case MUL:	  tokens[nr_token++].type = MUL;
+								  break;
+					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
+								  break;
+					case NUM: tokens[nr_token].type = NUM;
+							  strcpy(tokens[nr_token].str,substr_start);
+							  nr_token++;
+							  break;
 					default: panic("please implement me");
+							 assert(0);
 				}
 
 				break;
@@ -102,7 +125,32 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	panic("please implement me");
+   	panic("please implement me");
 	return 0;
+}
+
+
+
+int check_parentheses(int p, int q){
+	int flag = 1;
+	int pos = p+1;
+	if(tokens[p].type != LEFT_R)
+		return false;
+	else{
+		for( ; pos<q; pos++){
+			if(tokens[pos].type == LEFT_R)
+				flag++;
+			if(tokens[pos].type == RIGHT_R){
+				if(flag) flag--;
+				else 
+					return false;}
+			if(!flag)
+				return false;
+		}
+		if(tokens[q].type == RIGHT_R)
+			return true;
+		else
+			return false;
+	}
 }
 
