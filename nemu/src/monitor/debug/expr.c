@@ -175,8 +175,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			case MUL  : if(!flag) mark = pos;
 			case DIVIDE: if(!flag) mark = pos;
 			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
-			default : printf("can't find dominant operator.");
-					  assert(0);
 			}
 	return mark;
 }
