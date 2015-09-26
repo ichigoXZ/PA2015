@@ -172,7 +172,7 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 		uint32_t op;
 	}Mark;
 	Mark stack[32];
-	for( ;pos < q;pos++)
+	for( ;pos <= q;pos++)
 		switch(tokens[pos].type){
 			case PLUS : stack[i].position = pos;
 						stack[i++].op = 1;
