@@ -187,12 +187,10 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						stack[i++].op = 0; 
 						break;
 			case LEFT_R:
-						 printf("%d\n",pos);
+						 while(tokens[pos].type != RIGHT_R && pos<q)
 					   	{
-						 printf("%d\n",pos);
 							pos++;
-						 printf("%d",pos);
-						 }while(tokens[pos].type != RIGHT_R && pos<q);
+						}
 						 break;
 			default: break;
 			}
