@@ -190,7 +190,7 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						break;
 			default: break;
 			}
-	for(j = i ;j >= 0;j--)
+	for(j = i-- ;j >= 0;j--)
 		if(stack[j].op==1)
 			return stack[j].position;
 	return stack[i].position;
