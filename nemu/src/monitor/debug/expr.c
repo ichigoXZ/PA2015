@@ -190,6 +190,7 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						break;
 			default: break;
 			}
+	printf("%d\n",stack[i-1].position);
 	for(j = i-1 ;j >= 0;j--)
 		if(stack[j].op==1)
 			return stack[j].position;
