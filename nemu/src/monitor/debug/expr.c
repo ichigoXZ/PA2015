@@ -181,10 +181,10 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						stack[i++].op = 1;
 						break;
 			case MUL  : stack[i].position = pos;
-						stack[i++].op = 2;
+						stack[i++].op = 1;
 						break;
 			case DIVIDE:stack[i].position = pos;
-						stack[i++].op = 2; 
+						stack[i++].op = 1; 
 						break;
 			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
 						break;
