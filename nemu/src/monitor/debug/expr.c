@@ -186,8 +186,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			case DIVIDE:stack[i].position = pos;
 						stack[i++].op = 0; 
 						break;
-			case LEFT_R: {pos++;}while(tokens[pos].type != RIGHT_R);
-						break;
 			default: break;
 			}
 	for(j=0;j<i;j++)
