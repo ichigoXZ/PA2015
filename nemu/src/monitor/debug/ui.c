@@ -44,8 +44,7 @@ static int cmd_si(char *args){
 	return 0;
 }
 
-static int cmd_info(char *args)
-{
+static int cmd_info(char *args) {
     if('r'==*args){    
         printf("eax: 0x%.8x\n",cpu.eax);
         printf("ecx: 0x%.8x\n",cpu.ecx);
@@ -61,8 +60,7 @@ static int cmd_info(char *args)
     return 0;
 }
 
-static int cmd_x(char *args)
-{
+static int cmd_x(char *args){
     char *len = strtok(args," ");
 	char *expr = len + strlen(len) + 1;
 	int i = 0;
@@ -76,6 +74,12 @@ static int cmd_x(char *args)
 	return 0;
 }
 
+static int cmd_p(char *args) {
+	bool success;
+	expr(args,&success);	
+	return 0;
+ }
+
 static int cmd_help(char *args);
 
 static struct {
@@ -84,13 +88,14 @@ static struct {
 	int (*handler) (char *);
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
-	{ "c", "Continue the execution of the program", cmd_c },
-	{ "q", "Exit NEMU", cmd_q },
+	{ "c", "Continue the execution of the program",cmd_c },
+	{ "q", "Exit NEMU",cmd_q },
 
 	/* TODO: Add more commands */
-	{"si","do a single step",cmd_si},
+	{"si","do a single step",cmd_si },
 	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info },
-	{"x","N EXPR:求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x } 
+	{"x","N EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x },
+	{"p"," EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个4字节",cmd_p }
 
 };
 
