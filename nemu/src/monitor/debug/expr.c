@@ -153,7 +153,6 @@ uint32_t eval(uint32_t p,uint32_t q){
 			case SUB:  return val1 - val2;
 			case MUL:  return val1 * val2;
 			case DIVIDE: if(!val2){
-							printf("divided by 0.");
 						    assert(0);}	
     					 else              
     					    return val1 / val2;
