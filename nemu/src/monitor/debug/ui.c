@@ -84,9 +84,19 @@ static int cmd_p(char *args) {
 	return 0;
  }
 
+static int cmd_w(char *args){
+	printf("cmd_w is called\n");
+	return 0;
+}
+
+static int cmd_d(char *args){
+	printf("cmd_d is called\n");
+	return 0;
+}
+
 static int cmd_help(char *args);
 
-static struct {
+static struct {  
 	char *name;
 	char *description;
 	int (*handler) (char *);
@@ -99,13 +109,15 @@ static struct {
 	{"si","do a single step",cmd_si },
 	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info },
 	{"x","N EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x },
-	{"p"," EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个4字节",cmd_p }
+	{"p"," EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个4字节",cmd_p },
+	{"w"," EXPR: 当表达式EXPR的值以生变化时，暂停程序执行",cmd_w },
+	{"d"," N: 删除序号为N的监视点",cmd_d }
 
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
-static int cmd_help(char *args) {
+static int cmd_help(char *args)  {
 	/* extract the first argument */
 	char *arg = strtok(NULL, " ");
 	int i;
@@ -128,8 +140,8 @@ static int cmd_help(char *args) {
 	return 0;
 }
 
-void ui_mainloop()  {
-	while(1) { 
+void ui_mainloop()  { 
+	while(1) {  
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
 
