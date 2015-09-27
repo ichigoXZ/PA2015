@@ -1,6 +1,11 @@
 #include "monitor/monitor.h"
 #include "cpu/helper.h"
+#include "monitor/watchpoint.h"
+#include "monitor/expr.h"
 #include <setjmp.h>
+
+extern WP *head;
+extern WP *free_;
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -73,7 +78,13 @@ void cpu_exec (volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-
+		WP *p = head;
+		for( ; p!=NULL; p++)
+			if(expr(p->info,NULL) != p->value){
+				p->value = expr(p->info,NULL);
+				nemu_state = STOP;
+				break;
+			}
 
 		if(nemu_state != RUNNING) { return; }
 	}
