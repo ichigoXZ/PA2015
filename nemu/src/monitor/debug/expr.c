@@ -174,6 +174,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 				return cpu.edi;
 			else 
 				assert(0);}
+		else
+			assert(0);
 				}
 	else if(check_parentheses(p,q) == true)		
 		return eval(p+1,q-1);
