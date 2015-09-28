@@ -8,11 +8,11 @@
 #include <regex.h>
 
 enum {
-	NUM,LEFT_R,RIGHT_R,PLUS,SUB,MUL,DIVIDE,NOTYPE = 256, EQ
+	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,STR,NOTYPE = 256, EQ
 
 	/* TODO: Add more token types */
 };
-
+ 
 static struct rule {
 	char *regex;
 	int token_type;
@@ -24,7 +24,8 @@ static struct rule {
 
 	{"\\(", LEFT_R},					// left parentheses
 	{"\\)", RIGHT_R},					// right parentheses
-	{"\[0-9]+",  NUM},					// number			  
+	{"\[0-9]+",  NUM},					// numbers
+	{"0x\[0-9]+",HEX_NUM},			//hexadecimal numbers				
 	{" +",  NOTYPE},				// spaces
 	{"\\+", PLUS},					// plus
 	{"\\-", SUB},						// substract
@@ -102,6 +103,10 @@ static bool make_token(char *e) {
 							  strncpy(tokens[nr_token].str,substr_start,substr_len);		
 							  nr_token++;
 							  break;
+					case HEX_NUM: tokens[nr_token].type = HEX_NUM;
+								  strncpy(tokens[nr_token].str,substr_start,substr_len);
+								  nr_token++;
+								  break;
 					default: panic("please implement me");
 							 assert(0);
 				}
@@ -139,8 +144,11 @@ uint32_t eval(uint32_t p,uint32_t q){
 	if(p > q){
 		printf("Bad expression./n");
 		assert(0);}
-	else if(p == q) 		//single token
-		return (uint32_t)atoi(tokens[p].str);
+	else if(p == q){ 		//single token
+		if(tokens[p].type == NUM)
+			return (uint32_t)atoi(tokens[p].str);
+		else
+			return (uint32_t)strtol(tokens[p].str,NULL,16);}
 	else if(check_parentheses(p,q) == true)		//throw away the parentheses
 		return eval(p+1,q-1);
 	else{
