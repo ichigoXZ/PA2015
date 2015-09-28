@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,REG,NOTYPE = 256, EQ
+	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,REG,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
 
 	/* TODO: Add more token types */
 };
@@ -32,6 +32,10 @@ static struct rule {
 	{"\\*", MUL},					// multiply
 	{"\\/", DIVIDE},					// divide
 	{"\\$[a-z]+",REG},				//reg_name
+	{"&&",AND},						//and
+	{"\\|\\|",OR},
+	{"!",NOT},
+	{"!=",NOT_EQ},					//not equal
 	{"==", EQ}						// equal
 };
 
@@ -100,6 +104,12 @@ static bool make_token(char *e) {
 								  break;
 					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
 								  break;
+					case AND: tokens[nr_token++].type = AND;
+							  break;
+					case OR:  tokens[nr_token++].type = OR;
+							  break;
+					case NOT: tokens[nr_token++].type = NOT;
+							  break;
 					case NUM: tokens[nr_token].type = NUM;
 							  strncpy(tokens[nr_token].str,substr_start,substr_len);		
 							  nr_token++;
@@ -193,6 +203,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 						    assert(0);}	
     					 else              
     					    return val1 / val2;
+			case AND:  return val1 && val2;
+			case OR:   return val1 || val2;
 			default: printf("not surported");
 					 assert(0);}
 	}
@@ -221,6 +233,11 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			case DIVIDE:stack[i].position = pos;
 						stack[i++].op = 0; 
 						break;
+			case AND  : stack[i].position = pos;
+						stack[i++].op = 2;
+						break;
+			case OR   : stack[i].position = pos;
+						stack[i++].op = 2;
 			case LEFT_R:
 						 while(tokens[pos].type != RIGHT_R && pos<q)
 					   	{
@@ -230,8 +247,11 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			default: break;
 			}
 	for(j = i-1 ;j >= 0;j--)
-		if(stack[j].op){
+		if(stack[j].op==2){
 			return stack[j].position;}
+	for(j = i-1 ;j >= 0;j--)
+		if(stack[j].op)
+			return stack[j].position;
 	return stack[i-1].position;
 }
 
