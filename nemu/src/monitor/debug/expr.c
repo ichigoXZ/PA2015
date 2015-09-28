@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,STR,NOTYPE = 256, EQ
+	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,REG,NOTYPE = 256, EQ
 
 	/* TODO: Add more token types */
 };
@@ -31,6 +31,7 @@ static struct rule {
 	{"\\-", SUB},						// substract
 	{"\\*", MUL},					// multiply
 	{"\\/", DIVIDE},					// divide
+	{"\\$[a-z]+",REG},				//reg_name
 	{"==", EQ}						// equal
 };
 
@@ -107,6 +108,9 @@ static bool make_token(char *e) {
 								  strncpy(tokens[nr_token].str,substr_start,substr_len);
 								  nr_token++;
 								  break;
+					case REG: tokens[nr_token].type = REG;
+    						  strncpy(tokens[nr_token].str,substr_start,substr_len);
+							  break; 
 					default: panic("please implement me");
 							 assert(0);
 				}
@@ -147,9 +151,29 @@ uint32_t eval(uint32_t p,uint32_t q){
 	else if(p == q){ 		//single token
 		if(tokens[p].type == NUM)
 			return (uint32_t)atoi(tokens[p].str);
-		else
-			return (uint32_t)strtol(tokens[p].str,NULL,16);}
-	else if(check_parentheses(p,q) == true)		//throw away the parentheses
+		else if(tokens[p].type == HEX_NUM)
+			return (uint32_t)strtol(tokens[p].str,NULL,16);
+		else if(tokens[p].type == REG){
+			if(strcmp(tokens[p].str+1,"eax"))
+				return cpu.eax;
+			else if(strcmp(tokens[p].str+1,"ecx"))
+				return cpu.ecx;
+			else if(strcmp(tokens[p].str+1,"edx"))
+				return cpu.edx;
+			else if(strcmp(tokens[p].str+1,"ebx"))
+				return cpu.ebx;
+			else if(strcmp(tokens[p].str+1,"esp"))
+				return cpu.esp;
+			else if(strcmp(tokens[p].str+1,"ebp"))
+				return cpu.ebp;
+			else if(strcmp(tokens[p].str+1,"esi"))
+				return cpu.esi;
+			else if(strcmp(tokens[p].str+1,"edi"))
+				return cpu.edi;
+			else 
+				assert(0);}
+				}
+	else if(check_parentheses(p,q) == true)		
 		return eval(p+1,q-1);
 	else{
 		uint32_t op = dominant_operator(p,q);
@@ -165,9 +189,9 @@ uint32_t eval(uint32_t p,uint32_t q){
     					 else              
     					    return val1 / val2;
 			default: printf("not surported");
-					 assert(0);
-		}
+					 assert(0);}
 	}
+	return 0;
 }
 
 uint32_t dominant_operator(uint32_t p,uint32_t q){
@@ -202,7 +226,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			}
 	for(j = i-1 ;j >= 0;j--)
 		if(stack[j].op){
-			printf("%d\n",j);
 			return stack[j].position;}
 	return stack[i-1].position;
 }
