@@ -209,6 +209,8 @@ uint32_t eval(uint32_t p,uint32_t q){
     					    return val1 / val2;
 			case AND:  return val1 && val2;
 			case OR:   return val1 || val2;
+			case EQ:   return val1 == val2;
+			case NOT_EQ: return val1 != val2;
 			default: printf("not surported");
 					 assert(0);}
 	}
