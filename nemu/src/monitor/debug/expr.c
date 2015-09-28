@@ -82,7 +82,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-			//	Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -103,6 +103,10 @@ static bool make_token(char *e) {
 				    case MUL:	  tokens[nr_token++].type = MUL;
 								  break;
 					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
+								  break;
+					case EQ:  tokens[nr_token++].type = EQ;
+							  break;
+					case NOT_EQ:  tokens[nr_token++].type = NOT_EQ;
 								  break;
 					case AND: tokens[nr_token++].type = AND;
 							  break;
@@ -237,6 +241,10 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						stack[i++].op = 2;
 						break;
 			case OR   : stack[i].position = pos;
+						stack[i++].op = 2;
+			case EQ   : stack[i].position = pos;
+						stack[i++].op = 2;
+			case NOT_EQ : stack[i].position = pos;
 						stack[i++].op = 2;
 			case LEFT_R:
 						 while(tokens[pos].type != RIGHT_R && pos<q)
