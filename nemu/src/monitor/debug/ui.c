@@ -45,8 +45,7 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args) {
-    if(!args)
-		printf("lack argument.");
+		printf("%s\n.",args);
 	if('r'==*args){    
         printf("eax: 0x%.8x\n",cpu.eax);
         printf("ecx: 0x%.8x\n",cpu.ecx);
