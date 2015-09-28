@@ -98,6 +98,7 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
+	free_wp(atoi(args));
 	return 0;
 }
 
