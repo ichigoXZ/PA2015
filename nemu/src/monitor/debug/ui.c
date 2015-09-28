@@ -90,7 +90,6 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
-	printf("cmd_d is called\n");
 	return 0;
 }
 
