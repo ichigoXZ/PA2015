@@ -171,6 +171,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 				return cpu.esi;
 			else if(strcmp(tokens[p].str+1,"edi")==0)
 				return cpu.edi;
+			else if(strcmp(tokens[p].str+1,"eip")==0)
+				return cpu.eip;
 			else 
 				assert(0);}
 		else
