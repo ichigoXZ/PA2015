@@ -82,7 +82,7 @@ void cpu_exec (volatile uint32_t n) {
 		for( ; p!=NULL; p++)
 			if(expr(p->info,NULL) != p->value){
 				p->value = expr(p->info,NULL);
-				printf("watchpoint: %d",p->NO);
+				printf("watchpoint: %d\t",p->NO);
 				printf("%s\t%.8x\n",p->info,p->value);
 				nemu_state = STOP;
 				break;
