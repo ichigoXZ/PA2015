@@ -110,7 +110,6 @@ static bool make_token(char *e) {
 								  break;
 					case REG: tokens[nr_token].type = REG;
     						  strncpy(tokens[nr_token].str,substr_start,substr_len);
-							  printf("reg\n");
 							  nr_token++;
 							  break; 
 					default: panic("please implement me");
@@ -156,6 +155,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 		else if(tokens[p].type == HEX_NUM)
 			return (uint32_t)strtol(tokens[p].str,NULL,16);
 		else if(tokens[p].type == REG){
+        printf("eax: 0x%.8x\n",cpu.eax);
 			if(strcmp(tokens[p].str+1,"eax")){
         printf("eax: 0x%.8x\n",cpu.eax);
 				return cpu.eax;}
