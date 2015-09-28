@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
+extern WP *head,*free_;
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -46,8 +47,8 @@ static int cmd_si(char *args){
 
 static int cmd_info(char *args) {
 	if(args == NULL)
-		printf("lack argument.");
-    else if('r'==*args){    
+		printf("lack argument.\n");
+    else if('r' == *args){    
         printf("eax: 0x%.8x\n",cpu.eax);
         printf("ecx: 0x%.8x\n",cpu.ecx);
         printf("edx: 0x%.8x\n",cpu.edx);
@@ -57,6 +58,8 @@ static int cmd_info(char *args) {
         printf("esi: 0x%.8x\n",cpu.esi);
         printf("edi: 0x%.8x\n",cpu.edi);
     }
+	else if('w' == *args){
+		printf("%d\t%s",head->NO,head->info);}
     else
         printf("unknown command.\n");
     return 0;
