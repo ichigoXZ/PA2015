@@ -79,7 +79,7 @@ void cpu_exec (volatile uint32_t n) {
 
 		/* TODO: check watchpoints here. */
 		WP *p = head;
-		for( ; p!=NULL; p++)
+		for( ; p!=NULL; p=p->next)
 			if(expr(p->info,NULL) != p->value){
 				p->value = expr(p->info,NULL);
 				printf("%s\t%.8x\n",p->info,p->value);
