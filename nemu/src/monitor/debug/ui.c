@@ -59,7 +59,9 @@ static int cmd_info(char *args) {
         printf("edi: 0x%.8x\n",cpu.edi);
     }
 	else if('w' == *args){
-		printf("%d\t%s",head->NO,head->info);}
+		WP *p = head;
+		while(p!=NULL)
+			printf("%d\t%s\n",p->NO,p->info);}
     else
         printf("unknown command.\n");
     return 0;
