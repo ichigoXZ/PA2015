@@ -157,19 +157,19 @@ uint32_t eval(uint32_t p,uint32_t q){
 		else if(tokens[p].type == REG){
 			if(strcmp(tokens[p].str+1,"eax")==0)
 				return cpu.eax;
-			else if(!strcmp(tokens[p].str+1,"ecx")==0)
+			else if(strcmp(tokens[p].str+1,"ecx")==0)
 				return cpu.ecx;
-			else if(!strcmp(tokens[p].str+1,"edx")==0)
+			else if(strcmp(tokens[p].str+1,"edx")==0)
 				return cpu.edx;
-			else if(!strcmp(tokens[p].str+1,"ebx")==0)
+			else if(strcmp(tokens[p].str+1,"ebx")==0)
 				return cpu.ebx;
-			else if(!strcmp(tokens[p].str+1,"esp")==0)
+			else if(strcmp(tokens[p].str+1,"esp")==0)
 				return cpu.esp;
-			else if(!strcmp(tokens[p].str+1,"ebp")==0)
+			else if(strcmp(tokens[p].str+1,"ebp")==0)
 				return cpu.ebp;
-			else if(!strcmp(tokens[p].str+1,"esi")==0)
+			else if(strcmp(tokens[p].str+1,"esi")==0)
 				return cpu.esi;
-			else if(!strcmp(tokens[p].str+1,"edi")==0)
+			else if(strcmp(tokens[p].str+1,"edi")==0)
 				return cpu.edi;
 			else 
 				assert(0);}
