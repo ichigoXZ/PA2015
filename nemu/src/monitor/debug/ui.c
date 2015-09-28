@@ -60,7 +60,7 @@ static int cmd_info(char *args) {
     }
 	else if('w' == *args){
 		WP *p = head;
-		while(p!=NULL)
+		for( ;p != NULL;p = p->next)
 			printf("%d\t%s\n",p->NO,p->info);}
     else
         printf("unknown command.\n");
