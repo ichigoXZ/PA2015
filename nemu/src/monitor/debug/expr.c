@@ -155,8 +155,9 @@ uint32_t eval(uint32_t p,uint32_t q){
 		else if(tokens[p].type == HEX_NUM)
 			return (uint32_t)strtol(tokens[p].str,NULL,16);
 		else if(tokens[p].type == REG){
-			if(strcmp(tokens[p].str+1,"eax"))
-				return cpu.eax;
+			if(strcmp(tokens[p].str+1,"eax")){
+        printf("eax: 0x%.8x\n",cpu.eax);
+				return cpu.eax;}
 			else if(strcmp(tokens[p].str+1,"ecx"))
 				return cpu.ecx;
 			else if(strcmp(tokens[p].str+1,"edx"))
