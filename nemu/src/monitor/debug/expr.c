@@ -82,7 +82,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+			//	Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -211,6 +211,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 			case OR:   return val1 || val2;
 			case EQ:   return val1 == val2;
 			case NOT_EQ: return val1 != val2;
+			case NOT:  return !val2;
 			default: printf("not surported");
 					 assert(0);}
 	}
@@ -239,6 +240,9 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 			case DIVIDE:stack[i].position = pos;
 						stack[i++].op = 0; 
 						break;
+			case NOT:   stack[i].position = pos;
+						stack[i++].op = 3;
+						break;
 			case AND  : stack[i].position = pos;
 						stack[i++].op = 2;
 						break;
@@ -256,6 +260,9 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						 break;
 			default: break;
 			}
+	for(j = i-1 ;j >= 0;j--)
+		if(stack[j].op==3)
+			return stack[j].position;
 	for(j = i-1 ;j >= 0;j--)
 		if(stack[j].op==2){
 			return stack[j].position;}
