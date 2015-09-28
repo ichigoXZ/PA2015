@@ -78,8 +78,9 @@ static int cmd_p(char *args) {
 	bool success;
 	uint32_t result = expr(args,&success);	
     //if(success)
-		printf("result:%d\n",result);
-	//else
+		printf("result: %d\n",result);
+        printf("HEX: 0x%.8x\n",result);
+		//else
 	//	printf("Bad expression.");
 	return 0;
  }
