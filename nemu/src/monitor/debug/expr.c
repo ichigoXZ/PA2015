@@ -110,8 +110,7 @@ static bool make_token(char *e) {
 								  break;
 					case REG: tokens[nr_token].type = REG;
     						  strncpy(tokens[nr_token].str,substr_start,substr_len);
-							printf("%s",tokens[nr_token].str+1);
-							 nr_token++;
+							  nr_token++;
 							  break; 
 					default: panic("please implement me");
 							 assert(0);
