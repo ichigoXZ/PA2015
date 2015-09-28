@@ -79,11 +79,9 @@ void cpu_exec (volatile uint32_t n) {
 
 		/* TODO: check watchpoints here. */
 		WP *p = head;
-		uint32_t val = expr(p->info,NULL);
 		for( ; p!=NULL; p++)
-			if(p->value != val){
-				p->value = val;
-				printf("watchpoint: %d\t",p->NO);
+			if(expr(p->info,NULL) != p->value){
+				p->value = expr(p->info,NULL);
 				printf("%s\t%.8x\n",p->info,p->value);
 				nemu_state = STOP;
 				break;
