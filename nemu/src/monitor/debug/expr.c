@@ -24,8 +24,8 @@ static struct rule {
 
 	{"\\(", LEFT_R},					// left parentheses
 	{"\\)", RIGHT_R},					// right parentheses
+	{"0x[a-fA-F0-9]+",HEX_NUM},		//hexadecimal numbers		
 	{"[1-9][0-9]+|0", NUM},					// numbers
-	{"0x[a-fA-F0-9]+",HEX_NUM},			//hexadecimal numbers				
 	{" +",  NOTYPE},				// spaces
 	{"\\+", PLUS},					// plus
 	{"\\-", SUB},						// substract
