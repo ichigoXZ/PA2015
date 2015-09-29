@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,DIVIDE,REG,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
+	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,ADDR,DIVIDE,REG,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
 
 	/* TODO: Add more token types */
 };
@@ -99,8 +99,11 @@ static bool make_token(char *e) {
 					case PLUS:    tokens[nr_token++].type = PLUS;
 								  break;
 					case SUB: 	  tokens[nr_token++].type = SUB;
-								  break;
-				    case MUL:	  tokens[nr_token++].type = MUL;
+								  break;  
+				    case MUL:	  if(tokens[nr_token-1].type == PLUS || tokens[nr_token-1].type == SUB || tokens[nr_token-1].type == MUL || tokens[nr_token-1].type == DIVIDE || nr_token == 0)
+									  tokens[nr_token++].type = ADDR;
+								  else
+		 							  tokens[nr_token++].type = MUL;
 								  break;
 					case DIVIDE:  tokens[nr_token++].type = DIVIDE;
 								  break;
@@ -163,6 +166,11 @@ uint32_t eval(uint32_t p,uint32_t q){
 	if(p > q){
 		printf("Bad expression./n");
 		assert(0);}
+	else if(p == q-1){
+		if(tokens[p].type == ADDR)
+			return swaddr_read(eval(p+1,q),4);
+		else if(tokens[p].type == NOT)
+			return !eval(p+1,q);}
 	else if(p == q){ 		//single token
 		if(tokens[p].type == NUM)
 			return (uint32_t)atoi(tokens[p].str);
@@ -211,7 +219,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 			case OR:   return val1 || val2;
 			case EQ:   return val1 == val2;
 			case NOT_EQ: return val1 != val2;
-			case NOT:  return !val2;
+			//case NOT:  return !val2;
 			default: printf("not surported");
 					 assert(0);}
 	}
@@ -227,7 +235,7 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 	}Mark;
 	Mark stack[32];
 	for( ;pos <= q;pos++)
-		switch(tokens[pos].type){
+		switch(tokens[pos] .type){
 			case PLUS : stack[i].position = pos;
 						stack[i++].op = 1;
 						break;
@@ -239,9 +247,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						break;
 			case DIVIDE:stack[i].position = pos;
 						stack[i++].op = 0; 
-						break;
-			case NOT:   stack[i].position = pos;
-						stack[i++].op = 3;
 						break;
 			case AND  : stack[i].position = pos;
 						stack[i++].op = 2;
@@ -260,9 +265,6 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 						 break;
 			default: break;
 			}
-	for(j = i-1 ;j >= 0;j--)
-		if(stack[j].op==3)
-			return stack[j].position;
 	for(j = i-1 ;j >= 0;j--)
 		if(stack[j].op==2){
 			return stack[j].position;}
