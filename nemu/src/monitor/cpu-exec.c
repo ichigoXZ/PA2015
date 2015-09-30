@@ -81,8 +81,10 @@ void cpu_exec (volatile uint32_t n) {
 		WP *p = head;
 		for( ; p!=NULL; p=p->next)
 			if(expr(p->info,NULL) != p->value){
+				printf("%d\t%s\n",p->NO,p->info);
+				printf("ex_value:0x%.8x\t",p->value);	
 				p->value = expr(p->info,NULL);
-				printf("%s\t%.8x\n",p->info,p->value);
+				printf("value:0x%.8x\n",p->value);
 				nemu_state = STOP;
 				break;
 			}
