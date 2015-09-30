@@ -61,7 +61,10 @@ static int cmd_info(char *args) {
 	else if('w' == *args){
 		WP *p = head;
 		for( ;p != NULL;p = p->next)
-			printf("%d\t%s\t0x%.8x\n",p->NO,p->info,p->value);}
+			printf("%d\t%s\t0x%.8x\n",p->NO,p->info,p->value);
+		if(head == NULL)
+			printf("no watchpoint.\n");	
+	}
     else
         printf("unknown command.\n");
     return 0;
