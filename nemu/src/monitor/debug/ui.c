@@ -69,9 +69,9 @@ static int cmd_info(char *args) {
 
 static int cmd_x(char *args){
     char *len = strtok(args," ");
-	char *expr = len + strlen(len) + 1;
+	char *exp = len + strlen(len) + 1;
 	int i = 0;
-	int addr = (int)strtol(expr,NULL,16);
+	int addr = (int)expr(exp,NULL);
 	printf("0x%x:\t",addr);
 	for( ; i < atoi(len); i++){
 	printf("0x%.8x\t",swaddr_read(addr+i,4));
