@@ -177,24 +177,54 @@ uint32_t eval(uint32_t p,uint32_t q){
 		else if(tokens[p].type == HEX_NUM)
 			return (uint32_t)strtol(tokens[p].str,NULL,16);
 		else if(tokens[p].type == REG){
-			if(strcmp(tokens[p].str+1,"eax")==0)
+			if(strcmp(tokens[p].str+1,"eax")==0||strcmp(tokens[p].str+1,"EAX")==0)
 				return cpu.eax;
-			else if(strcmp(tokens[p].str+1,"ecx")==0)
+			else if(strcmp(tokens[p].str+1,"ecx")==0||strcmp(tokens[p].str+1,"ECX")==0)
 				return cpu.ecx;
-			else if(strcmp(tokens[p].str+1,"edx")==0)
+			else if(strcmp(tokens[p].str+1,"edx")==0||strcmp(tokens[p].str+1,"EDX")==0)
 				return cpu.edx;
-			else if(strcmp(tokens[p].str+1,"ebx")==0)
+			else if(strcmp(tokens[p].str+1,"ebx")==0||strcmp(tokens[p].str+1,"EBX")==0)
 				return cpu.ebx;
-			else if(strcmp(tokens[p].str+1,"esp")==0)
+			else if(strcmp(tokens[p].str+1,"esp")==0||strcmp(tokens[p].str+1,"ESP")==0)
 				return cpu.esp;
-			else if(strcmp(tokens[p].str+1,"ebp")==0)
+			else if(strcmp(tokens[p].str+1,"ebp")==0||strcmp(tokens[p].str+1,"EBP")==0)
 				return cpu.ebp;
-			else if(strcmp(tokens[p].str+1,"esi")==0)
+			else if(strcmp(tokens[p].str+1,"esi")==0||strcmp(tokens[p].str+1,"ESI")==0)
 				return cpu.esi;
-			else if(strcmp(tokens[p].str+1,"edi")==0)
+			else if(strcmp(tokens[p].str+1,"edi")==0||strcmp(tokens[p].str+1,"EDI")==0)
 				return cpu.edi;
-			else if(strcmp(tokens[p].str+1,"eip")==0)
+			else if(strcmp(tokens[p].str+1,"eip")==0||strcmp(tokens[p].str+1,"EIP")==0)
 				return cpu.eip;
+			else if(strcmp(tokens[p].str+1,"ax")==0||strcmp(tokens[p].str+1,"AX")==0)
+				return cpu.gpr[R_AX]._16;
+			else if(strcmp(tokens[p].str+1,"cx")==0||strcmp(tokens[p].str+1,"CX")==0)
+				return cpu.gpr[R_CX]._16;
+			else if(strcmp(tokens[p].str+1,"dx")==0||strcmp(tokens[p].str+1,"DX")==0)
+				return cpu.gpr[R_DX]._16;
+			else if(strcmp(tokens[p].str+1,"bx")==0||strcmp(tokens[p].str+1,"BX")==0)
+				return cpu.gpr[R_BX]._16;
+			else if(strcmp(tokens[p].str+1,"sp")==0||strcmp(tokens[p].str+1,"SP")==0)
+				return cpu.gpr[R_SP]._16;
+			else if(strcmp(tokens[p].str+1,"bp")==0||strcmp(tokens[p].str+1,"BP")==0)
+				return cpu.gpr[R_BP]._16;
+			else if(strcmp(tokens[p].str+1,"si")==0||strcmp(tokens[p].str+1,"SI")==0)
+				return cpu.gpr[R_SI]._16;
+			else if(strcmp(tokens[p].str+1,"al")==0||strcmp(tokens[p].str+1,"AL")==0)
+				return cpu.gpr[R_EAX]._8[0];
+			else if(strcmp(tokens[p].str+1,"ah")==0||strcmp(tokens[p].str+1,"AH")==0)
+				return cpu.gpr[R_EAX]._8[1];
+			else if(strcmp(tokens[p].str+1,"cl")==0||strcmp(tokens[p].str+1,"CL")==0)
+				return cpu.gpr[R_ECX]._8[0];
+			else if(strcmp(tokens[p].str+1,"ch")==0||strcmp(tokens[p].str+1,"CH")==0)
+				return cpu.gpr[R_ECX]._8[1];
+			else if(strcmp(tokens[p].str+1,"dl")==0||strcmp(tokens[p].str+1,"DL")==0)
+				return cpu.gpr[R_EDX]._8[0];
+			else if(strcmp(tokens[p].str+1,"dh")==0||strcmp(tokens[p].str+1,"DH")==0)
+				return cpu.gpr[R_EDX]._8[1];
+			else if(strcmp(tokens[p].str+1,"bl")==0||strcmp(tokens[p].str+1,"BL")==0)
+				return cpu.gpr[R_EBX]._8[0];
+			else if(strcmp(tokens[p].str+1,"bh")==0||strcmp(tokens[p].str+1,"BH")==0)
+				return cpu.gpr[R_EBX]._8[1];
 			else 
 				assert(0);}
 		else
