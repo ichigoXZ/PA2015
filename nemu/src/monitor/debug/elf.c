@@ -36,8 +36,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	assert(elf->e_ident[EI_ABIVERSION] == 0);			// should be 0
 	assert(elf->e_type == ET_EXEC);						// executable file
 	assert(elf->e_machine == EM_386);					// Intel 80386 architecture
-	assert(elf->e_version == EV_CURRENT);				// current version
-
+	assert(elf->e_version == EV_CURRENT);				// current version:
 
 	/* Load symbol table and string table for future use */
 
