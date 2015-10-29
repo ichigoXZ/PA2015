@@ -84,6 +84,26 @@ void restart() {
 	/* Read the entry code into memory. */
 	load_entry();
 
+	/* Set the Eflags.*/
+	cpu.Eflags.a1=0;
+	cpu.Eflags.a2=0;
+	cpu.Eflags.VM=0;
+	cpu.Eflags.RF=0;
+	cpu.Eflags.b1=0;
+	cpu.Eflags.NT=0;
+	cpu.Eflags.IPOL=0;
+	cpu.Eflags.OF=0;
+	cpu.Eflags.DF=0;
+	cpu.Eflags.IF=0;
+	cpu.Eflags.TF=0;
+	cpu.Eflags.SF=0;
+	cpu.Eflags.ZF=0;
+	cpu.Eflags.b2=0;
+	cpu.Eflags.AF=0;
+	cpu.Eflags.b3=0;
+	cpu.Eflags.PF=0;
+	cpu.Eflags.b4=1;
+	cpu.Eflags.CF=0;
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
 
