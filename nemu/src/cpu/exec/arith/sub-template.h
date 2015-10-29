@@ -20,20 +20,28 @@ static void do_execute () {
 			cpu.Eflags.SF = 0;
 			else 
 			cpu.Eflags.SF = 1;
-		if(((op_dest->val&0x80)^(op_src->val&0x80))&&((op_dest_>val&0x80)^(op_src->val&0x80)))
+		if(((op_dest->val&0x80)^(op_src->val&0x80))&&((op_dest->val&0x80)^(result&0x8000)))
 			cpu.Eflags.OF = 1;
 			else
-			cpu.Eflags = 0;
+			cpu.Eflags.OF = 0;
 #elif DATA_TYPE == 2
 		if(result&0x8000)
 			cpu.Eflags.SF = 0;
 			else 
 			cpu.Eflags.SF = 1;
+		if(((op_dest->val&0x8000)^(op_src->val&0x8000))&&((op_dest->val&0x8000)^(result&0x8000)))
+			cpu.Eflags.OF = 1;
+			else
+			cpu.Eflags.OF = 0;
 #else 
 		if(result&0x80000000)
 			cpu.Eflags.SF = 0;
 			else 
 			cpu.Eflags.SF = 1;
+		if(((op_dest->val&0x80000000)^(op_src->val&0x80000000))&&((op_dest->val&0x80000000)^(result&0x8000)))
+			cpu.Eflags.OF = 1;
+			else
+			cpu.Eflags.OF = 0;
 #endif
 
 		print_asm_template2();
