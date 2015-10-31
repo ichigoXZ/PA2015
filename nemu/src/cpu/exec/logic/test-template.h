@@ -31,7 +31,7 @@ static void do_execute () {
 			cpu.Eflags.SF = 1;
 #endif
 
-	//print_asm_template2();
+	print_asm_template2();
 }
 
 make_instr_helper(i2a)
