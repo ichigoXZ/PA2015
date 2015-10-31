@@ -4,9 +4,10 @@
 
 static void do_execute () {
 
-#if DATA_TYPE == 2
 	if(cpu.Eflags.ZF)
 		cpu.eip += op_src->val;
+#if DATA_TYPE == 2
+	cpu.eip = cpu.eip&0x0000ffff;
 #endif
 
 	print_asm_template1();
