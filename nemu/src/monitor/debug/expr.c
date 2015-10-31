@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,ADDR,DIVIDE,REG,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
+	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,ADDR,DIVIDE,REG,VAR,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
 
 	/* TODO: Add more token types */
 };
@@ -32,6 +32,7 @@ static struct rule {
 	{"\\*", MUL},					// multiply
 	{"\\/", DIVIDE},					// divide
 	{"\\$[a-zA-Z]+",REG},				//reg_name
+	{"[_|a-zA-Z]+[_|a-zA-Z0-9]*",VAR},	//var_name
 	{"&&",AND},						//and
 	{"\\|\\|",OR},
 	{"!",NOT},
