@@ -8,10 +8,6 @@ static void do_execute () {
 
 				/* TODO: Update EFLAGS. */
 
-		if(op_dest->val < op_src->val)
-			cpu.Eflags.CF = 1;
-			else 
-			cpu.Eflags.CF = 0;
 #if DATA_TYPE == 1
 		if(result&0x80)
 			cpu.Eflags.SF = 0;
