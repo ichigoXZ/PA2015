@@ -7,7 +7,15 @@ static void do_execute () {
 		OPERAND_W(op_dest, result);
 
 				/* TODO: Update EFLAGS. */
-	#if DATA_TYPE == 1
+		if(result == 0)
+			cpu.Eflags.ZF = 1;
+			else 
+			cpu.Eflags.ZF = 0;
+		if(op_dest->val < op_src->val)
+			cpu.Eflags.CF = 1;
+			else 
+			cpu.Eflags.CF = 0;
+#if DATA_TYPE == 1
 		if(result&0x80)
 			cpu.Eflags.SF = 0;
 			else 
