@@ -231,6 +231,9 @@ uint32_t eval(uint32_t p,uint32_t q){
 				return cpu.gpr[R_EBX]._8[1];
 			else 
 				assert(0);}
+		else if(tokens[p].type == VAR){
+			printf("ENN\n");
+		}
 		else
 			assert(0);
 				}
