@@ -14,7 +14,6 @@ static void do_execute () {
 		cpu.Eflags.ZF = 1;
 		else 
 		cpu.Eflags.ZF = 0;
-	printf("ennn\n");
 #if DATA_TYPE == 1
 		if(result&0x80)
 			cpu.Eflags.SF = 0;
@@ -31,7 +30,7 @@ static void do_execute () {
 			else 
 			cpu.Eflags.SF = 1;
 #endif
-
+			printf("ennn\n");
 	print_asm_template2();
 }
 
