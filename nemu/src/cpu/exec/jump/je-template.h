@@ -3,7 +3,7 @@
 #define instr je
 
 static void do_execute () {
-
+ 	printf("ennnn\n");
 	if(cpu.Eflags.ZF){
 		cpu.eip += op_src->val;
 		if(DATA_BYTE == 2)
