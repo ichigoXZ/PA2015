@@ -6,7 +6,7 @@ static void do_execute () {
 	
 	DATA_TYPE result = op_dest->val & op_src->val;
 	OPERAND_W(op_dest, result);
-printf("ennnn\n");
+                             
 	/* TODO: Update EFLAGS. */
 	cpu.Eflags.CF = 0;
 	cpu.Eflags.OF = 0;
@@ -14,6 +14,7 @@ printf("ennnn\n");
 		cpu.Eflags.ZF = 1;
 		else 
 		cpu.Eflags.ZF = 0;
+	printf("ennnn\n");
 #if DATA_TYPE == 1
 		if(result&0x80)
 			cpu.Eflags.SF = 0;
