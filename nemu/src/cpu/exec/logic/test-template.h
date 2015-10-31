@@ -30,8 +30,8 @@ static void do_execute () {
 			else 
 			cpu.Eflags.SF = 1;
 #endif
-			printf("ennn\n");
-	print_asm_template2();
+
+	//print_asm_template2();
 }
 
 make_instr_helper(i2a)
