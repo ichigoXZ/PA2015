@@ -12,7 +12,7 @@ static void do_execute () {
 			else 
 			cpu.Eflags.ZF = 0;
 
-		#if DATA_TYPE == 1
+	#if DATA_TYPE == 1
 		if(result&0x80)
 			cpu.Eflags.SF = 0;
 			else 
