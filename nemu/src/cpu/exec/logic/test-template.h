@@ -3,6 +3,7 @@
 #define instr test
 
 static void do_execute () {
+	printf("ennnn\n");
 	DATA_TYPE result = op_dest->val & op_src->val;
 	OPERAND_W(op_dest, result);
 
