@@ -7,7 +7,7 @@ static void do_execute () {
 		OPERAND_W(op_dest, result);
 		printf("%d\n",op_src->val);
 				/* TODO: Update EFLAGS. */
-		if(result == 0)
+	if(result == 0)
 			cpu.Eflags.ZF = 1;
 			else 
 			cpu.Eflags.ZF = 0;
