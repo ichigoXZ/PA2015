@@ -30,7 +30,7 @@ static void do_execute () {
 			else 
 			cpu.Eflags.SF = 1;
 #endif
-
+		printf("%d\n", result);
 	print_asm_template2();
 }
 
