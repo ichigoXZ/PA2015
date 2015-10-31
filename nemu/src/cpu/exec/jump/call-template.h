@@ -3,7 +3,6 @@
 #define instr call
 
 static void do_execute () {
-	printf("%d\n",op_src->val);
 #if DATA_BYTE == 2
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
