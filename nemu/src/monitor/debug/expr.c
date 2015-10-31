@@ -31,7 +31,7 @@ static struct rule {
 	{"\\-", SUB},						// substract
 	{"\\*", MUL},					// multiply
 	{"\\/", DIVIDE},					// divide
-	{"\\$[a-zA-Z]+",REG},				//reg_name
+	{"\\[a-zA-Z]+",REG},				//reg_name
 	{"&&",AND},						//and
 	{"\\|\\|",OR},
 	{"!",NOT},
