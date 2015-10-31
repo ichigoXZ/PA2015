@@ -3,7 +3,6 @@
 #define instr je
 
 static void do_execute () {
- 	printf("ennnn\n");
 	if(cpu.Eflags.ZF){
 		cpu.eip += op_src->val;
 		if(DATA_BYTE == 2)
@@ -13,6 +12,6 @@ static void do_execute () {
 	print_asm_template1();
 }
 
-make_instr_helper(rm)
+make_instr_helper(i)
 
 #include "cpu/exec/template-end.h"
