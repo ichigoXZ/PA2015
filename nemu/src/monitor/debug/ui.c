@@ -118,9 +118,9 @@ static struct {
 
 	/* TODO: Add more commands */
 	{"si","do a single step",cmd_si },
-	{"info"," r: print registers;/n/t w:print watchpoints",cmd_info },
+	{"info"," r: print registers;\n/t w:print watchpoints",cmd_info },
 	{"x","N EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个字节",cmd_x },
-	{"p"," EXPR: 求出表达式EXPR的值，将结果作为起始内存地址，以十六进制形式输出连续的N个4字节",cmd_p },
+	{"p"," EXPR: 求出表达式EXPR的值",cmd_p },
 	{"w"," EXPR: 当表达式EXPR的值以生变化时，暂停程序执行",cmd_w },
 	{"d"," N: 删除序号为N的监视点",cmd_d }
 
