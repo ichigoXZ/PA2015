@@ -7,40 +7,40 @@ static void do_execute () {
 		OPERAND_W(op_dest, result);
 				/* TODO: Update EFLAGS. */
 	if(result == 0)
-			cpu.Eflags.ZF = 1;
+			cpu.ZF = 1;
 			else 
-			cpu.Eflags.ZF = 0;
-	if((unsigned)result < (unsigned)op_dest->val || (unsigned)result < (unsigned)op_src->val)
-			cpu.Eflags.CF = 1;
+			cpu.ZF = 0;
+	if(result < op_dest->val || result < op_src->val)
+			cpu.CF = 1;
 			else 
-			cpu.Eflags.CF = 0;
+			cpu.CF = 0;
 #if DATA_TYPE == 1
 		if(result&0x80)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 		if(((op_dest->val&0x80)==(op_src->val&0x80))&&((op_dest->val&0x80)^(result&0x80)))
-			cpu.Eflags.OF = 1;
+			cpu.OF = 1;
 			else
-			cpu.Eflags.OF = 0;
+			cpu.OF = 0;
 #elif DATA_TYPE == 2
 		if(result&0x8000)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 		if(((op_dest->val&0x8000)==(op_src->val&0x8000))&&((op_dest->val&0x8000)^(result&0x8000)))
-			cpu.Eflags.OF = 1;
+			cpu.OF = 1;
 			else
-			cpu.Eflags.OF = 0;
+			cpu.OF = 0;
 #else 
 		if(result&0x80000000)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 		if(((op_dest->val&0x80000000)==(op_src->val&0x80000000))&&((op_dest->val&0x80000000)^(result&0x80000000)))
-			cpu.Eflags.OF = 1;
+			cpu.OF = 1;
 			else
-			cpu.Eflags.OF = 0;
+			cpu.OF = 0;
 #endif
 
 		print_asm_template2();

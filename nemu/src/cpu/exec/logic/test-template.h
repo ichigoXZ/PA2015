@@ -8,27 +8,27 @@ static void do_execute () {
 	OPERAND_W(op_dest, result);
                              
 	/* TODO: Update EFLAGS. */
-	cpu.Eflags.CF = 0;
-	cpu.Eflags.OF = 0;
+	cpu.CF = 0;
+	cpu.OF = 0;
 	if(result == 0)
-		cpu.Eflags.ZF = 1;
+		cpu.ZF = 1;
 		else 
-		cpu.Eflags.ZF = 0;
+		cpu.ZF = 0;
 #if DATA_TYPE == 1
 		if(result&0x80)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 #elif DATA_TYPE == 2
 		if(result&0x8000)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 #else 
 		if(result&0x80000000)
-			cpu.Eflags.SF = 1;
+			cpu.SF = 1;
 			else 
-			cpu.Eflags.SF = 0;
+			cpu.SF = 0;
 #endif
 	print_asm_template2();
 }
