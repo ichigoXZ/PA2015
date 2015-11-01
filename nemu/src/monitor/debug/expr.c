@@ -242,8 +242,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 				if(strcmp(tokens[p].str,(strtab+i))==0){
 					return (symtab+i)-> st_value;
 				}
-				else
-					assert("no such val");
+				if(i==nr_symtab_entry)
+					assert("no such thing!\n");
 		}
 		else
 			assert(0);
