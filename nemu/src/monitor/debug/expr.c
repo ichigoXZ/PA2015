@@ -240,8 +240,9 @@ uint32_t eval(uint32_t p,uint32_t q){
 				assert(0);}
 		else if(tokens[p].type == VAR){
 				int i=0;
+				printf("  ewfefw%d\n", (symtab+i)->st_info);
 				for(;i<nr_symtab_entry;i++){
-					printf("%d\n", (symtab+i)->st_info);
+					
 					printf("%d\n",STT_OBJECT );
 					if((symtab+i)->st_info==STT_OBJECT)
 						if(0==strcmp(tokens[p].str,&strtab[(symtab+i)->st_name]))
