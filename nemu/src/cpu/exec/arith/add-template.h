@@ -19,7 +19,7 @@ static void do_execute () {
 			cpu.Eflags.SF = 1;
 			else 
 			cpu.Eflags.SF = 0;
-		if(!((op_dest->val&0x80)^(op_src->val&0x80))&&((op_dest->val&0x80)^(result&0x8000)))
+		if(!((op_dest->val&0x80)^(op_src->val&0x80))&&((op_dest->val&0x80)^(result&0x80)))
 			cpu.Eflags.OF = 1;
 			else
 			cpu.Eflags.OF = 0;
@@ -37,7 +37,7 @@ static void do_execute () {
 			cpu.Eflags.SF = 1;
 			else 
 			cpu.Eflags.SF = 0;
-		if(!((op_dest->val&0x80000000)^(op_src->val&0x80000000))&&((op_dest->val&0x80000000)^(result&0x8000)))
+		if(!((op_dest->val&0x80000000)^(op_src->val&0x80000000))&&((op_dest->val&0x80000000)^(result&0x80000000)))
 			cpu.Eflags.OF = 1;
 			else
 			cpu.Eflags.OF = 0;
