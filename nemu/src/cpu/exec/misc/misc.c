@@ -35,3 +35,19 @@ make_helper(leave) {
 	print_asm("leave");
 	return 1;
 }
+
+make_helper(ret) {
+	#if DATA_BYTE == 2
+	//实现段寄存器
+	cpu.eip = MEM_R(cpu.esp);
+	cpu.esp = cpu.esp + 2;
+	cpu.eip = cpu.eip & 0x0000ffff;
+#elif DATA_BYTE == 4
+	//实现段寄存器
+	cpu.eip = MEM_R(cpu.esp);
+	cpu.esp = cpu.esp + 4;
+#endif
+
+	print_asm("ret");
+	return 1;
+}
