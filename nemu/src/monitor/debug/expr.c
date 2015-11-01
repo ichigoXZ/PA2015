@@ -124,7 +124,8 @@ static bool make_token(char *e) {
 					case NOT: tokens[nr_token++].type = NOT;
 							  break;
 					case NUM: tokens[nr_token].type = NUM;
-							  strncpy(tokens[nr_token].str,substr_start,substr_len);		
+							  strncpy(tokens[nr_token].str,substr_start,substr_len);
+
 							  nr_token++;
 							  break;
 					case HEX_NUM: tokens[nr_token].type = HEX_NUM;
@@ -237,16 +238,13 @@ uint32_t eval(uint32_t p,uint32_t q){
 			else 
 				assert(0);}
 		else if(tokens[p].type == VAR){
-			int i=0;
-			for(;i<nr_symtab_entry;i++){
-				printf("%s\n",tokens[p].str);
-				if(strcmp(tokens[p].str,(strtab+i))==0){
-					printf("found!\n");
-					return (symtab+i)-> st_value;
+				int i=0;
+				for(;i<nr_symtab_entry;i++){
+					printf("%s\n",strtab);
+					assert(0);
 				}
-			}
 				if(i==nr_symtab_entry)
-					assert("no such thing!\n");
+					printf("no such thing!\n");
 		}
 		else
 			assert(0);
