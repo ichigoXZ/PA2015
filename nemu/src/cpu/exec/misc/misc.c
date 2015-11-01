@@ -23,3 +23,15 @@ make_helper(lea) {
 	print_asm("leal %s,%%%s", op_src->str, regsl[m.reg]);
 	return 1 + len;
 }
+
+make_helper(leave) {
+#if DATA_TYPE == 2 || DATA_TYPE == 4
+	cpu.esp = cpu.ebp;
+
+	cpu.ebp = MEM_R(cpu.esp);
+	cpu.esp = cpu.esp + DATA_TYPE;
+#endif
+
+	print_asm("leave");
+	return 1;
+}
