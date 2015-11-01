@@ -3,11 +3,8 @@
 #define instr jbe
 
 static void do_execute () {
-	if(cpu.Eflags.CF || cpu.Eflags.ZF){
-		cpu.eip += op_src->val;
-#if DATA_BYTE == 2
-	cpu.eip = (cpu.eip + op_src->val) & 0x0000ffff;
-#endif
+	if(cpu.Eflags.CF==1 || cpu.Eflags.ZF==1){
+
 	}
 
 	print_asm_template1();
