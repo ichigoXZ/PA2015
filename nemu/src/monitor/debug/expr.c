@@ -238,8 +238,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 				assert(0);}
 		else if(tokens[p].type == VAR){
 			int i=0;
-			for(i=0;i<nr_symtab_entry;i++){
-				printf("%d\n",nr_symtab_entry );
+			for(;i<nr_symtab_entry;i++){
+				printf("%s\n",tokens[p].str);
 				if(strcmp(tokens[p].str,(strtab+i))==0){
 					printf("found!\n");
 					return (symtab+i)-> st_value;
