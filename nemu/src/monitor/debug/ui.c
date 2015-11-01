@@ -59,8 +59,7 @@ static int cmd_info(char *args) {
         printf("edi: 0x%.8x\n",cpu.edi);
         printf("eip: 0x%.8x\n",cpu.eip);
         printf("Eflags: 0x%.8x\n",cpu.Eflags);
-        printf("%d\n",cpu.a1 );
-    }
+          }
 	else if('w' == *args){
 		WP *p = head;
 		for( ;p != NULL;p = p->next)
