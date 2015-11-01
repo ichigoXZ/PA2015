@@ -239,9 +239,12 @@ uint32_t eval(uint32_t p,uint32_t q){
 		else if(tokens[p].type == VAR){
 			int i=0;
 			for(i=0;i<nr_symtab_entry;i++)
+				printf("%d\n",nr_symtab_entry );
 				if(strcmp(tokens[p].str,(strtab+i))==0){
 					return (symtab+i)-> st_size;
 				}
+				else
+					assert("no such val");
 		}
 		else
 			assert(0);
