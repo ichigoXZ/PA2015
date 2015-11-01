@@ -29,8 +29,9 @@ typedef struct {
  	};
 
 	swaddr_t eip;
-
-	struct Eflags{
+    union {
+    	uint32_t eflags;
+	struct {
 		unsigned long int a1:8;
 		unsigned long int a2:7;
 		unsigned long int VM:1;
@@ -50,6 +51,7 @@ typedef struct {
 		unsigned long int PF:1;
 		unsigned long int b4:1;
 		unsigned long int CF:1;
+		};
 	}Eflags;
 
 } CPU_state;
