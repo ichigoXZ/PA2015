@@ -10,7 +10,7 @@ static void do_execute () {
 			cpu.Eflags.ZF = 1;
 			else 
 			cpu.Eflags.ZF = 0;
-	if(result < op_dest->val || result < op_src->val)
+	if((unsigned)result < (unsigned)op_dest->val || (unsigned)result < (unsigned)op_src->val)
 			cpu.Eflags.CF = 1;
 			else 
 			cpu.Eflags.CF = 0;
