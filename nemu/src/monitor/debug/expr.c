@@ -241,7 +241,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 				int i=0;
 				for(;i<nr_symtab_entry;i++){
 					if(0==strcmp(tokens[p].str,&strtab[(symtab+i)->st_name]))
-						assert(0);
+						return (symtab+i)->st_value;
 				}
 				if(i==nr_symtab_entry)
 					printf("no such thing!\n");
