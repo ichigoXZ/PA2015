@@ -1,5 +1,5 @@
 #include "cpu/exec/template-start.h"
-
+#include "cpu/reg.h"
 #define instr jbe
 
 static void do_execute(){
