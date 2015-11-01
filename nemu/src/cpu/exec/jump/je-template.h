@@ -3,7 +3,7 @@
 #define instr je
 
 static void do_execute () {
-	if(cpu.Eflags.ZF){
+	if(cpu.ZF){
 		cpu.eip += op_src->val;
 		if(DATA_BYTE == 2)
 			cpu.eip = cpu.eip & 0x0000ffff;
