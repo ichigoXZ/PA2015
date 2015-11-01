@@ -6,6 +6,11 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <regex.h>
+#include <elf.h>
+
+ extern char *strtab;
+ extern Elf32_Sym *symtab;
+ extern int nr_symtab_entry;
 
 enum {
 	LEFT_R,RIGHT_R,NUM,HEX_NUM,PLUS,SUB,MUL,ADDR,DIVIDE,REG,VAR,AND,OR,NOT,EQ,NOT_EQ,NOTYPE = 256
@@ -232,7 +237,11 @@ uint32_t eval(uint32_t p,uint32_t q){
 			else 
 				assert(0);}
 		else if(tokens[p].type == VAR){
-			printf("ENN\n");
+			int i=0;
+			for(i=0;i<nr_symtab_entry;i++)
+				if(strcmp(tokens[p].str,(strtab+i))==0){
+					return (symtab+i)-> st_size;
+				}
 		}
 		else
 			assert(0);
