@@ -27,7 +27,7 @@ make_helper(lea) {
 make_helper(leave) {
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 	cpu.esp = cpu.ebp;
-
+	printf("efwef\n");
 	cpu.ebp = MEM_R(cpu.esp);
 	cpu.esp = cpu.esp + DATA_TYPE;
 #endif
