@@ -5,9 +5,13 @@
 static void do_execute () {
 	if(cpu.CF || cpu.ZF){
 		cpu.eip = cpu.eip + op_src->val;
-		printf("%d\n",DATA_BYTE );
 #if DATA_BYTE == 1
-		cpu.eip = cpu.eip & 0x00ff;
+		if(op_src->val&0x80){
+			uint32_t val = 0xffffff00 || op_src->val;
+			cpu.eip += val;
+		}
+		else 
+			cpu.eip +=op_src->val;
 #elif DATA_BYTE == 2 
 		cpu.eip = cpu.eip & 0x0000ffff;
 #endif
