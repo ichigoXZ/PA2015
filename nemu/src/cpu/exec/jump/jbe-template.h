@@ -11,6 +11,7 @@ static void do_execute () {
 		}
 		else
 			cpu.eip += op_src->val;
+		cpu.eip = cpu.eip & 0x000000ff;
 #elif DATA_BYTE == 2 
 		cpu.eip += op_src->val;
 		if(op_src->val&0x8000){
