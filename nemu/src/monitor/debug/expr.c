@@ -256,6 +256,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 		return eval(p+1,q-1);
 	else{
 		uint32_t op = dominant_operator(p,q);
+		if(op != p){
 		uint32_t val1 = eval(p,op-1);
   	    uint32_t val2 = eval(op+1,q);
 
@@ -263,8 +264,8 @@ uint32_t eval(uint32_t p,uint32_t q){
 			case PLUS: return val1 + val2;
 			case SUB:  return val1 - val2;
 			case MUL:  return val1 * val2;
-			case DIVIDE: if(!val2){
-						    assert(0);}	
+			case DIVIDE: if(!val2)
+						    assert(0);
     					 else              
     					    return val1 / val2;
 			case AND:  return val1 && val2;
@@ -274,7 +275,16 @@ uint32_t eval(uint32_t p,uint32_t q){
 			//case NOT:  return !val2;
 			default: printf("not surported");
 					 assert(0);}
-	}
+				}
+		else{
+			switch(tokens[op].type){
+				case ADDR: return swaddr_read(eval(p+1,q),4);
+				case NOT:  return !eval(p+1,q);
+				case SUB:  return -eval(p+1,q);
+				default: printf("error!\n");
+						 assert(0);}
+					}
+		}
 	return 0;
 }
 
@@ -286,8 +296,10 @@ uint32_t dominant_operator(uint32_t p,uint32_t q){
 		int op;
 	}Mark;
 	Mark stack[32];
+	if(tokens[p].type == ADDR || tokens[p].type == NOT || tokens[p].type == SUB)
+		return p;
 	for( ;pos <= q;pos++)
-		switch(tokens[pos] .type){
+		switch(tokens[pos].type){
 			case PLUS : stack[i].position = pos;
 						stack[i++].op = 1;
 						break;
