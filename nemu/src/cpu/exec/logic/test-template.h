@@ -14,12 +14,12 @@ static void do_execute () {
 		cpu.ZF = 1;
 		else 
 		cpu.ZF = 0;
-#if DATA_TYPE == 1
+#if DATA_BYTE == 1
 		if(result&0x80)
 			cpu.SF = 1;
 			else 
 			cpu.SF = 0;
-#elif DATA_TYPE == 2
+#elif DATA_BYTE == 2
 		if(result&0x8000)
 			cpu.SF = 1;
 			else 
