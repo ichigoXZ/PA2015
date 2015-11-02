@@ -27,8 +27,8 @@ make_helper(lea) {
 make_helper(leave) {
 
 	cpu.esp = cpu.ebp;
-	swaddr_read(cpu.esp, 4);
-	cpu.esp = cpu.esp + 4;
+	swaddr_read(cpu.esp, 2);
+	cpu.esp = cpu.esp + 2;
 
 	print_asm("leave");
 	return 1;
@@ -36,8 +36,8 @@ make_helper(leave) {
 
 make_helper(ret) {
 
-	cpu.eip = swaddr_read(cpu.esp,4);
-	cpu.esp = cpu.esp + 4;
+	cpu.eip = swaddr_read(cpu.esp,2);
+	cpu.esp = cpu.esp + 2;
 
 
 	print_asm("ret");
