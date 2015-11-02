@@ -6,7 +6,7 @@ static void do_execute () {
 	if(cpu.CF || cpu.ZF){
 #if DATA_BYTE == 1
 		if(op_src->val&0x80){
-			uint32_t val = 0xffffff00 + op_src->val;
+			uint32_t val = 0xffffff00 | op_src->val;
 			cpu.eip += val;
 		}
 		else 
