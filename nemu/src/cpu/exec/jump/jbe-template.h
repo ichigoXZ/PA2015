@@ -7,7 +7,7 @@ static void do_execute () {
 		cpu.eip = cpu.eip + op_src->val;
 		printf("%d\n",DATA_BYTE );
 #if DATA_BYTE == 1
-		cpu.eip = cpu.eip & 0x000000ff;
+		cpu.eip = cpu.eip & 0x00ff;
 #elif DATA_BYTE == 2 
 		cpu.eip = cpu.eip & 0x0000ffff;
 #endif
