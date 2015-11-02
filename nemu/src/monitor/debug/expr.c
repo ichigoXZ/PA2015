@@ -88,7 +88,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -106,7 +106,7 @@ static bool make_token(char *e) {
 								  break;
 					case SUB: 	  tokens[nr_token++].type = SUB;
 								  break;  
-				    case MUL:	  if(tokens[nr_token-1].type == PLUS || tokens[nr_token-1].type == SUB || tokens[nr_token-1].type == MUL || tokens[nr_token-1].type == DIVIDE || nr_token == 0)
+				    case MUL:	  if(tokens[nr_token-1].type == PLUS || tokens[nr_token-1].type == SUB || tokens[nr_token-1].type == MUL || tokens[nr_token-1].type == DIVIDE || tokens[nr_token-1].type == NOT || nr_token == 0)
 									  tokens[nr_token++].type = ADDR;
 								  else
 		 							  tokens[nr_token++].type = MUL;
@@ -125,7 +125,6 @@ static bool make_token(char *e) {
 							  break;
 					case NUM: tokens[nr_token].type = NUM;
 							  strncpy(tokens[nr_token].str,substr_start,substr_len);
-
 							  nr_token++;
 							  break;
 					case HEX_NUM: tokens[nr_token].type = HEX_NUM;
