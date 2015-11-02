@@ -29,7 +29,7 @@ make_helper(leave) {
 	cpu.esp = cpu.ebp;
 
 	cpu.ebp = MEM_R(cpu.esp);
-	cpu.esp = cpu.esp + DATA_BYTE;
+	cpu.esp = cpu.esp + DATA_TYPE;
 #endif
 
 	print_asm("leave");
