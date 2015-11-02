@@ -7,7 +7,6 @@ static void do_execute () {
 #if DATA_BYTE == 1
 		if(op_src->val&0x80){
 			uint32_t val = 0xffffff00 + op_src->val;
-			printf("%x\n",val );
 			cpu.eip += val;
 		}
 		else 
