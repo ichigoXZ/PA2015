@@ -4,11 +4,9 @@
 
 static void do_execute () {
 	if(cpu.CF || cpu.ZF){
-		printf("%x\n", cpu.eip);
-		printf("%x\n", op_src->val);
-		cpu.eip += (int32_t)op_src->val;
-		printf("%x\n",cpu.eip );
+		cpu.eip += op_src->val;
 		if(DATA_BYTE == 2)
+			printf("ennn\n");
 			cpu.eip = cpu.eip & 0x0000ffff;
 	}
 
