@@ -31,7 +31,7 @@ make_helper(leave) {
 	cpu.esp = cpu.esp + 4;
 
 	print_asm("leave");
-	return 0;
+	return 1;
 }
 
 make_helper(ret) {
