@@ -247,6 +247,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 				}
 				if(i==nr_symtab_entry)
 					printf("no such thing!\n");
+					assert(0);
 		}
 		else
 			assert(0);
