@@ -19,6 +19,7 @@ static void do_execute () {
 		}
 		else
 			cpu.eip += op_src->val;
+		cpu.eip = cpu.eip & 0x0000ffff;
 #else
 		cpu.eip = cpu.eip+op_src->val;
 #endif
