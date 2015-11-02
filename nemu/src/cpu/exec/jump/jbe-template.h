@@ -5,7 +5,7 @@
 static void do_execute () {
 	if(cpu.CF || cpu.ZF){
 		cpu.eip += op_src->val;
-		cpu.eip &= 0xff;
+		cpu.eip &= 0x10000ff;
 		if(DATA_BYTE == 2)
 			cpu.eip = cpu.eip & 0x0000ffff;
 	}
