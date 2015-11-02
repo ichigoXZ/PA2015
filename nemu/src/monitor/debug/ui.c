@@ -119,20 +119,7 @@ static int cmd_d(char *args){
 }
 
 static int cmd_bt(char *args){
-	uint32_t ini = cpu.ebp;
-	int no=0,i;
-	PartOFStackFrame psf;
-	while(cpu.ebp != 0){
-		psf.prev_ebp = swaddr_read(cpu.ebp,4);
-		for(i=0;i<nr_symtab_entry;i++){
-			if(cpu.ebp == (symtab+i)->st_value){
-				printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
-				psf.ret_addr = swaddr_read(cpu.eip,4);
-				cpu.ebp = psf.prev_ebp;
-			}
-		}
-		cpu.ebp = ini;
-	}
+
 	return 0;
 }
 
