@@ -8,6 +8,7 @@ static void do_execute () {
 		cpu.eip = (cpu.eip&0xffffff00)+op_src->val;
 #elif DATA_BYTE == 2 
 		cpu.eip = (cpu.eip&0xffffff00)+op_src->val;
+		cpu.eip = cpu.eip & 0x0000ffff;
 #else
 		cpu.eip = cpu.eip+op_src->val;
 #endif
