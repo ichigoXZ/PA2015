@@ -4,9 +4,9 @@
 
 static void do_execute () {
 	if(cpu.CF || cpu.ZF){
-#if DATA_TYPE == 1
+#if DATA_BYTE == 1
 		cpu.eip = (cpu.eip&0xffffff00)+op_src->val;
-#elif DATA_TYPE == 2 
+#elif DATA_BYTE == 2 
 		cpu.eip = (cpu.eip&0xffffff00)+op_src->val;
 #else
 		cpu.eip = cpu.eip+op_src->val;
