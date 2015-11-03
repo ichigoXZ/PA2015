@@ -120,12 +120,12 @@ static int cmd_d(char *args){
 
 static int cmd_bt(char *args){
 	int no=0,i;
-	PartOFStackFrame psf;
-	psf.prev_ebp = swaddr_read(cpu.ebp,4);
+	//PartOFStackFrame psf;
+	//psf.prev_ebp = swaddr_read(cpu.ebp,4);
 		for(i=0;i<nr_symtab_entry;i++)
-			if(psf.prev_ebp == (symtab+i)->st_value){
-				printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
-				psf.ret_addr = swaddr_read(cpu.eip,4);
+		{
+				printf("#%d\t%d%s\n",no++,(symtab+i)->st_value,&strtab[(symtab+i)->st_name]);
+				//psf.ret_addr = swaddr_read(cpu.eip,4);
 			}
 		if(i == nr_symtab_entry)
 			printf("no stack\n");
