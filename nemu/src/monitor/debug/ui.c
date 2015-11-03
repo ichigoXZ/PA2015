@@ -132,10 +132,8 @@ static int cmd_bt(char *args){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(q->prev_ebp,4);
 		p->ret_addr = swaddr_read(q->prev_ebp+4,4);
+		printf("%d\t0x%x\t0x%x\n",no++,q->prev_ebp,q->prev_ebp );
 		q = p;
-	}
-	for(p = head;p->prev_ebp;no++){
-		printf("%d\t%x\t\n",no,p->prev_ebp );
 	}
 	return 0;
 }
