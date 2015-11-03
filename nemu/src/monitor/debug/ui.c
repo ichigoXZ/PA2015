@@ -147,7 +147,7 @@ static int cmd_bt(char *args){
 					while(i<4)
 						temp->args[i++] = 0;
 				else
-					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
+					temp->args[i] = swaddr_read(cpu.eip+8+4*i,4);
 			}
 			printf("(%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 	}
