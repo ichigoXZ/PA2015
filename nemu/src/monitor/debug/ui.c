@@ -147,9 +147,9 @@ static int cmd_bt(char *args){
 					while(i<4)
 						temp->args[i++] = 0;
 				else
-					temp->args[i] = swaddr_read(cpu.eip+8+4*i,4);
+					temp->args[i] = swaddr_read(cpu.ebp+8+4*i,4);
 			}
-			printf("(%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
+			printf("(%d,%d,%d,%d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 	}
 	while(temp->prev_ebp != 0){
 			for( i=0;i<nr_symtab_entry;i++)
@@ -164,7 +164,7 @@ static int cmd_bt(char *args){
 				else
 					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
 			}
-			printf("(%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
+			printf("(%d,%d,%d,%d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
 			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 
