@@ -122,9 +122,11 @@ static int cmd_bt(char *args){
 	int no=0,i;
 	//PartOFStackFrame psf;
 	//psf.prev_ebp = swaddr_read(cpu.ebp,4);
+	printf("%d\n",cpu.ebp);
+	printf("%d\n",swaddr_read(cpu.eip,4));	
 		for(i=0;i<nr_symtab_entry;i++)
 		{
-				printf("#%d\t%d%s\n",no++,(symtab+i)->st_value,&strtab[(symtab+i)->st_name]);
+				printf("#%d\t%d\t%s\n",no++,(symtab+i)->st_value,&strtab[(symtab+i)->st_name]);
 				//psf.ret_addr = swaddr_read(cpu.eip,4);
 			}
 		if(i == nr_symtab_entry)
