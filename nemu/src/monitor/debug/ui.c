@@ -127,7 +127,7 @@ static int cmd_bt(char *args){
 	head->prev_ebp = cpu.ebp;
 	PartOFStackFrame *p = head,*q = p;
 	printf("%x\n",cpu.eip );
-	while(p->prev_ebp != cpu.eip){
+	while(p->prev_ebp != 0){
 		printf("%x\n",p->prev_ebp );
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(q->prev_ebp,4);
