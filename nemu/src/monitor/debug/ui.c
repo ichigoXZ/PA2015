@@ -24,6 +24,11 @@ typedef struct {
 	uint32_t args[4];
 }PartOFStackFrame;
 
+typedef struct {
+	PartOFStackFrame psf;
+	PartOFStackFrame* next;
+}PoSF;
+
 /* We@ use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -130,14 +135,12 @@ static int cmd_bt(char *args){
 	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	head->prev_ebp = swaddr_read(cpu.ebp,4);
 	head->ret_addr = swaddr_read(cpu.ebp+4,4);
-			printf("0x%x\n",cpu.ebp);
-
 	PartOFStackFrame *p = head,*past = p;
 	while(p->prev_ebp != 0){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(past->prev_ebp,4);
 		//p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
-		printf("#%d\t0x%x\t0x%x\n",no++,past->prev_ebp,past->ret_addr );
+		printf("#%d\t0x%x\t0x%x\n",no++,past->prev_ebp,p->prev_ebp );
 		for( ;i<nr_symtab_entry;i++){
 			if(18 == (symtab+i)->st_info){
 				if(cpu.ebp == (symtab+i)->st_value)
