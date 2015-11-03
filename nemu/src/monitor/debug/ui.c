@@ -145,7 +145,6 @@ static int cmd_bt(char *args){
 	while(temp->prev_ebp != 0){
 			for( i=0;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
-				printf("0x%x  0x%x\n",symtab[i].st_value,symtab[i].st_value+symtab[i].st_size);
 				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
 					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
 			}
