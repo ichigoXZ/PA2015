@@ -139,19 +139,17 @@ static int cmd_bt(char *args){
 	while(p->prev_ebp != 0){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(past->prev_ebp,4);
-		//p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
-		printf("#%d\t0x%x\t0x%x\n",no++,past->prev_ebp,past->ret_addr );
-		printf("#%d\t0x%x\n",no++,p->prev_ebp);
-		for( ;i<nr_symtab_entry;i++){
+		p->ret_addr = swaddr_read(past->prev_ebp+4,4);;
+		printf("#past:%d\t0x%x\t0x%x\n",no++,past->prev_ebp,past->ret_addr );
+		printf("#%d\t0x%x\t0x%x\n",no++,p->prev_ebp,p->ret_addr);
+		past = p;
+	}
+	for( ;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				//printf("%x\t%x\n",(symtab+i)->st_value,(symtab+i)->st_value+(symtab+i)->st_size );
 				if(cpu.eip >= (symtab+i)->st_value && cpu.eip <= (symtab+i)->st_value+(symtab+i)->st_size)
-					printf("%s\n",&strtab[(symtab+i)->st_name]);
-
+					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
 			}
-		}
-		past = p;
-	}
 	return 0;
 }
 
