@@ -123,7 +123,7 @@ static int cmd_bt(char *args){
 	//PartOFStackFrame psf;
 	//psf.prev_ebp = swaddr_read(cpu.ebp,4);
 	printf("%x\n",cpu.ebp);
-	printf("%x\n",swaddr_read(cpu.eip,4));	
+	printf("%x\n",swaddr_read(cpu.ebp,4));	
 		/*for(i=0;i<nr_symtab_entry;i++)
 		{
 				printf("#%d\t%d\t%s\n",no++,(symtab+i)->st_value,&strtab[(symtab+i)->st_name]);
