@@ -126,6 +126,7 @@ static int cmd_bt(char *args){
 	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	head->prev_ebp = cpu.ebp;
 	PartOFStackFrame *p = head,*q = p;
+	printf("%x\n",cpu.eip );
 	while(p->prev_ebp != cpu.eip){
 		printf("%x\n",p->prev_ebp );
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
