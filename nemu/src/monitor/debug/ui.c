@@ -141,8 +141,8 @@ static int cmd_bt(char *args){
 				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
 					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
 			}
-			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
+			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 	}
 	return 0;
 }
