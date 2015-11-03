@@ -21,7 +21,7 @@ typedef struct {
 	uint32_t args[4];
 }PartOFStackFrame;
 
-/* We use the ``readline'' library to provide more flexibility to read from stdin. */
+/* We@ use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
 
@@ -119,7 +119,16 @@ static int cmd_d(char *args){
 }
 
 static int cmd_bt(char *args){
-
+	int no=0,i;
+	PartOFStackFrame psf;
+	psf.prev_ebp = swaddr_read(cpu.ebp,4);
+		for(i=0;i<nr_symtab_entry;i++)
+			if(psf.prev_ebp == (symtab+i)->st_value){
+				printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
+				psf.ret_addr = swaddr_read(cpu.eip,4);
+			}
+		if(i == nr_symtab_entry)
+			printf("no stack\n");
 	return 0;
 }
 
