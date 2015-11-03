@@ -144,9 +144,9 @@ static int cmd_bt(char *args){
 		printf("#%d\t0x%x\n",no++,p->prev_ebp);
 		for( ;i<nr_symtab_entry;i++){
 			if(18 == (symtab+i)->st_info){
-				printf("%x\t%x\n",(symtab+i)->st_value,(symtab+i)->st_value+(symtab+i)->st_size );
+				//printf("%x\t%x\n",(symtab+i)->st_value,(symtab+i)->st_value+(symtab+i)->st_size );
 				if(cpu.eip >= (symtab+i)->st_value && cpu.eip <= (symtab+i)->st_value+(symtab+i)->st_size)
-					printf("%s",&strtab[(symtab+i)->st_name]);
+					printf("%s\n",&strtab[(symtab+i)->st_name]);
 
 			}
 		}
