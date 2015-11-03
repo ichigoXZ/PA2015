@@ -134,7 +134,7 @@ static int cmd_bt(char *args){
 	while(p->prev_ebp != 0){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(q->prev_ebp,4);
-		p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp);
+		p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
 		printf("#%d\t0x%x\t0x%x\n",no++,p->prev_ebp,p->ret_addr );
 		q = p;
 	}
