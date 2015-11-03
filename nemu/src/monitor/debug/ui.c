@@ -136,15 +136,13 @@ static int cmd_bt(char *args){
 	temp->prev_ebp = swaddr_read(cpu.ebp,4);
 	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
 	if(cpu.ebp != 0){
-			for( ;i<nr_symtab_entry;i++)
+			for(i=0 ;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				if(cpu.eip >= (symtab+i)->st_value && cpu.eip <= (symtab+i)->st_value+(symtab+i)->st_size)
 					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
 			}
 	}
 	while(temp->prev_ebp != 0){
-				printf("%x\n",temp->prev_ebp );
-				printf("%x\n",temp->ret_addr );
 			for( i=0;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				printf("0x%x  0x%x\n",symtab[i].st_value,symtab[i].st_value+symtab[i].st_size);
