@@ -86,6 +86,8 @@ void restart() {
 
 	/* Set the Eflags.*/
 	cpu.Eflags=0x00000002;
+	/* Set the initial %ebp;*/
+	cpu.ebp = 0;
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
 
