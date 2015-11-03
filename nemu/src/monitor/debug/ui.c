@@ -124,12 +124,12 @@ static int cmd_bt(char *args){
 		return 0;
 	}
 	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
-	head->prev_ebp = swaddr_read(cpu.ebp,4);
+	head->prev_ebp = cpu.ebp;
 	PartOFStackFrame *p = head,*q = p;
 	while(p->prev_ebp != cpu.eip){
 		printf("%x\n",p->prev_ebp );
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
-		p->prev_ebp = swaddr_read(q->prev_ebp,4);
+		p->prev_ebp = q->prev_ebp;
 		q = p;
 	}
 	return 0;
