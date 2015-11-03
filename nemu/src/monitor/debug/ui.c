@@ -119,21 +119,19 @@ static int cmd_d(char *args){
 }
 
 static int cmd_bt(char *args){
-	PartOFStackFrame head;
-	head.prev_ebp = swaddr_read(cpu.ebp,4);
-	head.ret_addr = swaddr_read(cpu.ebp+4,4);
-	int no=0,i;
-	printf("%x\n",head.prev_ebp);
-	printf("%x\n",head.ret_addr);	
-	//printf("%x\n",swaddr_read(cpu.ebp+4,4));
-		for(i=0;i<nr_symtab_entry;i++)
-		{
-			printf("#%d\t%x\t%s\n",no++,(symtab+i)->st_value,&strtab[(symtab+i)->st_name]);
-				//psf.ret_addr = swaddr_read(cpu.eip,4);
-		}
-	/*
-		if(i == nr_symtab_entry)
-			printf("no stack\n");*/
+	if(cpu.ebp == 0){
+		printf("no stack!\n");
+		return 0;
+	}
+	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
+	head->prev_ebp = swaddr_read(cpu.ebp,4);
+	PartOFStackFrame *p = head,*q = p;
+	while(p->prev_ebp != cpu.eip){
+		printf("%x\n",p->prev_ebp );
+		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
+		p->prev_ebp = swaddr_read(q->prev_ebp,4);
+		q = p;
+	}
 	return 0;
 }
 
