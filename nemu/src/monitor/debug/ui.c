@@ -135,19 +135,36 @@ static int cmd_bt(char *args){
 	PartOFStackFrame *temp = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	temp->prev_ebp = swaddr_read(cpu.ebp,4);
 	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
+	temp->args[0] = '\0';
 	if(cpu.ebp != 0){
 			for(i=0 ;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				if(cpu.eip >= (symtab+i)->st_value && cpu.eip <= (symtab+i)->st_value+(symtab+i)->st_size)
-					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
+					printf("#%d\t%s\t",no++,&strtab[(symtab+i)->st_name]);
 			}
+			for( i=0; i<4; i++){
+				if(cpu.eip+8+4*i == 0x80000000)
+					while(i<4)
+						temp->args[i++] = 0;
+				else
+					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
+			}
+			printf("(%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 	}
 	while(temp->prev_ebp != 0){
 			for( i=0;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
-					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
+					printf("#%d\t%s\t",no++,&strtab[(symtab+i)->st_name]);
 			}
+			for( i=0; i<4; i++){
+				if(temp->prev_ebp+8+4*i == 0x80000000)
+					while(i<4)
+						temp->args[i++] = 0;
+				else
+					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
+			}
+			printf("9%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
 			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 
