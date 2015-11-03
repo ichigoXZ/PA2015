@@ -138,7 +138,8 @@ static int cmd_bt(char *args){
 		printf("#%d\t0x%x\t0x%x\n",no++,past->prev_ebp,past->ret_addr );
 		for( ;i<nr_symtab_entry;i++){
 			if(18 == (symtab+i)->st_info){
-				printf("succeed matched!\n");
+				if(cpu.ebp == (symtab+i)->st_value)
+					printf("%s",&strtab[(symtab+i)->st_name]);
 				if(past->prev_ebp == (symtab+i)->st_value)
 					printf("%s",&strtab[(symtab+i)->st_name]);
 			}
