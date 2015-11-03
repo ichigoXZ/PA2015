@@ -134,12 +134,12 @@ static int cmd_bt(char *args){
 	int no = 0,i = 0;
 	PartOFStackFrame *temp = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	temp->prev_ebp = swaddr_read(cpu.ebp,4);
+	printf("%x\n",temp->prev_ebp );
 	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
-	if(temp->prev_ebp != 0){
-		printf("efnnn\n");
+	if(cpu.ebp != 0){
 			for( ;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
-				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
+				if(cpu.ebp >= (symtab+i)->st_value && cpu.ebp <= (symtab+i)->st_value+(symtab+i)->st_size)
 					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
 			}
 	}
