@@ -123,18 +123,19 @@ static int cmd_bt(char *args){
 		printf("no stack!\n");
 		return 0;
 	}
+	int no = 0;
 	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	head->prev_ebp = swaddr_read(cpu.ebp,4);
 	head->ret_addr = swaddr_read(cpu.ebp+4,4);
 	PartOFStackFrame *p = head,*q = p;
-	printf("%x\n",cpu.ebp );
-	printf("%x\n",head->prev_ebp );
 	while(p->prev_ebp != 0){
-		printf("%x\n",p->prev_ebp );
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(q->prev_ebp,4);
 		p->ret_addr = swaddr_read(q->prev_ebp+4,4);
 		q = p;
+	}
+	for(p = head;p->prev_ebp;no++){
+		printf("%d\t%x\t\n",no,p->prev_ebp );
 	}
 	return 0;
 }
