@@ -126,18 +126,22 @@ static int cmd_bt(char *args){
 		printf("no stack!\n");
 		return 0;
 	}
-	int no = 0;
+	int no = 0,i = 0;
 	PartOFStackFrame *head = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 	head->prev_ebp = swaddr_read(cpu.ebp,4);
 	head->ret_addr = swaddr_read(cpu.ebp+4,4);
-	PartOFStackFrame *p = head,*q = p;
+	PartOFStackFrame *p = head,*past = p;
 	while(p->prev_ebp != 0){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
-		p->prev_ebp = swaddr_read(q->prev_ebp,4);
-		p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
+		p->prev_ebp = swaddr_read(past->prev_ebp,4);
+		//p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
 		printf("#%d\t0x%x\t0x%x\n",no++,p->prev_ebp,p->ret_addr );
-		q = p;
+
+		past = p;
 	}
+	for(;i<nr_symtab_entry;i++){
+			printf("%d\t%s\n",(symtab+i)->st_info, &strtab[(symtab+i)->st_name]);	
+		}
 	return 0;
 }
 
