@@ -136,6 +136,7 @@ static int cmd_bt(char *args){
 	temp->prev_ebp = swaddr_read(cpu.ebp,4);
 	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
 	if(temp->prev_ebp != 0){
+		printf("efnnn\n");
 			for( ;i<nr_symtab_entry;i++)
 			if(18 == (symtab+i)->st_info){
 				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
