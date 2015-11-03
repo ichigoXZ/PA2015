@@ -164,7 +164,7 @@ static int cmd_bt(char *args){
 				else
 					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
 			}
-			printf("9%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
+			printf("(%8d,%8d,%8d,%8d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
 			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 
