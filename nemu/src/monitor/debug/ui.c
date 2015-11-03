@@ -135,7 +135,7 @@ static int cmd_bt(char *args){
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
 		p->prev_ebp = swaddr_read(past->prev_ebp,4);
 		//p->ret_addr = swaddr_read(q->prev_ebp+4,4)+decode_i_l(q->prev_ebp)+1;
-		printf("#%d\t0x%x\t0x%x\n",no++,p->prev_ebp,p->ret_addr );
+		printf("#%d\t0x%x\t0x%x\n",no++,past->prev_ebp,past->ret_addr );
 		for( ;i<nr_symtab_entry;i++){
 			if(18 == (symtab+i)->st_info){
 				printf("succeed matched!\n");
