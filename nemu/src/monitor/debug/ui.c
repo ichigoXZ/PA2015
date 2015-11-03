@@ -144,10 +144,9 @@ static int cmd_bt(char *args){
 		printf("#%d\t0x%x\n",no++,p->prev_ebp);
 		for( ;i<nr_symtab_entry;i++){
 			if(18 == (symtab+i)->st_info){
-				if(cpu.ebp == (symtab+i)->st_value)
+				if(cpu.eip >= (symtab+i)->st_value && cpu.eip <= (symtab+i)->st_value+(symtab+i)->st_size)
 					printf("%s",&strtab[(symtab+i)->st_name]);
-				if(past->prev_ebp == (symtab+i)->st_value)
-					printf("%s",&strtab[(symtab+i)->st_name]);
+
 			}
 		}
 		past = p;
