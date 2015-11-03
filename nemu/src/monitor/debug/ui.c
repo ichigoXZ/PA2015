@@ -129,7 +129,7 @@ static int cmd_bt(char *args){
 	while(p->prev_ebp != cpu.eip){
 		printf("%x\n",p->prev_ebp );
 		p = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
-		p->prev_ebp = q->prev_ebp;
+		p->prev_ebp = swaddr_read(q->prev_ebp,4);
 		q = p;
 	}
 	return 0;
