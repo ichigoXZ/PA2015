@@ -136,8 +136,11 @@ static int cmd_bt(char *args){
 	temp->prev_ebp = swaddr_read(cpu.ebp,4);
 	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
 	if(temp->prev_ebp != 0){
-			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
-			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
+			for( ;i<nr_symtab_entry;i++)
+			if(18 == (symtab+i)->st_info){
+				if(temp->ret_addr >= (symtab+i)->st_value && temp->ret_addr <= (symtab+i)->st_value+(symtab+i)->st_size)
+					printf("#%d\t%s\n",no++,&strtab[(symtab+i)->st_name]);
+			}
 	}
 	while(temp->prev_ebp != 0){
 		for( ;i<nr_symtab_entry;i++)
