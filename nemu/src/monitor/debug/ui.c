@@ -169,6 +169,7 @@ static int cmd_bt(char *args){
 			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
 
 	}
+	free(temp);
 	return 0;
 }
 
