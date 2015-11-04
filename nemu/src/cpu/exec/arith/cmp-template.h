@@ -3,6 +3,18 @@
 #define instr cmp
 
 static void do_execute () {
+
+	#if DATA_BYTE == 1
+		if(op_src->val&0x80){
+			uint32_t val = 0xffffff00 | op_src->val;
+			op_src->val = (DATA_TYPE) val;
+		}
+	#elif DATA_BYTE == 2
+		if(op_src->val&0x8000){
+			uint32_t val = 0xffff0000 | op_src->val;
+			op_src->val = (DATA_TYPE) val;
+		}
+	#endif
 		DATA_TYPE result = op_dest->val - op_src->val;
 
 				/* TODO: Update. */
