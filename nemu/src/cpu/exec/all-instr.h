@@ -45,3 +45,4 @@
 #include "jump/jge.h"
 #include "jump/jge.h"
 #include "jump/jl.h"
+#include "jump/jne.h"
