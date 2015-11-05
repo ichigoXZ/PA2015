@@ -26,7 +26,8 @@ make_helper(rep) {
 				);
 
 			/* TODO: Jump out of the while loop if necessary. */
-
+				if(cpu.ZF == 1)
+					break;
 		}
 		len = 1;
 	}
