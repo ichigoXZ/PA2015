@@ -43,3 +43,5 @@
 #include "jump/jbe.h"
 #include "jump/jle.h"
 #include "jump/jge.h"
+#include "jump/jge.h"
+#include "jump/jl.h"
