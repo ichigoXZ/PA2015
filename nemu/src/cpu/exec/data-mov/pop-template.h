@@ -3,14 +3,11 @@
 #define instr pop
 
 static void do_execute () {
-#if DATA_BYTE == 1
-	op_src->val = MEM_R(cpu.esp);
-	cpu.esp = cpu.esp +1;
-#elif DATA_BYTE == 2
+#if DATA_BYTE == 2
 	//实现段寄存器
 	op_src->val = MEM_R(cpu.esp);
 	cpu.esp = cpu.esp + 2;
-#else 
+#elif DATA_BYTE == 4
 	//实现段寄存器
 	op_src->val = MEM_R(cpu.esp);
 	cpu.esp = cpu.esp + 4;
