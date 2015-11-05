@@ -1,9 +1,9 @@
 #include "cpu/exec/template-start.h"
 
-#define instr je
+#define instr jle
 
 static void do_execute () {
-	if(cpu.ZF){
+	if(cpu.ZF && cpu.SF != cpu.OF){
 #if DATA_BYTE == 1
 		if(op_src->val&0x80){
 			uint32_t val = 0xffffff00 | op_src->val;
