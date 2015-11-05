@@ -3,11 +3,14 @@
 #define instr push
 
 static void do_execute () {
-#if DATA_BYTE == 2
+#if DATA_BYTE == 1
+	cpu.esp = cpu.esp - 1;
+	MEM_W(cpu.esp,op_src->val);
+#elif DATA_BYTE == 2
 	cpu.esp = cpu.esp - 2;
 	//实现段寄存器
 	MEM_W(cpu.esp, op_src->val);
-#elif DATA_BYTE == 4
+#else
 	cpu.esp = cpu.esp - 4;
 	//实现段寄存器
 	MEM_W(cpu.esp, op_src->val);
