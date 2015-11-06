@@ -4,10 +4,10 @@ typedef unsigned char uint8_t;
 typedef char bool;
 
 bool getbit(void *buf, int offset){
+		set_bp();
 	int byte = offset >> 3;
 	offset &= 7;
 	uint8_t mask = 1 << offset;
-	set_bp();
 	return (((uint8_t *)buf)[byte] & mask) != 0;
 }
 
