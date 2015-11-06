@@ -4,7 +4,8 @@
 
 static void do_execute () {
 	printf("src: %x  src2: %x\n",op_src->val,op_src2->val );
-	DATA_TYPE result = op_src2->val & op_src->val;
+	DATA_TYPE result = op_src->val & op_src2->val;
+	printf("result:%d\n", result);
 	OPERAND_W(op_dest, result);
     printf("dest: %x\n",op_dest->val );
 	/* TODO: Update EFLAGS. */
