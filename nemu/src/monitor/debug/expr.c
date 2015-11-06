@@ -235,8 +235,10 @@ uint32_t eval(uint32_t p,uint32_t q){
 				return cpu.gpr[R_EBX]._8[0];
 			else if(strcmp(tokens[p].str+1,"bh")==0||strcmp(tokens[p].str+1,"BH")==0)
 				return cpu.gpr[R_EBX]._8[1];
-			else 
-				assert(0);}
+			else {
+				printf("fault register name!\n");			
+				return 0;}
+			}
 		else if(tokens[p].type == VAR){
 				int i=0;
 				for(;i<nr_symtab_entry;i++){
