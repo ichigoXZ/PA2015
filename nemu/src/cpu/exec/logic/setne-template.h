@@ -4,9 +4,9 @@
 
 static void do_execute() {
 	if(cpu.ZF==0)
-		op_dest->val = 1;
+		OPERAND_W(op_dest,1);
 	else
-		op_dest->val = 0;
+		OPERAND_W(op_dest,0);
 
 	print_asm_template1();
 }
