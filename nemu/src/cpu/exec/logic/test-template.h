@@ -3,10 +3,10 @@
 #define instr test
 
 static void do_execute () {
-	printf("src: %d  src2: %d\n",op_src->val,op_src2->val );
+	printf("src: %x  src2: %x\n",op_src->val,op_src2->val );
 	DATA_TYPE result = op_src->val & op_src2->val;
 	OPERAND_W(op_dest, result);
-    printf("dest: %d\n",op_dest->val );
+    printf("dest: %x\n",op_dest->val );
 	/* TODO: Update EFLAGS. */
 	cpu.CF = 0;
 	cpu.OF = 0;
