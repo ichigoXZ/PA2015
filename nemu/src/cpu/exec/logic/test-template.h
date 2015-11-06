@@ -4,10 +4,8 @@
 
 static void do_execute () {
 	
-	DATA_TYPE result = op_dest->val & op_src->val;
-	printf("test: result%d\n",result );
+	DATA_TYPE result = op_src->val & op_src2->val;
 	OPERAND_W(op_dest, result);
-	printf("test:op_dest->val%d\n",op_dest->val );
                              
 	/* TODO: Update EFLAGS. */
 	cpu.CF = 0;
