@@ -4,9 +4,9 @@
 
 static void do_execute () {
 	printf("src: %x  src2: %x\n",op_src->val,op_src2->val );
-	DATA_TYPE result = op_src->val & op_src2->val;
+	DATA_TYPE result = op_src->val & op_dest->val;
 	printf("result:%d\n", result);
-	OPERAND_W(op_dest, result);
+	//OPERAND_W(op_dest, result);
     printf("dest: %x\n",op_dest->val );
 	/* TODO: Update EFLAGS. */
 	cpu.CF = 0;
