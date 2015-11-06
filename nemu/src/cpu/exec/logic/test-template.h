@@ -3,6 +3,7 @@
 #define instr test
 
 static void do_execute () {
+	printf("src: %x  dest: %x\n",op_src->val,op_dest->val );
 	DATA_TYPE result = op_src->val & op_dest->val;
 	//OPERAND_W(op_dest, result);
 	/* TODO: Update EFLAGS. */
