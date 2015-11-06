@@ -3,10 +3,16 @@
 #define instr setne
 
 static void do_execute() {
-	if(cpu.ZF==0)
+	printf("%d\n",cpu.ZF );
+	if(cpu.ZF==0){
 		op_dest->val = 1;
-	else
+		printf("op_dest->val = 1\n");
+	}
+	else{
 		op_dest->val = 0;
+		printf("op_dest-.val = 0\n");
+		
+	}
 
 	print_asm_template1();
 }
