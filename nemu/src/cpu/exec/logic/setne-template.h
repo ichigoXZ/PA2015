@@ -8,6 +8,7 @@ static void do_execute() {
 	else
 		op_dest->val = 0;
 
+	printf("%d\n",op_dest->val );
 	print_asm_template1();
 }
 
