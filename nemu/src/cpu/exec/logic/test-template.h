@@ -6,6 +6,7 @@ static void do_execute () {
 	DATA_TYPE result = op_src->val & op_dest->val;
 	//OPERAND_W(op_dest, result);
 	/* TODO: Update EFLAGS. */
+	printf("result: %d\n",result );
 	cpu.CF = 0;
 	cpu.OF = 0;
 	if(result == 0)
