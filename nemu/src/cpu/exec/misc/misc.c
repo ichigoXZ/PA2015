@@ -52,3 +52,21 @@ make_helper(ret) {
 	print_asm("ret");
 	return decode_i_l(cpu.eip)+1;
 }
+
+make_helper(cltd) {
+	if(ops_decoded.is_data_size_16 == 1){
+		if(cpu.eax & 0x00008000)
+			cpu.edx |= 0x0000ffff;
+		else
+			cpu.edx &= 0xffff0000;
+	}
+	else{
+		if(cpu.eax & 0x80000000)
+			cpu.edx = 0xffffffff;
+		else
+			cpu.edx = 0;
+	}
+
+	print_asm("cltd");
+	return 1;
+}
