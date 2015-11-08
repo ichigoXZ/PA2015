@@ -17,6 +17,8 @@ static void do_execute() {
 		}
 		else 
 	OPERAND_W(op_dest, op_src->val);
+#else
+	OPERAND_W(op_dest, op_src->val);
 #endif
 
 	print_asm_template2();
