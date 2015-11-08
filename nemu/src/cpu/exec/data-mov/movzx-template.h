@@ -3,7 +3,7 @@
 #define instr movzx
 
 static void do_execute() {
-#if DATA_BYTE == 1
+#if DATA_BYTE == 1	
 	uint32_t val = 0x000000ff & op_src->val;
 	OPERAND_W(op_dest,val);
 #elif DATA_BYTE == 2
