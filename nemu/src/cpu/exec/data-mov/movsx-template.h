@@ -18,7 +18,6 @@ static void do_execute() {
 		else 
 	OPERAND_W(op_dest, op_src->val);
 #endif
-	OPERAND_W(op_dest, op_src->val);
 
 	print_asm_template2();
 }
