@@ -3,6 +3,7 @@
 int ans[] = {153, 370, 371, 407};
 
 int cube(int n) {
+set_bp();
 	return n * n * n;
 }
 
