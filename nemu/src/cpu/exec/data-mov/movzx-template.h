@@ -4,6 +4,7 @@
 
 static void do_execute() {
 #if DATA_BYTE == 1	
+		printf("ini:%x\n",op_src->val );
 	printf("DATA_BYTE == 1\n");
 	uint32_t val = 0x000000ff & op_src->val;
 	printf("%x\n",val );
