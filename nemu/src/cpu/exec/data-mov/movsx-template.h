@@ -4,6 +4,7 @@
 
 static void do_execute() {
 #if DATA_BYTE == 1
+	printf("DATA_BYTE == 1\n");
 		if(op_src->val&0x80){
 			uint32_t val = 0xffffff00 | op_src->val;
 			OPERAND_W(op_dest,val);
@@ -11,13 +12,15 @@ static void do_execute() {
 		else 
 	OPERAND_W(op_dest, op_src->val);
 #elif DATA_BYTE == 2 
-			if(op_src->val&0x800){
-			uint32_t val = 0xffffff00 | op_src->val;
+	printf("DATA_BYTE == 2\n");
+			if(op_src->val&0x8000){
+			uint32_t val = 0xffff0000 | op_src->val;
 			OPERAND_W(op_dest,val);
 		}
 		else 
 	OPERAND_W(op_dest, op_src->val);
 #else
+	printf("DATA_BYTE == 4\n");
 	OPERAND_W(op_dest, op_src->val);
 #endif
 
