@@ -6,9 +6,13 @@ static void do_execute() {
 #if DATA_BYTE == 1
 	//printf("DATA_BYTE == 1\n");
 		if(op_src->val&0x80){
+			printf("ini:%x\n",op_src->val );
 			uint32_t val = 0xffffff00 | op_src->val;
-			//printf("%x\n",val );
+			printf("%x\n",val );
+			OPERAND_W(op_dest,op_src->val);
+			printf("op_src:%x\n",op_dest->val );
 			OPERAND_W(op_dest,val);
+			printf("val--dest:%x\n",op_dest->val);
 		}
 		else 
 	OPERAND_W(op_dest, op_src->val);
