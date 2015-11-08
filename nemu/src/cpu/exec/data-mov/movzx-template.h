@@ -12,7 +12,7 @@ static void do_execute() {
 	uint32_t val = 0X0000ffff & op_src->val;
 	OPERAND_W(op_dest,val);
 #else
-		printf("DATA_BYTE == 3\n");
+		printf("DATA_BYTE == 4\n");
 	OPERAND_W(op_dest, op_src->val);
 #endif
 	print_asm_template2();
