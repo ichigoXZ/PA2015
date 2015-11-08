@@ -7,6 +7,7 @@ static void do_execute() {
 	printf("DATA_BYTE == 1\n");
 		if(op_src->val&0x80){
 			uint32_t val = 0xffffff00 | op_src->val;
+			printf("%x\n",val );
 			OPERAND_W(op_dest,val);
 		}
 		else 
