@@ -3,19 +3,23 @@
 #define instr movsx
 
 static void do_execute() {
-	uint32_t result = 0;
-
-	switch(ops_decoded.opcode & 0xff){
-		case 0xbe:
-			result = (uint32_t)(int32_t)(int8_t)op_src->val;
-			break;
-		case 0xbf:
-			result = (uint32_t)(int32_t)(int16_t)op_src->val;
-			break;
-		default:
-			break;
-	}
-	OPERAND_W(op_dest,result);
+#if DATA_BYTE == 1
+		if(op_src->val&0x80){
+			uint32_t val = 0xffffff00 | op_src->val;
+			write_operand_l(op_dest,val);
+		}
+		else 
+	write_operand_l(op_dest, op_src->val);
+#elif DATA_BYTE == 2 
+			if(op_src->val&0x8000){
+			uint32_t val = 0xffff0000 | op_src->val;
+			write_operand_l(op_dest,val);
+		}
+		else 
+	write_operand_l(op_dest, op_src->val);
+#else
+	write_operand_l(op_dest, op_src->val);
+#endif
 
 	print_asm_template2();
 }
