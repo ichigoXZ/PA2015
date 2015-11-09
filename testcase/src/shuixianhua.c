@@ -17,7 +17,7 @@ int main() {
 		n0 = n % 10;
 if(n==369)
 	set_bp();
-		set_bp();
+
 
 		if(n == cube(n2) + cube(n1) + cube(n0)) {
 //set_bp();
