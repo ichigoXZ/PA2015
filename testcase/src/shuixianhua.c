@@ -3,7 +3,7 @@
 int ans[] = {153, 370, 371, 407};
 
 int cube(int n) {
-//set_bp();
+set_bp();
 	return n * n * n;
 }
 
@@ -19,7 +19,7 @@ int main() {
 
 
 		if(n == cube(n2) + cube(n1) + cube(n0)) {
-set_bp();
+//set_bp();
 			nemu_assert(n == ans[k]);
 			k ++;
 		}
