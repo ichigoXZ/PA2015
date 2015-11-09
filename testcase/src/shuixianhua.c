@@ -12,14 +12,14 @@ int main() {
 	int k = 0;
 	for(n = 100; n < 1000; n ++) {
 		n2 = n / 100;
-set_bp();
+//set_bp();
 		n1 = (n / 10) % 10;
-set_bp();
+
 		n0 = n % 10;
-set_bp();
+
 
 		if(n == cube(n2) + cube(n1) + cube(n0)) {
-//set_bp();
+set_bp();
 			nemu_assert(n == ans[k]);
 			k ++;
 		}
