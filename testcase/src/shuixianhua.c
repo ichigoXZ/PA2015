@@ -18,7 +18,7 @@ int main() {
 
 
 		if(n == cube(n2) + cube(n1) + cube(n0)) {
-//set_bp();
+set_bp();
 			nemu_assert(n == ans[k]);
 			k ++;
 		}
