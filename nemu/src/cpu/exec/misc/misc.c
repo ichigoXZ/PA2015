@@ -74,6 +74,6 @@ make_helper(cltd) {
 make_helper(cld) {
 	cpu.DF = 0;
 
-	print_asm("CLD");
+	print_asm("cld");
 	return 1;
 }
