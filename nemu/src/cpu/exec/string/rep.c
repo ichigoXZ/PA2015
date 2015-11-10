@@ -13,12 +13,14 @@ make_helper(rep) {
 		len = 0;
 	}
 	else {
+			printf("%d\n",cpu.ecx );					
 		while(cpu.ecx) {
+			printf("%d\n",cpu.ecx );
 			exec(eip + 1);
 			count ++;
 			printf("cpu.ecx:0x%x\n",cpu.ecx );
 			cpu.ecx --;
-			/*assert(ops_decoded.opcode == 0xa4	// movsb
+			assert(ops_decoded.opcode == 0xa4	// movsb
 				|| ops_decoded.opcode == 0xa5	// movsw
 				|| ops_decoded.opcode == 0xaa	// stosb
 				|| ops_decoded.opcode == 0xab	// stosw
@@ -26,8 +28,8 @@ make_helper(rep) {
 				|| ops_decoded.opcode == 0xa7	// cmpsw
 				|| ops_decoded.opcode == 0xae	// scasb
 				|| ops_decoded.opcode == 0xaf	// scasw
-		);*/
-			switch(ops_decoded.opcode) {
+		);
+			/*switch(ops_decoded.opcode) {
 				case 0xa4: swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1));
 							cpu.esi--;cpu.edi--;
 							break;
@@ -115,11 +117,11 @@ make_helper(rep) {
 				default:  printf("rep error!\n");
 							assert(0);
 			}
-
+			*/
 			/* TODO: Jump out of the while loop if necessary. */
-			if(ops_decoded.opcode==0xa6 || ops_decoded.opcode==0xa7 || ops_decoded.opcode==0xae || ops_decoded.opcode==0xaf)
+			/*if(ops_decoded.opcode==0xa6 || ops_decoded.opcode==0xa7 || ops_decoded.opcode==0xae || ops_decoded.opcode==0xaf)
 				if(cpu.ZF == 1)
-					break;
+					break;*/
 		}
 		len = 1;
 	}
