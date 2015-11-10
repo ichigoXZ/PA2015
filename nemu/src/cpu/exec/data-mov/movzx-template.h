@@ -4,7 +4,7 @@
 
 static void do_execute() {
 #if DATA_BYTE == 1	
-	uint32_t val = 0x000000ff & op_src->val;
+	uint32_t val = 0x00ff & op_src->val;
 	write_operand_l(op_dest,val);
 #elif DATA_BYTE == 2
 	uint32_t val = 0X0000ffff & op_src->val;
