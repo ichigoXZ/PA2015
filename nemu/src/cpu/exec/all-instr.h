@@ -47,4 +47,5 @@
 #include "jump/jl.h"
 #include "jump/jne.h"
 #include "jump/jg.h"
+#include "jump/ja.h"
 #include "jump/ret.h"
