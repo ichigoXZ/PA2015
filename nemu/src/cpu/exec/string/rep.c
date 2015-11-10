@@ -12,12 +12,10 @@ make_helper(rep) {
 		exec(eip + 1);
 		len = 0;
 	}
-	else {
-			printf("%d\n",cpu.ecx );					
+	else {					
 		while(cpu.ecx) {
 			exec(eip + 1);
 			count ++;
-			printf("cpu.ecx:0x%x\n",cpu.ecx );
 			cpu.ecx --;
 			assert(ops_decoded.opcode == 0xa4	// movsb
 				|| ops_decoded.opcode == 0xa5	// movsw
