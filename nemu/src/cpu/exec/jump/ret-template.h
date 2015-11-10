@@ -8,7 +8,7 @@ static void do_execute () {
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0x0000ffff;
 #endif
-	cpu.esp += op_dest->val;
+	cpu.esp += op_src->val;
 
 	print_asm_template1();
 }
