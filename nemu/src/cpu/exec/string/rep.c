@@ -5,6 +5,7 @@ make_helper(exec);
 make_helper(rep) {
 	int len;
 	int count = 0;
+	printf("rep\n");
 	if(instr_fetch(eip + 1, 1) == 0xc3) {
 		/* repz ret */
 		exec(eip + 1);
