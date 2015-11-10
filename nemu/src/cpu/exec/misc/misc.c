@@ -119,7 +119,7 @@ make_helper(stosw){
 	return 1;
 }
 
-make_helper(cmpab){
+make_helper(cmpsb){
 	if(swaddr_read(cpu.esi,1) - swaddr_read(cpu.edi,1) == 0){
 		cpu.ZF = 1;
 		cpu.esi++;cpu.edi++;
@@ -132,7 +132,7 @@ make_helper(cmpab){
 	return 1;
 }
 
-make_helper(cmpaw){
+make_helper(cmpsw){
 	if(ops_decoded.is_data_size_16 == 1){
 		if(swaddr_read(cpu.esi,2) - swaddr_read(cpu.edi,2) == 0){
 			cpu.ZF = 1;
