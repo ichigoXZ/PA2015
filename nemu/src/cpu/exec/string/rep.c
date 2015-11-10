@@ -15,11 +15,11 @@ make_helper(rep) {
 	else {
 			printf("%d\n",cpu.ecx );					
 		while(cpu.ecx) {
-			printf("%d\n",cpu.ecx );
 			exec(eip + 1);
 			count ++;
 			printf("cpu.ecx:0x%x\n",cpu.ecx );
 			cpu.ecx --;
+			printf("%d\n",cpu.ecx );
 			/*assert(ops_decoded.opcode == 0xa4	// movsb
 				|| ops_decoded.opcode == 0xa5	// movsw
 				|| ops_decoded.opcode == 0xaa	// stosb
