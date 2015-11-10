@@ -7,6 +7,7 @@ make_helper(rep) {
 	int count = 0;
 	if(instr_fetch(eip + 1, 1) == 0xc3) {
 		/* repz ret */
+		printf("len == 0\n");
 		exec(eip + 1);
 		len = 0;
 	}
