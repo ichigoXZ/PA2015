@@ -13,7 +13,7 @@ make_helper(rep) {
 		len = 0;
 	}
 	else {
-		printf("else \n");
+		printf("cpu.ecx:%x\n",cpu.eax);
 		while(cpu.ecx) {
 			exec(eip + 1);
 			count ++;
@@ -123,7 +123,6 @@ make_helper(rep) {
 		}
 		len = 1;
 	}
-printf("%d\n",len );
 #ifdef DEBUG
 	char temp[80];
 	sprintf(temp, "rep %s", assembly);
