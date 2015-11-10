@@ -77,3 +77,120 @@ make_helper(cld) {
 	print_asm("cld");
 	return 1;
 }
+
+make_helper(movsb){
+	swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1));
+	cpu.esi--;
+	cpu.edi--;
+
+	return 1;
+}
+
+make_helper(movsw){
+	if(ops_decoded.is_data_size_16 == 1){
+		swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2));
+		cpu.esi -= 2;cpu.edi -= 2;
+	}
+	else {
+		swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4));
+		cpu.esi -= 4;cpu.edi -= 4;
+	}
+
+	return 1;
+}
+
+make_helper(stosb){
+	swaddr_write(cpu.edi,1,cpu.gpr[R_EAX]._8[0]);
+	cpu.esi--;cpu.edi--;
+
+	return 1;
+}
+
+make_helper(stosw){
+	if(ops_decoded.is_data_size_16 == 1){
+		swaddr_write(cpu.edi,2,cpu.gpr[R_AX]._16);
+		cpu.esi -= 2;cpu.edi -= 2;
+	}
+	else {
+		swaddr_write(cpu.edi,4,cpu.eax);
+		cpu.esi -= 4;cpu.edi -= 4;
+	}
+
+	return 1;
+}
+
+make_helper(cmpab){
+	if(swaddr_read(cpu.esi,1) - swaddr_read(cpu.edi,1) == 0){
+		cpu.ZF = 1;
+		cpu.esi++;cpu.edi++;
+	}
+	else {
+		cpu.ZF = 0;
+		cpu.esi--;cpu.edi--;
+	}
+
+	return 1;
+}
+
+make_helper(cmpaw){
+	if(ops_decoded.is_data_size_16 == 1){
+		if(swaddr_read(cpu.esi,2) - swaddr_read(cpu.edi,2) == 0){
+			cpu.ZF = 1;
+			cpu.esi+=2;cpu.edi+=2;
+		}
+		else {
+			cpu.ZF = 0;
+			cpu.esi-=2;cpu.edi-=2;
+		}
+	}
+	else {
+		if(swaddr_read(cpu.esi,4) - swaddr_read(cpu.edi,4) == 0){
+			cpu.ZF = 1;
+			cpu.esi+=4;cpu.edi+=4;
+		}
+		else {
+			cpu.ZF = 0;
+			cpu.esi-=4;cpu.edi-=4;
+		}
+	}
+
+	return 1;
+}
+
+make_helper(scasb){
+	if(swaddr_read(cpu.esi,1) - cpu.gpr[R_EAX]._8[0] == 0){
+		cpu.ZF = 1;
+		cpu.esi++;cpu.edi++;
+	}
+	else {
+		cpu.ZF = 0;
+		cpu.esi--;cpu.edi--;
+	}
+
+	return 1;
+}
+
+make_helper(scasw){
+	if(ops_decoded.is_data_size_16 == 1){
+		if(swaddr_read(cpu.esi,2) - cpu.gpr[R_EAX]._16 == 0){
+			cpu.ZF = 1;
+			cpu.esi+=2;cpu.edi+=2;
+		}
+		else {
+			cpu.ZF = 0;
+			cpu.esi-=2;cpu.edi-=2;
+		}
+	}
+	else {
+		if(swaddr_read(cpu.esi,4) - cpu.eax == 0){
+			cpu.ZF = 1;
+			cpu.esi+=4;cpu.edi+=4;
+		}
+		else {
+			cpu.ZF = 0;
+			cpu.esi-=4;cpu.edi-=4;
+		}
+	}
+
+	return 1;
+}
