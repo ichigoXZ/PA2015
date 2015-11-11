@@ -4,7 +4,7 @@
 
 struct dummy {
 	int pad1[N];
-	char pad2[N];
+	int pad2[N];
 } d;
 
 struct dummy fun(struct dummy a) {
@@ -14,10 +14,10 @@ struct dummy fun(struct dummy a) {
 int main() {
 	int i;
 	for(i = 0; i < N; i ++) {
-set_bp();
+//set_bp();
 		d.pad1[i] = i + 128;
 		d.pad2[i] = i;
-set_bp();
+//set_bp();
 	}
 
 	struct dummy t = fun(d);
