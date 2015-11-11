@@ -5,13 +5,11 @@
 static void do_execute () {
 #if DATA_BYTE == 2
 	//实现段寄存器
-	uint32_t val = MEM_R(cpu.esp);
-	OPERAND_W(op_src,val);
+	OPERAND_W(op_src,MEM_R(cpu.esp));
 	cpu.esp = cpu.esp + 2;
 #elif DATA_BYTE == 4
 	//实现段寄存器
-	uint32_t val = MEM_R(cpu.esp);
-	OPERAND_W(op_src,val);
+	OPERAND_W(op_src,MEM_R(cpu.esp));
 	cpu.esp = cpu.esp + 4;
 #endif
 
