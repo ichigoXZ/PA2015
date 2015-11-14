@@ -25,7 +25,6 @@ static void do_execute () {
 #elif DATA_BYTE == 4
 	cpu.esp = cpu.esp - 4;
 	//实现段寄存器
-	printf("0x%x\n",op_src->val);
 	cpu.eip = op_src->val - 2;
 #endif
 	}
