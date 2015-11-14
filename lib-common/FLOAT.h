@@ -6,31 +6,21 @@
 typedef int FLOAT;
 
 static inline int F2int(FLOAT a) {
-	if(a>=0)
-		return a/65536;
-	else
-		return (-a)/65536;
+	if (a > 0) return a >> 16;
+	else return -((-a)>>16);
 }
 
 static inline FLOAT int2F(int a) {
-	if(a>=0)
-		return a*65536;
-	else
-		return (-a)*65536;
+	return a << 16;
 }
 
 static inline FLOAT F_mul_int(FLOAT a, int b) {
-	if(b>0)
-		return a*b;
-	else 
-		returna*(-b);
+	return a*b;
 }
 
 static inline FLOAT F_div_int(FLOAT a, int b) {
-	if(b>0)
-		return a/b;
-	else
-		return a/(-b);
+	nemu_assert(b);
+	return a/b;
 }
 
 FLOAT f2F(float);
