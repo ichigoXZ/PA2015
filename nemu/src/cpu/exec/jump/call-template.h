@@ -21,7 +21,7 @@ static void do_execute () {
 	cpu.esp = cpu.esp - 2;
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
-	cpu.eip = op_src->val & 0x0000ffff;
+	cpu.eip = (op_src->val & 0x0000ffff) -2;
 #elif DATA_BYTE == 4
 	cpu.esp = cpu.esp - 4;
 	//实现段寄存器
