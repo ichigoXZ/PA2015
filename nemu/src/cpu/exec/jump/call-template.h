@@ -17,6 +17,7 @@ static void do_execute () {
 #endif
 	}
 	else {
+		printf("ennnnnn\n");
 #if DATA_BYTE == 2
 	cpu.esp = cpu.esp - 2;
 	//实现段寄存器
