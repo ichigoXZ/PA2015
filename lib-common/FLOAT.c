@@ -1,42 +1,56 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	return a*b/65535;
+	unsigned sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
+	unsigned sign = sign_a ^ sign_b;	
+	unsigned q = (1<<16);
+	FLOAT _a = (sign_a ? -a : a);
+	FLOAT _b = (sign_b ? -b : b);
+	unsigned qa = _a / q;
+	unsigned qb = _b /q;
+	unsigned ya = _a %q;
+	unsigned yb = _b % q;
+	int result = qa*qb *q + qa * yb +qb*ya + ((ya * yb) >>16);
+	return (sign? -result: result);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	return a/b*65535;
+	nemu_assert(b);
+
+	int i = 16;
+	int sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
+	int sign = sign_a ^ sign_b;
+	FLOAT _a = (sign_a ? -a : a);
+	FLOAT _b = (sign_b ? -b : b);
+	FLOAT c = 0;
+
+	while(i >0){
+	    if(_a >= _b){
+	        c += (1 << i);
+	        _a -= _b;
+	    }else{
+	        _b = _b>> 1;
+	        i --;
+	    }
+	    if(_b == 0x0 ||_a == 0x0) break;
+	}
+	return (sign? -c : c);
 }
 
 FLOAT f2F(float a) {
-	int p = *(int *)&f;
- //尾数 当然与真实的尾数左移了23位
- int t = (p & 0x7FFFFF) | 0x800000;
- //指数
- int e = (p >> 23) & 0xFF;
- //符号位
- int s = p >> 31;
- if(e - 127 < -31 || e - 127 > 31)
- {
-  printf("结果不可知\n");
- }
- e = e-127-23;
- if(e > 0)//左移
-  p = t << e;
- else if(e < 0)//右移
-  p = t >> -e;
- if(s < 0)
-  p = -p;
- if(f == 0)
-  p = 0;
-	return int2F(p);
+	int args = *(int *)(&a);
+	int sign = args & 0x80000000;
+	int e = ((args & 0x7f800000)>>23) - 127;
+	int m= (args & 0x007fffff) + 0x00800000;
+	int result;
+	if(e > 7)  result =(m << (e -7));
+	else result = (m >> (7 -e));
+	if(sign) result = -result;
+	return result;
 }
 
 FLOAT Fabs(FLOAT a) {
-	if(a>0)
-		return a;
-	else 
-		return -a;
+	return a < 0? -a :a;
 }
 
 FLOAT sqrt(FLOAT x) {
@@ -62,4 +76,3 @@ FLOAT pow(FLOAT x, FLOAT y) {
 
 	return t;
 }
-
