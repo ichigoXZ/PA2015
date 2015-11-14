@@ -6,6 +6,7 @@
 #include "data-mov/pop.h"
 #include "data-mov/movsx.h"
 #include "data-mov/movzx.h"
+#include "data-mov/cmov.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
