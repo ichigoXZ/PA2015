@@ -1,17 +1,17 @@
 #include "cpu/exec/helper.h"
 
 #define DATA_BYTE 1
-#include "jle-template.h"
+#include "jcc-template.h"
 #undef DATA_BYTE
 
 #define DATA_BYTE 2
-#include "jle-template.h"
+#include "jcc-template.h"
 #undef DATA_BYTE
 
 #define DATA_BYTE 4
-#include "jle-template.h"
+#include "jcc-template.h"
 #undef DATA_BYTE
 
 /* for instruction encoding overloading */
 
-make_helper_v(jle_i)
+make_helper_v(jcc_i)
