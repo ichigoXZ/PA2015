@@ -18,12 +18,12 @@ static void do_execute () {
 	}
 	else {
 #if DATA_BYTE == 2
-		printf("enmnnn\n");
 	cpu.esp = cpu.esp - 2;
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
 	cpu.eip = op_src->val & 0x0000ffff;
 #elif DATA_BYTE == 4
+	printf("ennnn\n");
 	cpu.esp = cpu.esp - 4;
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
