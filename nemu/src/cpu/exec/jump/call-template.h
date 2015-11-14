@@ -17,8 +17,8 @@ static void do_execute () {
 #endif
 	}
 	else {
-		printf("ennnnnn\n");
 #if DATA_BYTE == 2
+		printf("enmnnn\n");
 	cpu.esp = cpu.esp - 2;
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
