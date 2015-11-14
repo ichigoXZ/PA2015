@@ -6,5 +6,8 @@ $(FLOAT): $(FLOAT_OBJ)
 	ar r $(FLOAT) $(FLOAT_OBJ)
 
 # TODO: write a rule for generating $(FLOAT_OBJ)
-obj/lib-common/FLAOT.o : float.c float.h
-	gdb -m32 -fno-builtin
+
+$(FLOAT_OBJ):
+	rm -rf obj/$(LIB_COMMON_DIR)/
+	mkdir obj/$(LIB_COMMON_DIR)/
+	gcc -c -m32 -fno-builtin $(LIB_COMMON_DIR)/FLOAT.c -I $(LIB_COMMON_DIR) -o obj/$(LIB_COMMON_DIR)/FLOAT.o
