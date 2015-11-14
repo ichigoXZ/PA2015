@@ -38,15 +38,7 @@
 
 #include "special/special.h"
 
-#include "jump/je.h"
 #include "jump/call.h"
 #include "jump/jmp.h"
-#include "jump/jbe.h"
-#include "jump/jle.h"
-#include "jump/jge.h"
-#include "jump/jge.h"
-#include "jump/jl.h"
-#include "jump/jne.h"
-#include "jump/jg.h"
-#include "jump/ja.h"
+#include "jump/jcc.h"
 #include "jump/ret.h"
