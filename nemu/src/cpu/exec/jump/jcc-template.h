@@ -4,7 +4,6 @@
 
 static void do_execute () {
 	uint8_t flag = 0;
-	uint8_t byte_t = 0;
 
 	switch(ops_decoded.opcode){
 		case 0x77: if(cpu.CF ==0 && cpu.ZF ==0)flag=1;break;				//JA, JNBE
@@ -24,7 +23,7 @@ static void do_execute () {
 		case 0x70: if(cpu.OF == 1)flag=1; break;					//JO
 		case 0x7a: if(cpu.PF == 1)flag=1; break;					//JP, JPE
 		case 0x78: if(cpu.SF == 1)flag=1; break;					//JS
-		default: byte_t = 1;
+		default: break;
 	}
 
 	switch(ops_decoded.opcode & 0x0ff){
@@ -47,15 +46,19 @@ static void do_execute () {
 	}
 
 	if(flag){
-		if(byte_t ==0) 
-			cpu.eip+= (int32_t)((int8_t) (op_src->val));
-		else if(DATA_BYTE == 2){
-			cpu.eip += (int32_t)((int16_t)op_src -> val);
+#if DATA_BYTE == 1
+		if(op_src->val&0x80){
+			uint32_t val = 0xffffff00 | op_src->val;
+			cpu.eip += val;
 		}
-		else cpu.eip +=(int32_t)op_src -> val;
-		if(DATA_BYTE == 2){
-			cpu.eip = cpu.eip & 0x0000ffff;
-		}	
+		else 
+			cpu.eip +=op_src->val;
+#elif DATA_BYTE == 2 
+			cpu.eip += op_src->val;
+		cpu.eip = cpu.eip & 0x0000ffff;
+#else
+		cpu.eip += op_src->val;
+#endif
 	}
 
 	print_asm_template1();
