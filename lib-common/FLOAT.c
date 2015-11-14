@@ -1,23 +1,42 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	nemu_assert(0);
-	return 0;
+	return a*b/65535;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	nemu_assert(0);
-	return 0;
+	return a/b*65535;
 }
 
 FLOAT f2F(float a) {
-	nemu_assert(0);
-	return 0;
+	int p = *(int *)&f;
+ //尾数 当然与真实的尾数左移了23位
+ int t = (p & 0x7FFFFF) | 0x800000;
+ //指数
+ int e = (p >> 23) & 0xFF;
+ //符号位
+ int s = p >> 31;
+ if(e - 127 < -31 || e - 127 > 31)
+ {
+  printf("结果不可知\n");
+ }
+ e = e-127-23;
+ if(e > 0)//左移
+  p = t << e;
+ else if(e < 0)//右移
+  p = t >> -e;
+ if(s < 0)
+  p = -p;
+ if(f == 0)
+  p = 0;
+	return int2F(p);
 }
 
 FLOAT Fabs(FLOAT a) {
-	nemu_assert(0);
-	return 0;
+	if(a>0)
+		return a;
+	else 
+		return -a;
 }
 
 FLOAT sqrt(FLOAT x) {
