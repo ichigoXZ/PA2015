@@ -88,11 +88,11 @@ make_helper(movsb){
 
 make_helper(movsw){
 	if(ops_decoded.is_data_size_16 == 1){
-		swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2));
+		swaddr_write(reg_l(R_EDI),2,swaddr_read(reg_l(R_ESI),2));
 		cpu.esi -= 2;cpu.edi -= 2;
 	}
 	else {
-		swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4));
+		swaddr_write(reg_l(R_EDI),4,swaddr_read(reg_l(R_ESI),4));
 		cpu.esi -= 4;cpu.edi -= 4;
 	}
 
