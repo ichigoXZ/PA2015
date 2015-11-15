@@ -6,13 +6,15 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	unsigned q = (1<<16);
 	FLOAT _a = (sign_a ? -a : a);
 	FLOAT _b = (sign_b ? -b : b);
-	unsigned qa = _a / q;
+	/*unsigned qa = _a / q;
 	unsigned qb = _b /q;
 	unsigned ya = _a %q;
 	unsigned yb = _b % q;
 	int result = qa*qb *q + qa * yb +qb*ya + ((ya * yb) >>16);
 	return (sign? -result: result);
-	//return int2F(F2int(a)*F2int(b));
+	//return int2F(F2int(a)*F2int(b));*/
+	FLOAT result = (_a/_b) >> 16;
+	return (sign ? -result:result);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
@@ -37,8 +39,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	}
 	return (sign? -c : c);*/
 	FLOAT result = (_a/_b) << 16;
-	result = (sign ? -result:result);
-	return result;
+	return (sign ? -result:result);
 	//return int2F(F2int(a)/F2int(b));
 }
 
