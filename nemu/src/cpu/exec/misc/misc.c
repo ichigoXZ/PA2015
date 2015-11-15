@@ -88,11 +88,11 @@ make_helper(movsb){
 
 make_helper(movsw){
 	if(ops_decoded.is_data_size_16 == 1){
-		swaddr_write(reg_l(R_EDI),2,swaddr_read(reg_l(R_ESI),2));
+		swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2));
 		cpu.esi -= 2;cpu.edi -= 2;
 	}
 	else {
-		swaddr_write(reg_l(R_EDI),4,swaddr_read(reg_l(R_ESI),4));
+		swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4));
 		cpu.esi -= 4;cpu.edi -= 4;
 	}
 
@@ -100,21 +100,30 @@ make_helper(movsw){
 }
 
 make_helper(stosb){
+	int IncDec = 1;
+	if(cpu.DF!=0)
+		IncDec = -IncDec;
+
 	swaddr_write(cpu.edi,1,cpu.gpr[R_EAX]._8[0]);
-	cpu.esi--;cpu.edi--;
+	cpu.edi += IncDec;
+	cpu.esi += IncDec;
 
 	return 1;
 }
 
 make_helper(stosw){
-	if(ops_decoded.is_data_size_16 == 1){
-		swaddr_write(cpu.edi,2,cpu.gpr[R_AX]._16);
-		cpu.esi -= 2;cpu.edi -= 2;
-	}
-	else {
-		swaddr_write(cpu.edi,4,cpu.eax);
-		cpu.esi -= 4;cpu.edi -= 4;
-	}
+	int data_byte = 0, IncDec = 0;
+	if(ops_decoded.is_data_size_16)
+		data_byte = 2;
+	else 
+		data_byte = 4;
+
+	IncDec = (0==cpu.DF) ? data_byte: -data_byte;
+
+	swaddr_write(cpu.edi,4,cpu.eax);
+
+	cpu.edi += IncDec;
+	cpu.esi += IncDec;
 
 	return 1;
 }
