@@ -1,7 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	/*unsigned sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
+	unsigned sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
 	unsigned sign = sign_a ^ sign_b;	
 	unsigned q = (1<<16);
 	FLOAT _a = (sign_a ? -a : a);
@@ -11,15 +11,14 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	unsigned ya = _a %q;
 	unsigned yb = _b % q;
 	int result = qa*qb *q + qa * yb +qb*ya + ((ya * yb) >>16);
-	return (sign? -result: result);*/
+	return (sign? -result: result);
 	//return int2F(F2int(a)*F2int(b));
-	return (a*b) >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	nemu_assert(b);
 
-	/*int i = 16;
+	int i = 16;
 	int sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
 	int sign = sign_a ^ sign_b;
 	FLOAT _a = (sign_a ? -a : a);
@@ -36,13 +35,12 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	    }
 	    if(_b == 0x0 ||_a == 0x0) break;
 	}
-	return (sign? -c : c);*/
-	//return int2F(F2int(a)/F2int(b));
-	return (a/b) << 16;
+	return (sign? -c : c);
+	return int2F(F2int(a)/F2int(b));
 }
 
 FLOAT f2F(float a) {
-	int args = *(int *)(&a);
+	/*int args = *(int *)(&a);
 	int sign = args & 0x80000000;
 	int e = ((args & 0x7f800000)>>23) - 127;
 	int m= (args & 0x007fffff) + 0x00800000;
@@ -50,7 +48,25 @@ FLOAT f2F(float a) {
 	if(e > 7)  result =(m << (e -7));
 	else result = (m >> (7 -e));
 	if(sign) result = -result;
-	return result;
+	return result;*/
+	int p = *(int *)(&a);
+	int result;
+ 	//尾数 当然与真实的尾数左移了23位
+ 	int t = (p & 0x7FFFFF) + 0x800000;
+ 	//指数
+ 	int e = ((p >> 23) & 0xFF) - 127;
+ 	//符号位
+ 	int s = p >> 31;
+
+ 	e = e-23;
+ 	if(e > 0)//左移
+  		result = t << e;
+ 	else if(e < 0)//右移
+	    result = t >> -e;
+ 	if(s)
+  		result = -result;
+
+  	return result << 16;
 }
 
 FLOAT Fabs(FLOAT a) {
