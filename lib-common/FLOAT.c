@@ -36,7 +36,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	    if(_b == 0x0 ||_a == 0x0) break;
 	}
 	return (sign? -c : c);
-	return int2F(F2int(a)/F2int(b));
+	//return int2F(F2int(a)/F2int(b));
 }
 
 FLOAT f2F(float a) {
@@ -57,7 +57,8 @@ FLOAT f2F(float a) {
  	int e = ((p >> 23) & 0xFF) - 127;
  	//符号位
  	int s = p >> 31;
-
+ 	if(e < -31 || e > 31)
+  		nemu_assert(0);
  	e = e-23;
  	if(e > 0)//左移
   		result = t << e;
