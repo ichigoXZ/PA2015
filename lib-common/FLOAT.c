@@ -40,7 +40,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
-	int args = *(int *)(&a);
+	/*int args = *(int *)(&a);
 	int sign = args & 0x80000000;
 	int e = ((args & 0x7f800000)>>23) - 127;
 	int m= (args & 0x007fffff) + 0x00800000;
@@ -48,8 +48,8 @@ FLOAT f2F(float a) {
 	if(e > 7)  result =(m << (e -7));
 	else result = (m >> (7 -e));
 	if(sign) result = -result;
-	return result;
-	/*int p = *(int *)(&a);
+	return result;*/
+	int p = *(int *)(&a);
 	int result;
  	//尾数 当然与真实的尾数左移了23位
  	int t = (p & 0x7FFFFF) + 0x800000;
@@ -59,15 +59,14 @@ FLOAT f2F(float a) {
  	int s = p >> 31;
  	if(e < -31 || e > 31)
   		nemu_assert(0);
- 	e = e-23;
- 	if(e > 0)//左移
-  		result = t << e;
- 	else if(e < 0)//右移
-	    result = t >> -e;
+
+ 	if(e > 7)  result =(t << (e -7));
+	else result = (t >> (7 -e));
+
  	if(s)
   		result = -result;
 
-  	return result << 16;*/
+  	return result;
 }
 
 FLOAT Fabs(FLOAT a) {
