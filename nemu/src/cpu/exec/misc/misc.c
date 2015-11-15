@@ -84,7 +84,6 @@ make_helper(movsb){
 	swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1));
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
-
 	return 1;
 }
 
@@ -101,9 +100,10 @@ make_helper(movsw){
 
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
+	
+	printf("movsw");
 	return 1;
 
-	printf("movsw");
 }
 
 make_helper(stosb){
