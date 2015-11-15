@@ -1,7 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	unsigned sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
+	/*unsigned sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
 	unsigned sign = sign_a ^ sign_b;	
 	unsigned q = (1<<16);
 	FLOAT _a = (sign_a ? -a : a);
@@ -11,14 +11,15 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	unsigned ya = _a %q;
 	unsigned yb = _b % q;
 	int result = qa*qb *q + qa * yb +qb*ya + ((ya * yb) >>16);
-	return (sign? -result: result);
+	return (sign? -result: result);*/
 	//return int2F(F2int(a)*F2int(b));
+	return (a*b) >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	nemu_assert(b);
 
-	int i = 16;
+	/*int i = 16;
 	int sign_a = (a & 0x80000000)>>31, sign_b = (b & 0x80000000) >> 31;
 	int sign = sign_a ^ sign_b;
 	FLOAT _a = (sign_a ? -a : a);
@@ -35,8 +36,9 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	    }
 	    if(_b == 0x0 ||_a == 0x0) break;
 	}
-	return (sign? -c : c);
-	//eturn int2F(F2int(a)/F2int(b));
+	return (sign? -c : c);*/
+	//return int2F(F2int(a)/F2int(b));
+	return (a/b) << 16;
 }
 
 FLOAT f2F(float a) {
