@@ -103,7 +103,7 @@ make_helper(movsw){
 	cpu.esi += IncDec;
 	return 1;
 
-	print_asm("movsw");
+	printf("movsw");
 }
 
 make_helper(stosb){
