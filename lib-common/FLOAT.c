@@ -23,7 +23,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int sign = sign_a ^ sign_b;
 	FLOAT _a = (sign_a ? -a : a);
 	FLOAT _b = (sign_b ? -b : b);
-	FLOAT c = 0;
+	/*FLOAT c = 0;
 
 	while(i >0){
 	    if(_a >= _b){
@@ -35,7 +35,10 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	    }
 	    if(_b == 0x0 ||_a == 0x0) break;
 	}
-	return (sign? -c : c);
+	return (sign? -c : c);*/
+	FLOAT result = (_a/_b) << 16;
+	result = (sign ? -result:result);
+	return result;
 	//return int2F(F2int(a)/F2int(b));
 }
 
@@ -49,14 +52,14 @@ FLOAT f2F(float a) {
 	else result = (m >> (7 -e));
 	if(sign) result = -result;
 	return result;*/
+	if(0==a)
+		return 0;
+
 	int p = *(int *)(&a);
 	int result;
- 	//尾数 当然与真实的尾数左移了23位
- 	int t = (p & 0x7FFFFF) + 0x800000;
- 	//指数
- 	int e = ((p >> 23) & 0xFF) - 127;
- 	//符号位
- 	int s = p >> 31;
+ 	int t = (p & 0x7FFFFF) + 0x800000;		//尾数 真实的尾数左移了23位
+ 	int e = ((p >> 23) & 0xFF) - 127; 	//指数
+ 	int s = p >> 31; 	//符号位
  	if(e < -31 || e > 31)
   		nemu_assert(0);
 
