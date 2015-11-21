@@ -53,8 +53,7 @@ FLOAT f2F(float a) {
 	else result = (m >> (7 -e));
 	if(sign) result = -result;
 	return result;*/
-	if(0==a)
-		return 0;
+
 
 	int p = *(int *)(&a);
 	int result;
