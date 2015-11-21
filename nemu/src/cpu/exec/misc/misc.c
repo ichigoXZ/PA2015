@@ -102,7 +102,6 @@ make_helper(movsw){
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
 
-	printf("0x%x,%d\n",cpu.eip,swaddr_read(cpu.eax,data_byte));
 	return 1;
 
 }
