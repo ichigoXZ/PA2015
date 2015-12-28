@@ -3,16 +3,15 @@
 #define instr pop
 
 static void do_execute () {
-#if DATA_BYTE == 2
-	//实现段寄存器
-	OPERAND_W(op_src,MEM_R(cpu.esp));
-	cpu.esp = cpu.esp + 2;
-#elif DATA_BYTE == 4
-	//实现段寄存器
-	OPERAND_W(op_src,MEM_R(cpu.esp));
-	cpu.esp = cpu.esp + 4;
-#endif
-
+	if (DATA_BYTE == 2) {
+		OPERAND_W(op_src, MEM_R(cpu.esp));
+		cpu.esp += 2;
+	}
+	else {
+		OPERAND_W(op_src, MEM_R(cpu.esp));
+		cpu.esp += 4;
+	}
+	print_asm_template1();
 	print_asm_template1();
 }
 
