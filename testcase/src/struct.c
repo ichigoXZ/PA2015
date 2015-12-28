@@ -17,12 +17,12 @@ int main() {
 		d.pad1[i] = i + 128;
 		d.pad2[i] = i;
 	}
-	struct dummy t = fun(d);
+	//struct dummy t = fun(d);
 	for(i = 0; i < N; i ++) {
 		set_bp();
-		nemu_assert(t.pad1[i] == i + 128);
+		nemu_assert(d.pad1[i] == i + 128);
 		set_bp();
-		nemu_assert(t.pad2[i] == i);
+		nemu_assert(d.pad2[i] == i);
 	}
 
 	HIT_GOOD_TRAP;
