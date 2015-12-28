@@ -16,6 +16,7 @@ int main() {
 	for(i = 0; i < N; i ++) {
 		set_bp();
 		d.pad1[i] = i + 128;
+		set_bp();
 		d.pad2[i] = i;
 	}
 
