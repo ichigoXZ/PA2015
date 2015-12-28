@@ -17,25 +17,45 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	return ans;
 }
 
-FLOAT F_div_F(FLOAT a, FLOAT b) {
-	unsigned int a00 = a << 16;
-	unsigned int a01 = a >> 16;
-	unsigned int a10 = a >> 31;
-	unsigned int a11 = a >> 31;
+/*FLOAT F_div_F(FLOAT a, FLOAT b) {
+	unsigned int a0 = a << 16;
+	unsigned int a1 = a >> 16;
+	unsigned int a2 = a >> 31;
+	unsigned int a3 = a >> 31;
 	int ans = 0, i;
 	for(i = 0; i < 64; ++i)	{
-		a11 = (a11 << 1) + (a10 >> 31);
-		a10 = (a10 << 1) + (a01 >> 31);
-		a01 = (a01 << 1) + (a00 >> 31);
-		a00 = a00 << 1;
+		a3 = (a3 << 1) + (a2 >> 31);
+		a2 = (a2 << 1) + (a1 >> 31);
+		a1 = (a1 << 1) + (a0 >> 31);
+		a0 = a0 << 1;
 		ans = ans << 1;
-		if(a11 > 0 || a10 >= b) {
-			if(a10 < b) a11 --;
-			a10 -= b;
+		if(a3 > 0 || a2 >= b) {
+			if(a2 < b) a3 --;
+			a2 -= b;
 			ans++; 
 		}
 	}
 	return ans;
+}*/
+FLOAT F_div_F(FLOAT a, FLOAT b) {
+	long long remain = a<0?-a:a;
+	long long divisor = b<0?-b:b;
+	int count;
+	FLOAT result = 0;;
+	remain = remain << 16;
+	divisor = divisor << 16;
+	count = 16;
+	while(remain != 0) {
+		if (remain >= divisor) {
+			remain = remain - divisor;
+			result = result | (1 << count);
+		}
+		if (count == 0) break;
+		divisor = divisor >> 1;
+		count --;
+	}
+	if ((a < 0 &&  b > 0) || (a > 0 && b < 0)) result = -result;
+	return result;
 }
 
 FLOAT f2F(float a) {
