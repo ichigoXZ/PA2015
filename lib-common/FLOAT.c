@@ -17,45 +17,28 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	return ans;
 }
 
-/*FLOAT F_div_F(FLOAT a, FLOAT b) {
-	unsigned int a0 = a << 16;
-	unsigned int a1 = a >> 16;
-	unsigned int a2 = a >> 31;
-	unsigned int a3 = a >> 31;
-	int ans = 0, i;
-	for(i = 0; i < 64; ++i)	{
-		a3 = (a3 << 1) + (a2 >> 31);
-		a2 = (a2 << 1) + (a1 >> 31);
-		a1 = (a1 << 1) + (a0 >> 31);
-		a0 = a0 << 1;
-		ans = ans << 1;
-		if(a3 > 0 || a2 >= b) {
-			if(a2 < b) a3 --;
-			a2 -= b;
-			ans++; 
-		}
-	}
-	return ans;
-}*/
+
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	long long remain = a<0?-a:a;
-	long long divisor = b<0?-b:b;
-	int count;
-	FLOAT result = 0;;
-	remain = remain << 16;
-	divisor = divisor << 16;
-	count = 16;
-	while(remain != 0) {
-		if (remain >= divisor) {
-			remain = remain - divisor;
-			result = result | (1 << count);
-		}
-		if (count == 0) break;
-		divisor = divisor >> 1;
-		count --;
+	nemu_assert(b);
+
+	int i = 16;
+	int sign_a = a >>31, sign_b = b >> 31;
+	int sign = sign_a ^ sign_b;
+	FLOAT _a = (sign_a ? -a : a);
+	FLOAT _b = (sign_b ? -b : b);
+	FLOAT c = 0;
+
+	while(i >0){
+	    if(_a >= _b){
+	        c += (1 << i);
+	        _a -= _b;
+	    }else{
+	        _b = _b>> 1;
+	        i --;
+	    }
+	    if(_b == 0x0 ||_a == 0x0) break;
 	}
-	if ((a < 0 &&  b > 0) || (a > 0 && b < 0)) result = -result;
-	return result;
+	return (sign? -c : c);
 }
 
 FLOAT f2F(float a) {
