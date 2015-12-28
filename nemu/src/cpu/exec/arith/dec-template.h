@@ -7,7 +7,44 @@ static void do_execute () {
 	OPERAND_W(op_src, result);
 
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+		if(result == 0)
+			cpu.ZF = 1;
+			else 
+			cpu.ZF = 0;
+	if(op_dest->val < op_src->val)
+			cpu.CF = 1;
+			else 
+			cpu.CF = 0;
+#if DATA_BYTE == 1
+		if(result&0x80)
+			cpu.SF = 1;
+			else 
+			cpu.SF = 0;
+		if(((op_dest->val&0x80)^(op_src->val&0x80))&&((op_dest->val&0x80)^(result&0x80)))
+			cpu.OF = 1;
+			else
+			cpu.OF = 0;
+#elif DATA_BYTE == 2
+		if(result&0x8000)
+			cpu.SF = 1;
+			else 
+			cpu.SF = 0;
+		if(((op_dest->val&0x8000)^(op_src->val&0x8000))&&((op_dest->val&0x8000)^(result&0x8000)))
+			cpu.OF = 1;
+			else
+			cpu.OF = 0;
+#else 
+		if(result&0x80000000)
+			cpu.SF = 1;
+			else 
+			cpu.SF = 0;
+		if(((op_dest->val&0x80000000)^(op_src->val&0x80000000))&&((op_dest->val&0x80000000)^(result&0x80000000)))
+			cpu.OF = 1;
+			else
+			cpu.OF = 0;
+#endif
+
+
 
 	print_asm_template1();
 }

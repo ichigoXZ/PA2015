@@ -10,7 +10,7 @@ make_helper(rep) {
 		exec(eip + 1);
 		len = 0;
 	}
-	else {
+	else {					
 		while(cpu.ecx) {
 			exec(eip + 1);
 			count ++;
@@ -23,19 +23,19 @@ make_helper(rep) {
 				|| ops_decoded.opcode == 0xa7	// cmpsw
 				|| ops_decoded.opcode == 0xae	// scasb
 				|| ops_decoded.opcode == 0xaf	// scasw
-				);
-
+			);
+			
 			/* TODO: Jump out of the while loop if necessary. */
-
+			/*if(ops_decoded.opcode==0xa6 || ops_decoded.opcode==0xa7 || ops_decoded.opcode==0xae || ops_decoded.opcode==0xaf)
+				if(cpu.ZF == 1)
+					break;*/
 		}
 		len = 1;
 	}
-
 #ifdef DEBUG
 	char temp[80];
 	sprintf(temp, "rep %s", assembly);
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
-	
 	return len + 1;
 }
