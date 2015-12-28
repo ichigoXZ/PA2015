@@ -4,9 +4,9 @@
 
 char *exec_file = NULL;
 
-static char *strtab = NULL;
-static Elf32_Sym *symtab = NULL;
-static int nr_symtab_entry;
+char *strtab = NULL;
+Elf32_Sym *symtab = NULL;
+int nr_symtab_entry;
 
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
@@ -16,9 +16,11 @@ void load_elf_tables(int argc, char *argv[]) {
 	FILE *fp = fopen(exec_file, "rb");
 	Assert(fp, "Can not open '%s'", exec_file);
 
-	uint8_t buf[sizeof(Elf32_Ehdr)];
-	ret = fread(buf, sizeof(Elf32_Ehdr), 1, fp);
-	assert(ret == 1);
+	uint8_t buf[4096];
+	/* Read the first 4096 bytes from the exec_file.
+	 * They should contain the ELF header and program headers. */
+	ret = fread(buf, 1, 4096, fp);
+	assert(ret != 0);
 
 	/* The first several bytes contain the ELF header. */
 	Elf32_Ehdr *elf = (void *)buf;
@@ -34,8 +36,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	assert(elf->e_ident[EI_ABIVERSION] == 0);			// should be 0
 	assert(elf->e_type == ET_EXEC);						// executable file
 	assert(elf->e_machine == EM_386);					// Intel 80386 architecture
-	assert(elf->e_version == EV_CURRENT);				// current version
-
+	assert(elf->e_version == EV_CURRENT);				// current version:
 
 	/* Load symbol table and string table for future use */
 
