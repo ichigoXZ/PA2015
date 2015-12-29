@@ -15,12 +15,12 @@ FLOAT computeT(int n, FLOAT a, FLOAT b, FLOAT (*fun)(FLOAT)) {
 		s += fun(a + F_mul_int(h, k));
 	}
 	s = F_mul_F(s, h);
+	set_bp();
 	return s;
 }
 
 int main() { 
 	FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
-set_bp();
 	FLOAT ans = f2F(0.551222);
 
 	nemu_assert(Fabs(a - ans) < f2F(1e-4));
