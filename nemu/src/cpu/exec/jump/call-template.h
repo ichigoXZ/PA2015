@@ -27,6 +27,7 @@ make_helper(concat(call_rm_, SUFFIX)){
 		cpu.eip = ( op_src->val)&0x0000ffff;
 	}
 	else if(4 == DATA_BYTE){
+		printf("yes!\n");
 		cpu.esp = cpu.esp-4;
 		MEM_W(cpu.esp,  cpu.eip);
 		cpu.eip =  op_src->val;
