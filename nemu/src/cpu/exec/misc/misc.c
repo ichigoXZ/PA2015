@@ -25,16 +25,9 @@ make_helper(lea) {
 }
 
 make_helper(leave) {
-	if(ops_decoded.is_data_size_16 == 1){
-		cpu.esp = cpu.ebp;
-		cpu.ebp = swaddr_read(cpu.esp, 2);
-		cpu.esp = cpu.esp + 2;
-	}
-	else{
-		cpu.esp = cpu.ebp;
-		cpu.ebp = swaddr_read(cpu.esp, 4);
-		cpu.esp = cpu.esp + 4;
-	}
+	cpu.esp = cpu.ebp;
+	cpu.ebp = swaddr_read(cpu.esp, 4);
+	cpu.esp = cpu.esp + 4;
 	print_asm("leave");
 	return 1;
 }
@@ -163,7 +156,7 @@ make_helper(cmpsw){
 
 	return 1;
 }
-*/
+
 make_helper(scasb){
 	if(swaddr_read(cpu.esi,1) - cpu.gpr[R_EAX]._8[0] == 0){
 		cpu.ZF = 1;
@@ -200,4 +193,4 @@ make_helper(scasw){
 	}
 
 	return 1;
-}
+}*/
