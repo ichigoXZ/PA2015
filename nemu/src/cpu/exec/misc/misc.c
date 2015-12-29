@@ -78,7 +78,7 @@ make_helper(cld) {
 	return 1;
 }
 
-make_helper(movsb){
+/*make_helper(movsb){
 	int IncDec = (0==cpu.DF) ? 1: -1;
 	
 	swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1));
@@ -88,7 +88,7 @@ make_helper(movsb){
 	return 1;
 }
 
-make_helper(movsw){
+make_helper(movsw){, 
 	int data_byte = 0, IncDec = 0;
 	if(ops_decoded.is_data_size_16)
 		data_byte = 2;
@@ -104,7 +104,7 @@ make_helper(movsw){
 
 	return 1;
 
-}
+}*/
 
 make_helper(stosb){
 	swaddr_write(cpu.edi,1,cpu.gpr[R_EAX]._8[0]);
