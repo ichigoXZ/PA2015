@@ -25,28 +25,17 @@ make_helper(lea) {
 }
 
 make_helper(leave) {
-	if(ops_decoded.is_data_size_16 == 1){
-		cpu.esp = cpu.ebp;
-		cpu.ebp = swaddr_read(cpu.esp, 2);
-		cpu.esp = cpu.esp + 2;
-	}
-	else{
 		cpu.esp = cpu.ebp;
 		cpu.ebp = swaddr_read(cpu.esp, 4);
 		cpu.esp = cpu.esp + 4;
-	}
 	print_asm("leave");
 	return 1;
 }
 
 make_helper(ret) {
-	uint32_t ans = swaddr_read(cpu.esp, 4);
-	cpu.esp += 4 + op_src->val;
-	cpu.eip = ans;
-	if(op_src->val == 0) print_asm("ret"); 
-	else {
-		cpu.eip -= 2;
-	}
+		cpu.eip = swaddr_read(cpu.esp, 4);
+		cpu.esp += 4;
+	print_asm("ret");
 	return decode_i_l(cpu.eip)+1;
 }
 
