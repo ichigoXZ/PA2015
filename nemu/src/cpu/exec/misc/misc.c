@@ -125,7 +125,7 @@ make_helper(stosw){
 
 	return 1;
 }
-*/
+
 make_helper(cmpsb){
 	if(swaddr_read(cpu.esi,1) - swaddr_read(cpu.edi,1) == 0){
 		cpu.ZF = 1;
@@ -163,7 +163,7 @@ make_helper(cmpsw){
 
 	return 1;
 }
-
+*/
 make_helper(scasb){
 	if(swaddr_read(cpu.esi,1) - cpu.gpr[R_EAX]._8[0] == 0){
 		cpu.ZF = 1;
