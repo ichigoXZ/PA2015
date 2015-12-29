@@ -30,7 +30,7 @@ make_helper(concat(call_rm_, SUFFIX)){
 		printf("yes!\n");
 		cpu.esp = cpu.esp-4;
 		MEM_W(cpu.esp,  cpu.eip);
-		cpu.eip =  op_src->val -4;
+		cpu.eip =  op_src->val-2;
 	}
 	return 0;	
 }
