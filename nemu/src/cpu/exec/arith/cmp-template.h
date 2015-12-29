@@ -5,6 +5,8 @@
 static void do_execute () {
 		DATA_TYPE result = op_dest->val - op_src->val; 
 				/* TODO: Update. */
+		printf("0x%x	0x%x\n",op_dest->val,op_src->val );
+		printf("result = 0x%x\n",result );
 		if(result == 0)
 			cpu.ZF = 1;
 			else 
