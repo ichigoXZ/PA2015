@@ -1,20 +1,20 @@
 #include "cpu/exec/helper.h"
 
 make_helper(cmps) {
-	int DATA_BYTE = 0;
+	int data_byte = 0;
 
-	if(ops_decoded.opcode == 0xa4) DATA_BYTE = 1;
+	if(ops_decoded.opcode == 0xa4) data_byte = 1;
 	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
-		DATA_BYTE = 4;
-	}else DATA_BYTE = 2;
+		data_byte = 4;
+	}else data_byte = 2;
 
-	if(swaddr_read(cpu.esi,DATA_BYTE) - swaddr_read(cpu.edi,DATA_BYTE) == 0){
+	if(swaddr_read(cpu.esi,data_byte) - swaddr_read(cpu.edi,data_byte) == 0){
 		cpu.ZF = 1;
-		cpu.esi+=DATA_BYTE ;cpu.edi+=DATA_BYTE;
+		cpu.esi+=data_byte ;cpu.edi+=data_byte;
 	}
 	else {
 		cpu.ZF = 0;
-		cpu.esi-=DATA_BYTE;cpu.edi-=DATA_BYTE;
+		cpu.esi-=data_byte;cpu.edi-=data_byte;
 	}
 
 
