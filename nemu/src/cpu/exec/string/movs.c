@@ -12,8 +12,8 @@ make_helper(movs) {
 
 	swaddr_write( cpu.edi, DATA_BYTE, swaddr_read(cpu.esi, DATA_BYTE));
 
-	reg_l(R_EDI) += IncDec;
-	reg_l(R_ESI) += IncDec;
+	cpu.edi += IncDec;
+	cpu.esi += IncDec;
 
 #ifdef DEBUG
 	print_asm_template1();
