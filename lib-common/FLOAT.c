@@ -49,7 +49,7 @@ FLOAT f2F(float a) {
 	int ans;
 	if(e > 7)  ans =(m << (e -7));
 	else ans = (m >> (7 -e));
-	if(sign == 0) ans = -ans;
+	if(sign != 0) ans = -ans;
 	return ans;
 }
 
