@@ -42,15 +42,16 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
-	int args = *(int *)(&a);
-	int sign = args & 0x80000000;
-	int e = ((args & 0x7f800000)>>23) - 127;
-	int m= (args & 0x007fffff) + 0x00800000;
-	int result;
-	if(e > 7)  result =(m << (e -7));
-	else result = (m >> (7 -e));
-	if(sign) result = -result;
-	return result;
+	int _a = *(int *)(&a);
+	int sign = _a & 0x80000000;	
+	int e = ((_a & 0x7f800000)>>23) - 127;
+	int m= (_a & 0x007fffff) | 0x00800000;
+	int ans;
+	m = m << 7;
+	if(e > 0)  ans =m << e;
+	else ans = m >> -e;
+	if(sign) ans = -ans;
+	return ans;
 }
 
 
