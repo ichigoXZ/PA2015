@@ -77,6 +77,7 @@ void init_cond() {
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 #endif
+
 	/* Load the program. */
 	uint32_t eip = loader();
 	
