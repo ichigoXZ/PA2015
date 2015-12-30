@@ -78,7 +78,7 @@ void init_cond() {
 	video_mapping_write_test();
 #endif
 	/* Load the program. */
-	uint32_t eip = loader();
+	uint32_t eip = 0;//loader();
 	
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Read data in the video memory to check whether 
