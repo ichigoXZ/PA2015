@@ -36,6 +36,7 @@ make_helper(ret) {
 		cpu.eip = swaddr_read(cpu.esp, 4);
 		cpu.esp += 4;
 	print_asm("ret");
+	printf("eip:0x%x\n",cpu.eip );
 	return decode_i_l(cpu.eip)+1;
 }
 
