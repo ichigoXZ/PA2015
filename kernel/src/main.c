@@ -38,7 +38,6 @@ void init() {
 
 /* Initialization phase 2 */
 void init_cond() {
-	nemu_assert(0);
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
@@ -78,7 +77,6 @@ void init_cond() {
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 #endif
-	nemu_assert(0);
 	/* Load the program. */
 	uint32_t eip = loader();
 	
