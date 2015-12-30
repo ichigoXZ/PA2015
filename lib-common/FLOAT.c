@@ -46,6 +46,18 @@ FLOAT f2F(float a) {
 	int sign = f & 0x80000000;
 	int e = ((f & 0x7f800000)>>23) - 127;
 	int m= (f & 0x007fffff) + 0x00800000;
+=======
+	return (sign? -c : c);*/
+	FLOAT result = (_a/_b) << 16;
+	return (sign ? -result:result);
+	//return int2F(F2int(a)/F2int(b));
+}
+
+FLOAT f2F(float a) {
+	int args = *(int *)(&a);
+	int sign = args & 0x80000000;
+	int e = ((args & 0x7f800000)>>23) - 127;
+	int m= (args & 0x007fffff) + 0x00800000;
 	int result;
 	if(e > 7)  result =(m << (e -7));
 	else result = (m >> (7 -e));
@@ -55,7 +67,7 @@ FLOAT f2F(float a) {
 
 
 FLOAT Fabs(FLOAT a) {
-	return a>=0 ? a : -a;
+	return a < 0? -a :a;
 }
 
 FLOAT sqrt(FLOAT x) {
@@ -81,4 +93,3 @@ FLOAT pow(FLOAT x, FLOAT y) {
 
 	return t;
 }
-
