@@ -47,13 +47,12 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			uint32_t addr=mm_malloc(ph->p_vaddr, ph->p_memsz);
-			ramdisk_read((void*)addr, ph->p_offset, ph->p_filesz);
+			ramdisk_write((uint8_t*)(ph -> p_vaddr), ph->p_offset, ph->p_filesz);
 			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 memset((void*)addr+ph->p_filesz, 0, ph->p_memsz-ph->p_filesz); 
+			  memset((void*)(ph -> p_vaddr+ ph -> p_filesz), 0, ph -> p_memsz - ph -> p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
