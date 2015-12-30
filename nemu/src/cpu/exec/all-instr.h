@@ -42,7 +42,7 @@
 
 #include "special/special.h"
 
-#include "jump/call.h"
-#include "jump/jmp.h"
-#include "jump/jcc.h"
-#include "jump/ret.h"
+#include "control/call.h"
+#include "control/jmp.h"
+#include "control/jcc.h"
+#include "control/ret.h"
