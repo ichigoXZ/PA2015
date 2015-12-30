@@ -43,13 +43,13 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 
 FLOAT f2F(float a) {
 	int _a = *(int *)(&a);
-	int sign = _a & 0x80000000;	
+	int sign = _a >> 31;	
 	int e = ((_a & 0x7f800000)>>23) - 127;	//exponent
 	int m= (_a & 0x007fffff) | 0x00800000;	//significand+1
 	int ans;
 	if(e > 7)  ans =(m << (e -7));
 	else ans = (m >> (7 -e));
-	if(sign) ans = -ans;
+	if(sign == 0) ans = -ans;
 	return ans;
 }
 
