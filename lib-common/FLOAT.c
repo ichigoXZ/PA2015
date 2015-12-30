@@ -42,18 +42,6 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
-	int f = *(int *)(&a);
-	int sign = f & 0x80000000;
-	int e = ((f & 0x7f800000)>>23) - 127;
-	int m= (f & 0x007fffff) + 0x00800000;
-=======
-	return (sign? -c : c);*/
-	FLOAT result = (_a/_b) << 16;
-	return (sign ? -result:result);
-	//return int2F(F2int(a)/F2int(b));
-}
-
-FLOAT f2F(float a) {
 	int args = *(int *)(&a);
 	int sign = args & 0x80000000;
 	int e = ((args & 0x7f800000)>>23) - 127;
