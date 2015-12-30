@@ -12,7 +12,6 @@ static void do_execute () {
 		cpu.esp += 4;
 	}
 	print_asm_template1();
-	print_asm_template1();
 }
 
 make_instr_helper(r)

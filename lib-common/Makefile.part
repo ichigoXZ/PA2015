@@ -14,4 +14,3 @@ $(FLOAT_OBJ): $(FLOAT_SRC)
 	$(call make_command, $(CC),$(FLOAT_CFLAGS_EXTRA), cc $@, $^)
 
 # TODO: write a rule for generating $(FLOAT_OBJ)
-

@@ -75,7 +75,8 @@ make_helper(cld) {
 	return 1;
 }
 
-make_helper(movsw){, 
+
+make_helper(movsw){
 	int data_byte = 0, IncDec = 0;
 	if(ops_decoded.is_data_size_16)
 		data_byte = 2;
@@ -187,4 +188,5 @@ make_helper(scasw){
 	}
 
 	return 1;
+<<<<<<< HEAD
 }*/
