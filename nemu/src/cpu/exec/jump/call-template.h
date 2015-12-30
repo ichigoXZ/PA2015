@@ -23,7 +23,7 @@ static void do_execute () {
 	MEM_W(cpu.esp, cpu.eip);
 	cpu.eip = (op_src->val & 0x0000ffff) -2;
 #elif DATA_BYTE == 4
-	int len=concat(decode_rm_, SUFFIX)(cpu.eip + 1) + 1;
+	int len=concat(decode_rm_, SUFFIX)(cpu.eip + 1) ;
 	cpu.esp = cpu.esp - 4;
 	//实现段寄存器
 	MEM_W(cpu.esp, cpu.eip);
