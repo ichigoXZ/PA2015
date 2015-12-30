@@ -29,8 +29,8 @@ make_helper(concat(call_rm_, SUFFIX)){
 	else if(4 == DATA_BYTE){
 		printf("pos:0x%x\n",cpu.eip );
 		cpu.esp = cpu.esp-4;
-		MEM_W(cpu.esp,  cpu.eip-4);
-		cpu.eip =  op_src->val;
+		MEM_W(cpu.esp,  cpu.eip);
+		cpu.eip =  op_src->val-2;
 		printf("jmp to: 0x%x\n",cpu.eip );
 	}
 	return 0;	
