@@ -3,7 +3,9 @@
 
 
 static void do_execute (){
+	printf("eip: 0x%x\n",cpu.eip );
 	int len=concat(decode_i_, SUFFIX)(cpu.eip + 1) ;
+	printf("len:%d\n",len );
 	cpu.esp -= DATA_BYTE;
 	if(4 == DATA_BYTE){
 		MEM_W(cpu.esp,  cpu.eip + len);
@@ -13,6 +15,7 @@ static void do_execute (){
 		MEM_W(cpu.esp, (uint16_t)((cpu.eip + len) & 0x0000ffff));
 		cpu.eip = (cpu.eip + op_src->val)&0x0000ffff;
 	}
+	printf("esp: 0x%x\tj2eip:0x%x\n",cpu.esp,cpu.eip );
 	print_asm_template1();
 }
 
