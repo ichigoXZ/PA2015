@@ -40,6 +40,7 @@ void init() {
 void init_cond() {
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
+		nemu_assert(0);
 	init_segment();
 
 	/* Set the IDT by setting up interrupt and exception handlers.
@@ -71,7 +72,7 @@ void init_cond() {
 	 * Note that the output is actually performed only when
 	 * the serial port is available in NEMU.
 	 */
-	//Log("Hello, NEMU world!");
+	Log("Hello, NEMU world!");
 
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Write some test data to the video memory. */
