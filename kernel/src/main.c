@@ -20,7 +20,6 @@ void init_cond();
  * The assembly code in start.S will finally jump here.
  */
 void init() {
-	nemu_assert(0);
 #ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
@@ -78,7 +77,7 @@ void init_cond() {
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 #endif
-
+		nemu_assert(0);
 	/* Load the program. */
 	uint32_t eip = loader();
 	
