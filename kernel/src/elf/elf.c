@@ -40,7 +40,7 @@ uint32_t loader() {
 	//panic("please implement me");
 	int i;
 	//ph = (Elf32_Phdr *)(buf + elf->e_phoff);
-	for(i = 0; i <  elf->e_phnum; i++ ) {
+	for(i = 0; i <=  elf->e_phnum; i++ ) {
 		/* Scan the program header table, load each segment into memory */
 		ph = (void *)buf + elf -> e_ehsize + i * elf -> e_phentsize; 
 		if(ph->p_type == PT_LOAD) {
