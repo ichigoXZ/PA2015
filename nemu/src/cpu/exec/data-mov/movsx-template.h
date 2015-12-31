@@ -1,4 +1,4 @@
-/*#include "cpu/exec/template-start.h"
+#include "cpu/exec/template-start.h"
 
 #define instr movsx
 
@@ -27,7 +27,7 @@ else
 make_instr_helper(rm2r)
 
 #include "cpu/exec/template-end.h"
-*/
+/*
 #include "cpu/exec/template-start.h"
 #define instr movsx
 
@@ -51,3 +51,4 @@ static void do_execute (){
 make_instr_helper(rm2r)
 
 #include "cpu/exec/template-end.h"
+*/
