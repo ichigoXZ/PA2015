@@ -49,13 +49,11 @@ clean: clean-cpp
 	-rm -rf obj 2> /dev/null
 	-rm -f *log.txt entry $(FLOAT) 2> /dev/null
 
-
 ##### some convinient rules #####
 
-
 USERPROG := obj/testcase/mov-c
-#ENTRY := $(USERPROG)
-ENTRY := $(kernel_BIN)
+ENTRY := $(USERPROG)
+#ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)
 	objcopy -S -O binary $(ENTRY) entry
