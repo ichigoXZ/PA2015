@@ -10,10 +10,10 @@ make_helper(movs) {
 
 	IncDec = (cpu.DF == 0) ? data_byte : -data_byte;
 
-	swaddr_write( cpu.edi, data_byte, swaddr_read(cpu.esi, data_byte));
+	swaddr_write( reg_l(R_EDI), data_byte, swaddr_read(reg_l(R_ESI), data_byte));
 
-	cpu.edi += IncDec;
-	cpu.esi += IncDec;
+	reg_l(R_EDI) += IncDec;
+	reg_l(R_ESI) += IncDec;
 
 #ifdef DEBUG
 	print_asm_template1();
