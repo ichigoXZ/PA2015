@@ -9,7 +9,7 @@ static void do_execute () {
 	cpu.eip = cpu.eip & 0x0000ffff;
 #endif
 	printf("cpu.esp: 0x%x\n",cpu.esp );
-	cpu.esp += op_src->val;
+	cpu.esp += (op_src->val & 0x0000ffff);
 	printf("op_src:0x%x\n",op_src->val);
 	printf("cpu.esp: 0x%x\n",cpu.esp );
 
