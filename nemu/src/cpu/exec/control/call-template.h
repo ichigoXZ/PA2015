@@ -3,11 +3,10 @@
 
 
 static void do_execute (){
-	//printf("eip: 0x%x\n",cpu.eip );
-	int len=concat(decode_i_, SUFFIX)(cpu.eip + 1) +1;
+	printf("eip: 0x%x\n",cpu.eip );
+	int len=concat(decode_i_, SUFFIX)(cpu.eip + 1) ;
 	//printf("len:%d\n",len );
 	cpu.esp -= DATA_BYTE;
-	printf("cpu.esp:0x%x\n",cpu.esp );
 	if(4 == DATA_BYTE){
 		MEM_W(cpu.esp,  cpu.eip + len);
 		cpu.eip = cpu.eip+ op_src->val;
