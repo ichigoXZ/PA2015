@@ -41,7 +41,7 @@ make_helper(ret) {
 		cpu.esp += 4;
 	}
 	print_asm("ret");
-	return 0;
+	return 1;
 }
 
 make_helper(cltd) {
