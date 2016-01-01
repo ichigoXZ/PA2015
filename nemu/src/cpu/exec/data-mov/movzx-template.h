@@ -27,7 +27,7 @@ static void do_execute (){
 	if(DATA_BYTE == 2)
 		zeroExtend = 0x000000ff & op_src->val;
 	else{
-		if(ops_decoded.opcode == (0xb6 | 0x100)){
+		if(ops_decoded.opcode == 0xb6){
 			zeroExtend = 0x000000ff & op_src->val;
 		}else{
 			zeroExtend = 0x0000ffff & op_src->val;
@@ -36,7 +36,7 @@ static void do_execute (){
 		
 	write_operand_l(op_dest , zeroExtend);
 	print_asm_template2();
-}
+}                     
 
 make_instr_helper(rm2r)
 
