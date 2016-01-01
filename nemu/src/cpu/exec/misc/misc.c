@@ -33,8 +33,13 @@ make_helper(leave) {
 }
 
 make_helper(ret) {
+	if(ops_decoded.is_data_size_16 == 1){
+		cpu.eip = swaddr_read(cpu.esp, 2);
+		cpu.esp += 2;
+	}else{
 		cpu.eip = swaddr_read(cpu.esp, 4);
 		cpu.esp += 4;
+	}
 	print_asm("ret");
 	printf("eip:0x%x\n",cpu.eip );
 	return 1;
