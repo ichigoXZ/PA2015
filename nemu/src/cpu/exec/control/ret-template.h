@@ -2,7 +2,7 @@
 
 #define instr ret
 
-static void do_execute () {
+static void do_execute (concat(ret_i_, SUFFIX)) {
 	concat(decode_i_, SUFFIX)(cpu.eip + 1);
 	if(DATA_BYTE == 2){
 		cpu.eip = MEM_R(cpu.esp);
