@@ -9,7 +9,7 @@ static void do_execute () {
 	cpu.eip = cpu.eip & 0x0000ffff;
 #endif
 	cpu.esp += op_src->val;
-
+	cpu.eip-=2;
 	print_asm_template1();
 }
 
