@@ -3,8 +3,8 @@
 make_helper(scas) {
 	int data_byte = 0,flag = 0;
 
-	if(ops_decoded.opcode == 0xa4) data_byte = 1;
-	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
+	if(ops_decoded.opcode == 0xae) data_byte = 1;
+	else if(ops_decoded.opcode == 0xaf && ops_decoded.is_data_size_16 == 0){
 		data_byte = 4;
 	}else data_byte = 2;
 
