@@ -8,11 +8,8 @@ static void do_execute () {
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0x0000ffff;
 #endif
-	printf("cpu.esp: 0x%x\n",cpu.esp );
 	cpu.esp += op_src->val;
-	printf("op_src:0x%x\n",op_src->val);
-	printf("cpu.eip: 0x%x\n",cpu.eip );
-
+	
 	print_asm_template1();
 }
 
