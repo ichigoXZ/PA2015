@@ -19,7 +19,6 @@ int main() {
 		d.pad2[i] = i;
 //set_bp();
 	}
-set_bp();
 	struct dummy t = fun(d);
 	
 	for(i = 0; i < N; i ++) {
