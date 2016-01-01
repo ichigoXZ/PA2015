@@ -3,6 +3,7 @@
 #define instr ret
 
 static void do_execute () {
+	printf("yes!\n");
 	cpu.eip = MEM_R(cpu.esp);
 	cpu.esp += DATA_BYTE;
 #if DATA_BYTE == 2
