@@ -7,7 +7,7 @@ make_helper(movs) {
 	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
 		data_byte = 4;
 	}else data_byte = 2;
-	printf("%d\n",data_byte );
+
 	IncDec = (cpu.DF == 0) ? data_byte : -data_byte;
 
 	swaddr_write( cpu.edi, data_byte, swaddr_read(cpu.esi, data_byte));
