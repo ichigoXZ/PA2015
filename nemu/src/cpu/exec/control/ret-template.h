@@ -3,13 +3,12 @@
 #define instr ret
 
 static void do_execute () {
-	printf("yes! DATA_BYTE:%d\n",DATA_BYTE);
 	cpu.eip = MEM_R(cpu.esp);
 	cpu.esp += DATA_BYTE;
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0x0000ffff;
 #endif
-	cpu.esp += op_src->val;
+	cpu.esp += op_src->val & 0x0000ffff;
 
 	print_asm_template1();
 }
