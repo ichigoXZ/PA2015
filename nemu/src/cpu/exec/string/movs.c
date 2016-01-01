@@ -14,7 +14,7 @@ make_helper(movs) {
 
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
-	printf("edi:0x%x; dsi:0x%x\n",cpu.edi,cpu.esi );
+
 #ifdef DEBUG
 	print_asm_template1();
 #endif
