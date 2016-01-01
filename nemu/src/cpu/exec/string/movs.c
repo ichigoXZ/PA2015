@@ -2,7 +2,7 @@
 
 make_helper(movs) {
 	int data_byte = 0, IncDec=0;
-
+	printf("yes!\n");
 	if(ops_decoded.opcode == 0xa4) data_byte = 1;
 	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
 		data_byte = 4;
