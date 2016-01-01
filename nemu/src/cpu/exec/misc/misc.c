@@ -41,9 +41,7 @@ make_helper(ret) {
 		cpu.esp += 4;
 	}
 	print_asm("ret");
-	//printf("eip:0x%x\n",cpu.eip );
 	return 1;
-	//return decode_i_l(cpu.eip)+1;
 }
 
 make_helper(cltd) {
