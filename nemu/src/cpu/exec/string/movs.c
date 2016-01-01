@@ -1,21 +1,20 @@
-
 #include "cpu/exec/helper.h"
 
 make_helper(movs) {
-	int DATA_BYTE = 0, IncDec=0;
+	int data_byte = 0, IncDec=0;
 
-	if(ops_decoded.opcode == 0xa4) DATA_BYTE = 1;
+	if(ops_decoded.opcode == 0xa4) data_byte = 1;
 	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
-		DATA_BYTE = 4;
-	}else DATA_BYTE = 2;
+		data_byte = 4;
+	}else data_byte = 2;
 
-	IncDec = (cpu.DF == 0) ? DATA_BYTE : -DATA_BYTE;
+	IncDec = (cpu.DF == 0) ? data_byte : -data_byte;
 
-	swaddr_write( cpu.edi, DATA_BYTE, swaddr_read(cpu.esi, DATA_BYTE));
+	swaddr_write( cpu.edi, data_byte, swaddr_read(cpu.esi, data_byte));
 
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
-
+	printf("edi:0x%x; dsi:0x%x\n",cpu.edi,cpu.esi );
 #ifdef DEBUG
 	print_asm_template1();
 #endif
