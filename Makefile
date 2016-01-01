@@ -51,7 +51,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/to-lower-case
+USERPROG := obj/testcase/wanshu
 #USERPROG := obj/testcase/struct
 ENTRY := $(USERPROG)
 #ENTRY := $(kernel_BIN)
