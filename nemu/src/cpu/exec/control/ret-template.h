@@ -3,12 +3,14 @@
 #define instr ret
 
 static void do_execute () {
-	cpu.eip = MEM_R(cpu.esp);
-	cpu.esp += DATA_BYTE;
-	cpu.eip = cpu.eip & 0x0000ffff;
-	cpu.esp += op_src->val & 0x0000ffff;
-
-	print_asm_template1();
+	if(DATA_BYTE == 2){
+		cpu.eip = MEM_R(cpu.esp);
+		cpu.esp += 2;
+		cpu.eip &= 0x0000ffff;
+	}else{
+		cpu.eip = MEM_R(cpu.esp);
+		cpu.esp += 4;
+	}
 }
 
 make_instr_helper(i)
