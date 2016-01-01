@@ -4,7 +4,8 @@
 
 static void do_execute () {
 	cpu.eip = MEM_R(cpu.esp);
-		printf("cpu.eip:0x%x\n",cpu.eip );
+	cpu.eip -= DATA_BYTE;
+			printf("cpu.eip:0x%x\n",cpu.eip );
 	cpu.esp += DATA_BYTE;
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0x0000ffff;
