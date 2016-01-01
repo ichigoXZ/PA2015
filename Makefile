@@ -51,7 +51,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/sub-longlong
+USERPROG := obj/testcase/sum
 #USERPROG := obj/testcase/struct
 ENTRY := $(USERPROG)
 #ENTRY := $(kernel_BIN)
