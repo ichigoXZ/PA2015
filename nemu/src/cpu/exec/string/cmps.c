@@ -3,8 +3,8 @@
 make_helper(cmps) {
 	int data_byte = 0;
 
-	if(ops_decoded.opcode == 0xa4) data_byte = 1;
-	else if(ops_decoded.opcode == 0xa5 && ops_decoded.is_data_size_16 == 0){
+	if(ops_decoded.opcode == 0xa6) data_byte = 1;
+	else if(ops_decoded.opcode == 0xa7 && ops_decoded.is_data_size_16 == 0){
 		data_byte = 4;
 	}else data_byte = 2;
 
