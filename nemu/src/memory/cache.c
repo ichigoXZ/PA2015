@@ -54,9 +54,11 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	for(i=0; i<NR_ROW; i++){
 		if(cache[caddr.group][i].rem == caddr.rem && cache[caddr.group][i].valid){
 			/*read a block*/
-			if(len + caddr.block <= NR_BLOCK)
+			if(len + caddr.block <= NR_BLOCK){
 				memcpy(&temp, &cache[caddr.group][i].data[caddr.block], len);
-			return temp;
+				printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
+				return temp;
+			}
 		}
 	}
 	for(i = 0; i < NR_ROW; i++) {
@@ -64,6 +66,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 			cache[caddr.group][i].rem = caddr.rem;
 			cache[caddr.group][i].valid = 1;
 			update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
+			printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
 			return dram_read(addr, len);
 		}
 	}
