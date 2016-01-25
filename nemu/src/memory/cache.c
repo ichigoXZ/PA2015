@@ -56,6 +56,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 			/*read a block*/
 			if(len + caddr.block <= NR_BLOCK){
 				memcpy(&temp, &cache[caddr.group][i].data[caddr.block], len);
+				printf("cache_read branch1:\n");
 				printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
 				return temp;
 			}
@@ -66,6 +67,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 			cache[caddr.group][i].rem = caddr.rem;
 			cache[caddr.group][i].valid = 1;
 			update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
+			printf("cache_read branch2:\n");
 			printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
 			return dram_read(addr, len);
 		}
@@ -75,6 +77,8 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	cache[caddr.group][i].rem = caddr.rem;
 	cache[caddr.group][i].valid = 1;
 	update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
+	printf("cache_read branch3:\n");
+	printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
 	return dram_read(addr, len);
 }
 
