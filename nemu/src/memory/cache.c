@@ -68,7 +68,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 			cache[caddr.group][i].valid = 1;
 			update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
 			printf("cache_read branch2:\n");
-			printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
+			printf("i = %d,content = %x, group = %d, rem = %d\n", i,temp, caddr.group , caddr.rem);
 			return dram_read(addr, len);
 		}
 	}
@@ -77,7 +77,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	cache[caddr.group][i].rem = caddr.rem;
 	cache[caddr.group][i].valid = 1;
 	update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
-	printf("cache_read branch3:\n");
+	printf("cache_read branch:\n");
 	printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
 	return dram_read(addr, len);
 }
