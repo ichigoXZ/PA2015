@@ -70,7 +70,7 @@ static void ccr_read(hwaddr_t addr ,void * data) {
 			cache[group][i].rem = rem;
 			cache[group][i].valid = 1;
 			for(k = 0;k<NR_BLOCK;k++) {
-				cache[group][i].data[k]=dram_read((addr & ~(NR_BLOCK-1))+i, 1);	
+				cache[group][i].data[k]=dram_read((addr & ~(NR_BLOCK-1))+k, 1);	
 				printf("%d  %d\n", k, cache[group][i].data[k]);			
 			}
 			memcpy(data, &cache[group][i].data[block], BURST_LEN);
