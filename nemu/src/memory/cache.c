@@ -41,57 +41,96 @@ cache_block cache[NR_GROUP][NR_ROW];
 
 uint32_t dram_read(hwaddr_t addr, size_t len);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
-void update_cache(hwaddr_t addr, void *data, size_t len);
 
 void init_cache() {
 	memset(cache, 0, sizeof(cache));
 }
 
-uint32_t cache_read(hwaddr_t addr, size_t len) {
-	cache_addr caddr;
-	caddr.addr = addr;
-	uint32_t temp,i;
+static void ccr_read(hwaddr_t addr ,void * data) {
+	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+
+	cache_addr temp;
+	temp.addr = addr & ~BURST_MASK;
+	uint32_t block = temp.block;
+	uint32_t group = temp.group;
+	uint32_t rem = temp.rem;
+
+	uint32_t i,k;
 	for(i=0; i<NR_ROW; i++){
-		if(cache[caddr.group][i].rem == caddr.rem && cache[caddr.group][i].valid){
+		if(cache[group][i].rem == rem && cache[group][i].valid){
 			/*read a block*/
-			if(len + caddr.block <= NR_BLOCK){
-				memcpy(&temp, &cache[caddr.group][i].data[caddr.block], len);
-				printf("cache_read branch1:\n");
-				printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
-				return temp;
-			}
+			memcpy(data, &cache[group][i].data[block], BURST_LEN);
+			return;
 		}
 	}
 	for(i = 0; i < NR_ROW; i++) {
-		if(cache[caddr.group][i].valid == 0) {
-			cache[caddr.group][i].rem = caddr.rem;
-			cache[caddr.group][i].valid = 1;
-			update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
-			printf("cache_read branch2:\n");
-			printf("i = %d,content = %x, group = %d, rem = %d\n", i,temp, caddr.group , caddr.rem);
-			return dram_read(addr, len);
+		if(cache[group][i].valid == 0) {
+			cache[group][i].rem = rem;
+			cache[group][i].valid = 1;
+			for(k = 0;k<NR_BLOCK;k++) {
+				cache[group][i].data[k]=dram_read((addr & ~(NR_BLOCK-1))+i, 1);				
+			}
+			memcpy(data, &cache[group][i].data[block], BURST_LEN);
+			//printf("cache_read branch2:\n");
+			//printf("i = %d,content = %x, group = %d, rem = %d\n", i,temp, caddr.group , caddr.rem);
+			return ;
 		}
 	}
 	srand(time(0));
 	i = rand()%NR_BLOCK;
-	cache[caddr.group][i].rem = caddr.rem;
-	cache[caddr.group][i].valid = 1;
-	update_cache(addr,cache[caddr.group][i].data,NR_BLOCK);
-	printf("cache_read branch:\n");
-	printf("content = %x, group = %d, rem = %d\n", temp, caddr.group , caddr.rem);
-	return dram_read(addr, len);
+	cache[group][i].rem = rem;
+	cache[group][i].valid = 1;
+	for(k = 0;k<NR_BLOCK;k++) {
+		cache[group][i].data[k]=dram_read((addr & ~(NR_BLOCK-1))+i, 1);				
+	}
+	memcpy(data, &cache[group][i].data[block], BURST_LEN);
+}
+
+static void ccr_write(hwaddr_t addr , void *data,uint8_t *mask) {
+	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	cache_addr temp;
+	temp.addr = addr & ~BURST_MASK;
+
+	uint32_t block = temp.block;
+	uint32_t group = temp.group;
+	uint32_t rem = temp.rem;
+
+	uint32_t i;
+	for(i = 0; i < NR_ROW; i++) {
+		if(cache[group][i].valid && cache[group][i].rem == rem) {
+			memcpy_with_mask(&cache[group][i].data[block],data,BURST_LEN, mask);
+			return;
+		}
+	} 
+}
+
+uint32_t cache_read(hwaddr_t addr, size_t len) {
+	uint32_t offset = addr & BURST_MASK;
+	uint8_t temp[2 * BURST_LEN];
+
+	ccr_read(addr,temp);;
+
+	if(offset + len > BURST_LEN) {
+		/* data cross the burst boundary */	
+		ccr_read(addr + BURST_LEN, temp + BURST_LEN);
+	}
+	return unalign_rw(temp + offset, 4);
 }
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
-	cache_addr caddr;
-	caddr.addr = addr;
-	uint32_t i;
-	for(i = 0; i < NR_ROW; i++) {
-		if(cache[caddr.group][i].valid && cache[caddr.group][i].rem == caddr.rem) {
-			memcpy(&cache[caddr.group][i].data[caddr.block], &data, len);
-			dram_write(addr, len, data);
-			return;
-		}
+	uint32_t offset = addr & BURST_MASK;
+	uint8_t temp[2 * BURST_LEN];
+	uint8_t mask[2 * BURST_LEN];
+	memset(mask, 0, 2 * BURST_LEN);
+
+	*(uint32_t *)(temp + offset) = data;
+	memset(mask + offset, 1, len);
+
+	ccr_write(addr,temp,mask);
+
+	if(offset + len > BURST_LEN) {
+		/* data cross the brust boundary */
+		ccr_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
 	}
 }
 
