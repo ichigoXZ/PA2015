@@ -60,8 +60,8 @@ static void ccr_read(hwaddr_t addr ,void * data) {
 		if(cache[group][i].rem == rem && cache[group][i].valid){
 			/*read a block*/
 			memcpy(data, &cache[group][i].data[block], BURST_LEN);
-			//printf("cache_read branch1:\n");
-			//printf("i = %d,group = %d, rem = %d\n", i,group , rem);
+			printf("cache_read branch1:\n");
+			printf("i = %d,group = %d, rem = %d\n", i,group , rem);
 			return;
 		}
 	}
