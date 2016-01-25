@@ -40,7 +40,7 @@ CACHE cache[NR_SET];
 uint64_t cpu_time;
 
 uint32_t dram_read(hwaddr_t, size_t);
-//uint32_t L2_cache_read(hwaddr_t, size_t);
+uint32_t L2_cache_read(hwaddr_t, size_t);
 //void dram_write(hwaddr_t, size_t, uint32_t);
 
 void init_cache() {
