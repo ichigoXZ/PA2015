@@ -60,6 +60,8 @@ static void ccr_read(hwaddr_t addr ,void * data) {
 		if(cache[group][i].rem == rem && cache[group][i].valid){
 			/*read a block*/
 			memcpy(data, &cache[group][i].data[block], BURST_LEN);
+			printf("cache_read branch1:\n");
+			printf("i = %d,group = %d, rem = %d\n", i,group , rem);
 			return;
 		}
 	}
@@ -71,8 +73,8 @@ static void ccr_read(hwaddr_t addr ,void * data) {
 				cache[group][i].data[k]=dram_read((addr & ~(NR_BLOCK-1))+i, 1);				
 			}
 			memcpy(data, &cache[group][i].data[block], BURST_LEN);
-			//printf("cache_read branch2:\n");
-			//printf("i = %d,content = %x, group = %d, rem = %d\n", i,temp, caddr.group , caddr.rem);
+			printf("cache_read branch2:\n");
+			printf("i = %d,group = %d, rem = %d\n", i, group , rem);
 			return ;
 		}
 	}
