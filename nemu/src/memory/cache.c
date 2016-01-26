@@ -14,7 +14,7 @@
 
 uint32_t dram_read(hwaddr_t addr, size_t len);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
-void update_cache(hwaddr_t, void *, size_t);
+//void update_cache(hwaddr_t, void *, size_t);
 
 typedef union {
 	struct {
@@ -69,7 +69,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			//update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
 			for (j=0; j<NR_BLOCK; j++) {
 			cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
-		//	cache[set].data[k][i]=L2_cache_read((addr & ~(NR_COL-1))+i, 1);
+		//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
 			}
 			return dram_read(addr, len);
 		} 
@@ -79,7 +79,10 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 	cache[temp.group][i].row = temp.row;
 	cache[temp.group][i].flag = temp.flag;
 	cache[temp.group][i].valid = 1;
-	update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
+	for (j=0; j<NR_BLOCK; j++) {
+		cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
+	//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
+		}
 	return dram_read(addr, len);
 }
 
