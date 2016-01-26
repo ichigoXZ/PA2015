@@ -12,6 +12,8 @@
 #define NR_GROUP (1 << GROUP_WIDTH) 
 #define NR_ROW (1 << ROW_WIDTH)
 
+uint64_t cpu_time;
+
 uint32_t dram_read(hwaddr_t addr, size_t len);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 
@@ -43,6 +45,7 @@ void init_cache() {
 			cache[i][j].valid = 0;
 		}
 	}
+	cpu_time = 0;
 }
 
 
@@ -55,6 +58,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
 			if (len + temp.block <= NR_BLOCK) {
 				memcpy(&data, &cache[temp.group][i].block[temp.block], len);
+				cpu_time += 2;
 				return data;
 			}
 			
@@ -70,6 +74,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
 		//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
 			}
+			cpu_time += 200;
 			return dram_read(addr, len);
 		} 
 	}
@@ -82,36 +87,19 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 		cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
 	//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
 		}
+	cpu_time += 200;
 	return dram_read(addr, len);
 }
 
-/*void pretend_cache_read(hwaddr_t addr, size_t len) {
-	int i;
-	cache_addr temp;
-	temp.addr = addr;
-	uint32_t data;
-	for (i=0;i<GROUP_WIDTH;i++) {
-		if (cache[temp.row][i].q == temp.group && cache[temp.row][i].f == temp.flag && cache[temp.row][i].valid == 1) {
-			if (len + temp.block <= NR_BLOCK) {
-				memcpy(&data, &cache[temp.row][i].block[temp.block], len);
-				printf("content = %x, f = %d, q = %d\n", data, temp.flag , temp.group);
-				return ;
-			}
-			
-		} 
-	}
-	printf("can't find in the cache");
-	return ;
-}
-*/
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
 	cache_addr temp;
 	temp.addr = addr;
 	for (i=0;i<NR_ROW;i++)
-		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) 
+		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
 			memcpy(&cache[temp.group][i].block[temp.block], &data, len);
-	dram_write(addr, len, data);
+			dram_write(addr, len, data);
+		}
 }
 
 
