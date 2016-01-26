@@ -3,14 +3,14 @@
 
 #include <common.h>
 
-#define W_WIDTH 6
-#define Q_WIDTH 3
-#define R_WIDTH 7
-#define F_WIDTH (27-W_WIDTH-Q_WIDTH-R_WIDTH)
+#define BLOCK_WIDTH 6
+#define GROUP_WIDTH 3
+#define ROW_WIDTH 7
+#define FLAG_WIDTH (27-BLOCK_WIDTH-GROUP_WIDTH-ROW_WIDTH)
 
-#define BLOCK_SIZE (1 << W_WIDTH)
-#define BLOCK_NUM (1 << Q_WIDTH) 
-#define GROUP_NUM (1 << R_WIDTH)
+#define NR_BLOCK (1 << BLOCK_WIDTH)
+#define NR_GROUP (1 <<GROUP_WIDTH) 
+#define NR_ROW (1 << ROW_WIDTH)
 
 //uint32_t L2cache_read(hwaddr_t, size_t);
 //void L2cache_write(hwaddr_t, size_t, uint32_t);
@@ -20,30 +20,30 @@ void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 
 typedef union {
 	struct {
-		uint32_t w	:W_WIDTH;
-		uint32_t q 	:Q_WIDTH;
-		uint32_t r 	:R_WIDTH;
-		uint32_t f 	:F_WIDTH;
+		uint32_t block	:BLOCK_WIDTH;
+		uint32_t group  	:GROUP_WIDTH;
+		uint32_t row  	:ROW_WIDTH;
+		uint32_t flag  	:FLAG_WIDTH;
 	};
 	uint32_t addr;
 }cache_addr;
 
 typedef  struct {
 	struct {
-		uint32_t q 	:Q_WIDTH;
-		uint32_t f 	:F_WIDTH;
+		uint32_t group 	:GROUP_WIDTH;
+		uint32_t flag 	:FLAG_WIDTH;
 		uint32_t valid	:1;
 	};
-	uint8_t block[BLOCK_SIZE];
+	uint8_t block[NR_BLOCK];
 }cache_block;
 
-cache_block cache[GROUP_NUM][BLOCK_NUM];	
+cache_block cache[NR_GROUP][NR_ROW];	
 
 
 void init_cache() {
 	int i, j;
-	for(i = 0; i < GROUP_NUM; i ++) {
-		for(j = 0; j < BLOCK_NUM; j ++) {
+	for(i = 0; i < NR_ROW; i ++) {
+		for(j = 0; j < NR_GROUP; j ++) {
 			cache[i][j].valid = 0;
 		}
 	}
@@ -52,46 +52,47 @@ void init_cache() {
 
 uint32_t cache_read(hwaddr_t addr,  size_t len) {
 	int i;
-	cache_addr caddr;
-	caddr.addr = addr;
-	uint32_t temp;
-	for (i=0;i<BLOCK_NUM;i++) {
-		if (cache[caddr.r][i].q == caddr.q && cache[caddr.r][i].f == caddr.f && cache[caddr.r][i].valid == 1) {
-			if (len + caddr.w <= BLOCK_SIZE) {
-				memcpy(&temp, &cache[caddr.r][i].block[caddr.w], len);
-				return temp;
+	cache_addr temp;
+	temp.addr = addr;
+	uint32_t data;
+	for (i=0;i<NR_ROW;i++) {
+		if (cache[temp.group][i].group == temp.group && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
+			if (len + temp.block <= NR_BLOCK) {
+				memcpy(&data, &cache[temp.group][i].block[temp.block], len);
+				return data;
 			}
+			
 			
 		} 
 	}
-	for (i=0;i<BLOCK_NUM;i++) {
-		if (cache[caddr.r][i].valid == 0) {
-			cache[caddr.r][i].q = caddr.q;
-			cache[caddr.r][i].f = caddr.f;
-			cache[caddr.r][i].valid = 1;
-			update_cache(addr, cache[caddr.r][i].block, BLOCK_SIZE);
+	for (i=0;i<NR_ROW;i++) {
+		if (cache[temp.group][i].valid == 0) {
+			cache[temp.group][i].group = temp.group;
+			cache[temp.group][i].flag = temp.flag;
+			cache[temp.group][i].valid = 1;
+			update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
 			return dram_read(addr, len);
 		} 
 	}
 	srand(time(0));
-	i = rand()%BLOCK_NUM;
-	cache[caddr.r][i].q = caddr.q;
-	cache[caddr.r][i].f = caddr.f;
-	cache[caddr.r][i].valid = 1;
-	update_cache(addr, cache[caddr.r][i].block, BLOCK_SIZE);
+	i = rand()%NR_GROUP;
+	cache[temp.group][i].group = temp.group;
+	cache[temp.group][i].flag = temp.flag;
+	cache[temp.group][i].valid = 1;
+	update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
 	return dram_read(addr, len);
 }
 
-void pretend_cache_read(hwaddr_t addr, size_t len) {
+/*void pretend_cache_read(hwaddr_t addr, size_t len) {
 	int i;
-	cache_addr caddr;
-	caddr.addr = addr;
-	uint32_t temp;
-	for (i=0;i<BLOCK_NUM;i++) {
-		if (cache[caddr.r][i].q == caddr.q && cache[caddr.r][i].f == caddr.f && cache[caddr.r][i].valid == 1) {
-			if (len + caddr.w <= BLOCK_SIZE) {
-				memcpy(&temp, &cache[caddr.r][i].block[caddr.w], len);
-				printf("content = %x, f = %d, q = %d\n", temp, caddr.f , caddr.q);
+	cache_addr temp;
+	temp.addr = addr;
+	uint32_t data;
+	for (i=0;i<NR_ROW;i++) {
+		if (cache[temp.group][i].group == temp.group && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
+			if (len + temp.block <= NR_BLOCK) {
+				memcpy(&data, &cache[temp.group][i].block[temp.block], len);
+				printf("content = %x, f = %d, q = %d\n", data, temp.flag , temp.group);
 				return ;
 			}
 			
@@ -100,13 +101,13 @@ void pretend_cache_read(hwaddr_t addr, size_t len) {
 	printf("can't find in the cache");
 	return ;
 }
-
+*/
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
-	cache_addr caddr;
-	caddr.addr = addr;
-	for (i=0;i<BLOCK_NUM;i++)
-		if (cache[caddr.r][i].q == caddr.q && cache[caddr.r][i].f == caddr.f && cache[caddr.r][i].valid == 1) 
-			memcpy(&cache[caddr.r][i].block[caddr.w], &data, len);
+	cache_addr temp;
+	temp.addr = addr;
+	for (i=0;i<NR_ROW;i++)
+		if (cache[temp.group][i].group == temp.group && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) 
+			memcpy(&cache[temp.group][i].block[temp.block], &data, len);
 	dram_write(addr, len, data);
 }
