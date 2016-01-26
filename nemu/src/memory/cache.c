@@ -56,7 +56,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 	temp.addr = addr;
 	uint32_t data;
 	for (i=0;i<NR_ROW;i++) {
-		if (cache[temp.group][i].group == temp.group && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
+		if (cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
 			if (len + temp.block <= NR_BLOCK) {
 				memcpy(&data, &cache[temp.group][i].block[temp.block], len);
 				return data;
