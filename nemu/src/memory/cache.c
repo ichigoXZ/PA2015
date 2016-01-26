@@ -93,13 +93,19 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
+	bool find;
 	cache_addr temp;
 	temp.addr = addr;
 	for (i=0;i<NR_ROW;i++)
 		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
 			memcpy(&cache[temp.group][i].block[temp.block], &data, len);
-			dram_write(addr, len, data);
+			find = true;
 		}
+	dram_write(addr, len, data);
+	if(find)	
+		cpu_time += 2;
+	else
+		cpu_time += 200;
 }
 
 
