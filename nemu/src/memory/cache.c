@@ -4,8 +4,8 @@
 #include <common.h>
 
 #define BLOCK_WIDTH 6
-#define GROUP_WIDTH 3
-#define ROW_WIDTH 7
+#define GROUP_WIDTH 7
+#define ROW_WIDTH 3
 #define FLAG_WIDTH (27-BLOCK_WIDTH-GROUP_WIDTH-ROW_WIDTH)
 
 #define NR_BLOCK (1 << BLOCK_WIDTH)
