@@ -4,8 +4,8 @@
 #include <common.h>
 
 #define BLOCK_WIDTH 6
-#define GROUP_WIDTH 3
-#define ROW_WIDTH 7
+#define ROW_WIDTH 3
+#define GROUP_WIDTH 7
 #define FLAG_WIDTH (27-BLOCK_WIDTH-GROUP_WIDTH-ROW_WIDTH)
 
 #define NR_BLOCK (1 << BLOCK_WIDTH)
@@ -69,7 +69,6 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			cache[temp.group][i].row = temp.row;
 			cache[temp.group][i].flag = temp.flag;
 			cache[temp.group][i].valid = 1;
-			//update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
 			for (j=0; j<NR_BLOCK; j++) {
 			cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
 		//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
@@ -93,7 +92,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
-	bool find;
+	bool find = false;
 	cache_addr temp;
 	temp.addr = addr;
 	for (i=0;i<NR_ROW;i++)
