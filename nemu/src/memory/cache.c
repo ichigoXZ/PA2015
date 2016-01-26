@@ -14,8 +14,10 @@
 
 uint64_t cpu_time;
 
-uint32_t dram_read(hwaddr_t addr, size_t len);
-void dram_write(hwaddr_t addr, size_t len, uint32_t data);
+//uint32_t dram_read(hwaddr_t addr, size_t len);
+//void dram_write(hwaddr_t addr, size_t len, uint32_t data);
+uint32_t L2cache_read(hwaddr_t addr,  size_t len);
+void L2cache_write(hwaddr_t addr, size_t len, uint32_t data);
 
 typedef union {
 	struct {
@@ -70,11 +72,11 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			cache[temp.group][i].flag = temp.flag;
 			cache[temp.group][i].valid = 1;
 			for (j=0; j<NR_BLOCK; j++) {
-			cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
-		//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
+		//	cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
+			cache[temp.group][i].block[j]=L2cache_read((addr & ~(NR_BLOCK-1))+j, 1);
 			}
 			cpu_time += 200;
-			return dram_read(addr, len);
+			return L2cache_read(addr, len);
 		} 
 	}
 	srand(time(0));
@@ -83,11 +85,11 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 	cache[temp.group][i].flag = temp.flag;
 	cache[temp.group][i].valid = 1;
 	for (j=0; j<NR_BLOCK; j++) {
-		cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
-	//	cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
+	//	cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
+		cache[temp.group][i].block[j]=L2cache_read((addr & ~(NR_BLOCK-1))+j, 1);
 		}
 	cpu_time += 200;
-	return dram_read(addr, len);
+	return L2cache_read(addr, len);
 }
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -100,7 +102,7 @@ void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 			memcpy(&cache[temp.group][i].block[temp.block], &data, len);
 			find = true;
 		}
-	dram_write(addr, len, data);
+	L2cache_write(addr, len, data);
 	if(find)	
 		cpu_time += 2;
 	else
