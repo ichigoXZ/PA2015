@@ -48,7 +48,7 @@ void init_cache() {
 
 
 uint32_t cache_read(hwaddr_t addr,  size_t len) {
-	int i;
+	int i,j;
 	cache_addr temp;
 	temp.addr = addr;
 	uint32_t data;
@@ -66,7 +66,11 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			cache[temp.group][i].row = temp.row;
 			cache[temp.group][i].flag = temp.flag;
 			cache[temp.group][i].valid = 1;
-			update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
+			//update_cache(addr, cache[temp.group][i].block, NR_BLOCK);
+			for (j=0; j<NR_BLOCK; j++) {
+			cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
+		//	cache[set].data[k][i]=L2_cache_read((addr & ~(NR_COL-1))+i, 1);
+			}
 			return dram_read(addr, len);
 		} 
 	}
