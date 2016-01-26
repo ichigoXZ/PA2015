@@ -1,8 +1,8 @@
-/*#include <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
 
 #include <common.h>
-*/
+
    /* L2cache block存储空间的大小为64B
     L2cache存储空间的大小为4MB
     16-way set associative
@@ -10,10 +10,10 @@
     替换算法采用随机方式
     write back
     write allocate*/
-/*
+
 #define BLOCK_WIDTH 6
-#define GROUP_WIDTH 4
-#define ROW_WIDTH 12
+#define ROW_WIDTH 4
+#define GROUP_WIDTH 12
 #define FLAG_WIDTH (27-BLOCK_WIDTH-GROUP_WIDTH-ROW_WIDTH)
 
 #define NR_BLOCK (1 << BLOCK_WIDTH)
@@ -38,7 +38,7 @@ typedef  struct {
 		uint32_t row	:ROW_WIDTH;
 		uint32_t flag 	:FLAG_WIDTH;
 		uint32_t valid	:1;
-		uint32_t dirty 	;1;
+		uint32_t dirty 	:1;
 	};
 	uint8_t block[NR_BLOCK];
 }L2cache_block;
@@ -53,7 +53,6 @@ void init_L2cache() {
 			L2cache[i][j].dirty = 0;
 		}
 	}
-	cpu_time = 0;
 }
 
 
@@ -79,7 +78,6 @@ uint32_t L2cache_read(hwaddr_t addr,  size_t len) {
 			L2cache[temp.group][i].dirty = 0;
 			for (j=0; j<NR_BLOCK; j++) {
 			L2cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
-		//	L2cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
 			}
 			return dram_read(addr, len);
 		} 
@@ -87,34 +85,31 @@ uint32_t L2cache_read(hwaddr_t addr,  size_t len) {
 	srand(time(0));
 	i = rand()%NR_ROW;
 	if (L2cache[temp.group][i].dirty) {
-		dram_addr daddr;
+		L2cache_addr daddr;
 		daddr.addr = addr;
-		daddr.
+		daddr.block = 0;
 		for (j=0; j<NR_BLOCK; j++) 
-			dram_write((addrdram & ~(NR_BLOCK-1))+j, 1, L2_cache[temp.group][i].block[j]);
+			dram_write((daddr.addr & ~(NR_BLOCK-1))+j, 1, L2cache[temp.group][i].block[j]);
 	}
 	L2cache[temp.group][i].row = temp.row;
 	L2cache[temp.group][i].flag = temp.flag;
 	L2cache[temp.group][i].valid = 1;
-	L2cache[temp.group][i].dirty = 1;
+	L2cache[temp.group][i].dirty = 0;
 	for (j=0; j<NR_BLOCK; j++) {
 		L2cache[temp.group][i].block[j]=dram_read((addr & ~(NR_BLOCK-1))+j, 1);
-	//	L2cache[temp.group][i].block[j]=L2chche_read((addr & ~(NR_BLOCK-1))+j, 1);
 		}
 	return dram_read(addr, len);
 }
 
 void L2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
-	bool find;
 	L2cache_addr temp;
 	temp.addr = addr;
 	for (i=0;i<NR_ROW;i++)
 		if (L2cache[temp.group][i].row == temp.row && L2cache[temp.group][i].flag == temp.flag && L2cache[temp.group][i].valid == 1) {
 			memcpy(&L2cache[temp.group][i].block[temp.block], &data, len);
+			L2cache[temp.group][i].dirty = 1;
+			return;
 		}
 	dram_write(addr, len, data);
 }
-
-
-*/
