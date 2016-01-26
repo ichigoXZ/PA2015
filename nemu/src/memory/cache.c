@@ -52,7 +52,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 	cache_addr temp;
 	temp.addr = addr;
 	uint32_t data;
-	for (i=0;i<ROW_WIDTH;i++) {
+	for (i=0;i<NR_ROW;i++) {
 		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) {
 			if (len + temp.block <= NR_BLOCK) {
 				memcpy(&data, &cache[temp.group][i].block[temp.block], len);
@@ -61,7 +61,7 @@ uint32_t cache_read(hwaddr_t addr,  size_t len) {
 			
 		} 
 	}
-	for (i=0;i<ROW_WIDTH;i++) {
+	for (i=0;i<NR_ROW;i++) {
 		if (cache[temp.group][i].valid == 0) {
 			cache[temp.group][i].row = temp.row;
 			cache[temp.group][i].flag = temp.flag;
@@ -102,7 +102,7 @@ void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
 	cache_addr temp;
 	temp.addr = addr;
-	for (i=0;i<ROW_WIDTH;i++)
+	for (i=0;i<NR_ROW;i++)
 		if (cache[temp.group][i].row == temp.row && cache[temp.group][i].flag == temp.flag && cache[temp.group][i].valid == 1) 
 			memcpy(&cache[temp.group][i].block[temp.block], &data, len);
 	dram_write(addr, len, data);
