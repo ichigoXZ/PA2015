@@ -2,10 +2,12 @@
 #define __REG_H__
 
 #include "common.h"
+#include "../../lib-common/x86-inc/cpu.h"
 
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
+enum { R_ES, R_CS, R_SS, R_DS };
 
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
@@ -54,6 +56,25 @@ typedef struct {
 		};
 	};
 
+	struct {
+		uint32_t base;
+		uint16_t limit;
+	} GDTR;
+	CR0 cr0;
+	CR3 cr3;
+	union {
+		union {
+			struct {
+				unsigned RPL   : 2;
+				unsigned TI    : 1;
+				unsigned INDEX : 13;
+			};
+			uint16_t _16;
+		} SR[4];
+		struct {
+			uint16_t ES, CS, SS, DS;
+		};
+	};
 } CPU_state;
 
 extern CPU_state cpu;
