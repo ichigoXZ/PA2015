@@ -75,6 +75,13 @@ typedef struct {
 			uint16_t ES, CS, SS, DS;
 		};
 	};
+	struct {
+		bool vaild;
+		uint32_t base;
+		uint32_t limit;
+	} SR_cache[4];
+
+	volatile bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;
