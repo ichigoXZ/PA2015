@@ -75,9 +75,15 @@ static void load_entry() {
 	fclose(fp);
 }
 
-static void init_cr0() {
-	cpu.cr0.protect_enable = 0;
-	cpu.cr0.paging = 0;
+void init_cr0() {
+	cpu.cr0.protect_enable=0;
+	cpu.cr0.paging=0;
+	int i;
+	for (i=0; i<4; i++)
+		cpu.SR_cache[i].vaild=false;
+	cpu.SR_cache[1].vaild=true;
+	cpu.SR_cache[1].base=0;
+	cpu.SR_cache[1].limit=0xffffffff;
 }
 
 void restart() {
