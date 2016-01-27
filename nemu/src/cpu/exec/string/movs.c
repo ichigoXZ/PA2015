@@ -10,7 +10,7 @@ make_helper(movs) {
 
 	IncDec = (cpu.DF == 0) ? data_byte : -data_byte;
 
-	swaddr_write( cpu.edi, data_byte, swaddr_read(cpu.esi, data_byte));
+	swaddr_write( cpu.edi, data_byte, swaddr_read(cpu.esi, data_byte,R_SS),R_DS);
 
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;

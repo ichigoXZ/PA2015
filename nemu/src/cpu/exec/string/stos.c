@@ -10,11 +10,11 @@ make_helper(stos) {
 	
 	IncDec = (cpu.DF == 0)?data_byte:-data_byte;
 	if(data_byte == 1)
-		swaddr_write(cpu.edi,1,cpu.gpr[R_EAX]._8[0]);
+		swaddr_write(cpu.edi,1,cpu.gpr[R_EAX]._8[0],R_DS);
 	else if (data_byte == 2)
-		swaddr_write(cpu.edi,2,cpu.gpr[R_AX]._16);
+		swaddr_write(cpu.edi,2,cpu.gpr[R_AX]._16,R_DS);
 	else
-		swaddr_write(cpu.edi,4,cpu.eax);
+		swaddr_write(cpu.edi,4,cpu.eax,R_DS);
 	
 	cpu.esi += IncDec;
 	cpu.edi += IncDec;

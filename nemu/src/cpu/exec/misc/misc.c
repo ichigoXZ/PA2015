@@ -26,7 +26,7 @@ make_helper(lea) {
 
 make_helper(leave) {
 		cpu.esp = cpu.ebp;
-		cpu.ebp = swaddr_read(cpu.esp, 4);
+		cpu.ebp = swaddr_read(cpu.esp, 4,R_SS);
 		cpu.esp = cpu.esp + 4;
 	print_asm("leave");
 	return 1;
@@ -34,10 +34,10 @@ make_helper(leave) {
 
 make_helper(ret) {
 	if(ops_decoded.is_data_size_16 == 1){
-		cpu.eip = swaddr_read(cpu.esp, 2);
+		cpu.eip = swaddr_read(cpu.esp, 2,R_SS);
 		cpu.esp += 2;
 	}else{
-		cpu.eip = swaddr_read(cpu.esp, 4);
+		cpu.eip = swaddr_read(cpu.esp, 4,R_SS);
 		cpu.esp += 4;
 	}
 	print_asm("ret");

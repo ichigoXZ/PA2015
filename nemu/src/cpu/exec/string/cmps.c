@@ -8,7 +8,7 @@ make_helper(cmps) {
 		data_byte = 4;
 	}else data_byte = 2;
 
-	if(swaddr_read(cpu.esi,data_byte) - swaddr_read(cpu.edi,data_byte) == 0){
+	if(swaddr_read(cpu.esi,data_byte,R_ES) - swaddr_read(cpu.edi,data_byte,R_DS) == 0){
 		cpu.ZF = 1;
 		cpu.esi+=data_byte ;cpu.edi+=data_byte;
 	}

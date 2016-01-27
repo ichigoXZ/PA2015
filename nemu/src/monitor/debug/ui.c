@@ -98,7 +98,7 @@ static int cmd_x(char *args){
 	int addr = (int)expr(exp,NULL);
 	printf("0x%x:\t",addr);
 	for( ; i < atoi(len); i++){
-	printf("0x%.8x\t",swaddr_read(addr+i,4));
+	printf("0x%.8x\t",swaddr_read(addr+i,4,R_DS));
 	if(i%4==3) printf("\n\t\t");
 	}
 	printf("\n");
@@ -133,8 +133,8 @@ static int cmd_bt(char *args){
 	}
 	int no = 0,i = 0;
 	PartOFStackFrame *temp = (PartOFStackFrame*)malloc(sizeof(PartOFStackFrame));
-	temp->prev_ebp = swaddr_read(cpu.ebp,4);
-	temp->ret_addr = swaddr_read(cpu.ebp+4,4);
+	temp->prev_ebp = swaddr_read(cpu.ebp,4,R_SS);
+	temp->ret_addr = swaddr_read(cpu.ebp+4,4,R_SS);
 	temp->args[0] = '\0';
 	if(cpu.ebp != 0){
 			for(i=0 ;i<nr_symtab_entry;i++)
@@ -147,7 +147,7 @@ static int cmd_bt(char *args){
 					while(i<4)
 						temp->args[i++] = 0;
 				else
-					temp->args[i] = swaddr_read(cpu.ebp+8+4*i,4);
+					temp->args[i] = swaddr_read(cpu.ebp+8+4*i,4,R_SS);
 			}
 			printf("(%d,%d,%d,%d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
 	}
@@ -162,11 +162,11 @@ static int cmd_bt(char *args){
 					while(i<4)
 						temp->args[i++] = 0;
 				else
-					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4);
+					temp->args[i] = swaddr_read(temp->prev_ebp+8+4*i,4,R_SS);
 			}
 			printf("(%d,%d,%d,%d)\n",temp->args[0],temp->args[1],temp->args[2],temp->args[3]);
-			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4); 
-			temp->prev_ebp = swaddr_read(temp->prev_ebp,4);
+			temp->ret_addr = swaddr_read(temp->prev_ebp+4,4,R_SS); 
+			temp->prev_ebp = swaddr_read(temp->prev_ebp,4,R_SS);
 
 	}
 	free(temp);

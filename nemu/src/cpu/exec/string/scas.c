@@ -9,11 +9,11 @@ make_helper(scas) {
 	}else data_byte = 2;
 
 	if(data_byte == 1)
-		flag = swaddr_read(cpu.esi,1) - cpu.gpr[R_EAX]._8[0] ;
+		flag = swaddr_read(cpu.esi,1,R_SS) - cpu.gpr[R_EAX]._8[0] ;
 	else if (data_byte == 2)
-		flag = swaddr_read(cpu.esi,1) - cpu.gpr[R_AX]._16;
+		flag = swaddr_read(cpu.esi,1,R_SS) - cpu.gpr[R_AX]._16;
 	else
-		flag = swaddr_read(cpu.esi,1) - cpu.eax;
+		flag = swaddr_read(cpu.esi,1,R_SS) - cpu.eax;
 
 	if(flag == 0){
 		cpu.ZF = 1;

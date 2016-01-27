@@ -178,7 +178,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 		assert(0);}
 	else if(p == q-1){
 		if(tokens[p].type == ADDR)
-			return swaddr_read(eval(p+1,q),4);
+			return swaddr_read(eval(p+1,q),4,R_DS);
 		else if(tokens[p].type == NOT)
 			return !eval(p+1,q);}
 	else if(p == q){ 		//single token
@@ -279,7 +279,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 				}
 		else{
 			switch(tokens[op].type){
-				case ADDR: return swaddr_read(eval(p+1,q),4);
+				case ADDR: return swaddr_read(eval(p+1,q),4,R_DS);
 				case NOT:  return !eval(p+1,q);
 				case SUB:  return -eval(p+1,q);
 				default: printf("error!\n");

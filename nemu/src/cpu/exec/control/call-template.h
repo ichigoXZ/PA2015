@@ -8,11 +8,11 @@ static void do_execute (){
 	//printf("len:%d\n",len );
 	cpu.esp -= DATA_BYTE;
 	if(4 == DATA_BYTE){
-		MEM_W(cpu.esp,  cpu.eip + len);
+		MEM_W(cpu.esp,  cpu.eip + len,R_SS);
 		cpu.eip = cpu.eip+ op_src->val;
 	}
 	else if(2 == DATA_BYTE){
-		MEM_W(cpu.esp, (uint16_t)((cpu.eip + len) & 0x0000ffff));
+		MEM_W(cpu.esp, (uint16_t)((cpu.eip + len) & 0x0000ffff),R_SS);
 		cpu.eip = (cpu.eip + op_src->val)&0x0000ffff;
 	}
 	//printf("esp: 0x%x\tj2eip:0x%x\n",cpu.esp,cpu.eip );
@@ -25,11 +25,11 @@ make_helper(concat(call_rm_, SUFFIX)){
 	int len=concat(decode_rm_, SUFFIX)(eip + 1) ;
 	cpu.esp -= DATA_BYTE;
 	if(4 == DATA_BYTE){
-		MEM_W(cpu.esp,  cpu.eip + len);
+		MEM_W(cpu.esp,  cpu.eip + len, R_SS);
 		cpu.eip =  op_src->val;
 	}
 	else if(2 == DATA_BYTE){
-		MEM_W(cpu.esp, (uint16_t)((cpu.eip+len)& 0x0000ffff));
+		MEM_W(cpu.esp, (uint16_t)((cpu.eip+len)& 0x0000ffff),R_SS);
 		cpu.eip = ( op_src->val)&0x0000ffff;
 	}
 	print_asm_template1();

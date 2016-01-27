@@ -3,7 +3,7 @@
 #define instr ret
 
 static void do_execute () {
-	cpu.eip = MEM_R(cpu.esp);
+	cpu.eip = MEM_R(cpu.esp,R_SS);
 	cpu.eip -= DATA_BYTE;
 	cpu.esp += DATA_BYTE;
 #if DATA_BYTE == 2
