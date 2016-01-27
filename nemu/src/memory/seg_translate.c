@@ -29,8 +29,8 @@ lnaddr_t seg_translate(swaddr_t addr, uint8_t sreg) {
 		base=cpu.SR_cache[sreg].base;
 	}
 	return base + addr;
-	lnaddr_t segbase=lnaddr_read(cpu.GDTR.base+cpu.SR[sreg].INDEX*8, 4);
-	printf("%x\n", cpu.GDTR.base);
-	printf("%x\n", segbase);
-	return segbase+addr;
+	//lnaddr_t segbase=lnaddr_read(cpu.GDTR.base+cpu.SR[sreg].INDEX*8, 4);
+//	printf("%x\n", cpu.GDTR.base);
+//	printf("%x\n", segbase);
+//	return segbase+addr;
 }
