@@ -14,7 +14,7 @@ make_instr_helper(rm2r)
 
 make_helper(concat(mov_a2moffs_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
-	MEM_W(addr, REG(R_EAX),R_DS);
+	MEM_W(addr, REG(R_EAX), R_DS);
 
 	print_asm("mov" str(SUFFIX) " %%%s,0x%x", REG_NAME(R_EAX), addr);
 	return 5;
@@ -22,7 +22,7 @@ make_helper(concat(mov_a2moffs_, SUFFIX)) {
 
 make_helper(concat(mov_moffs2a_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
-	REG(R_EAX) = MEM_R(addr,R_DS);
+	REG(R_EAX) = MEM_R(addr, R_DS);
 
 	print_asm("mov" str(SUFFIX) " 0x%x,%%%s", addr, REG_NAME(R_EAX));
 	return 5;
@@ -38,53 +38,5 @@ make_helper(concat(mov_rm2s_, SUFFIX)) {
 	print_asm("mov" str(SUFFIX) " %%%s,0x%x", REG_NAME(reg), sreg);
 	return 2;
 }
-
-#if DATA_BYTE == 4
-make_helper(mov_cr2r) {
-	//uint8_t opcode = instr_fetch(eip + 1, 1);
-	cpu.eax = cpu.cr0.val;
-	print_asm("mov %%%s, %%cr0", REG_NAME(R_EAX));
-	/*switch (opcode) {
-		case 0xc0:
-		cpu.eax = cpu.cr0.val;
-		print_asm("mov %%%s, %%cr0", REG_NAME(R_EAX));
-		break;
-		case 0xd8:
-		cpu.eax = cpu.cr3.val;
-		for (i=0;i<TLB_NUM;i++) {
-			tlb[i].valid = false;
-		}
-		print_asm("mov %%%s, %%cr3", REG_NAME(R_EAX));
-		break;
-		default:
-		cpu.eax = cpu.cr0.val;
-		print_asm("mov %%%s, %%cr0", REG_NAME(R_EAX));
-		break;
-	}*/
-	return 2;
-}
-make_helper(mov_r2cr) {
-	//uint8_t opcode = instr_fetch(eip + 1, 1);
-	cpu.cr0.val = cpu.eax;
-	print_asm("mov %%cr0, %%%s", REG_NAME(R_EAX));
-	/*switch (opcode) {
-		case 0xc0:
-		cpu.cr0.val = cpu.eax;
-		print_asm("mov %%cr0, %%%s", REG_NAME(R_EAX));
-		break;
-		case 0xd8:
-		cpu.cr3.val = cpu.eax;
-
-		print_asm("mov %%cr3, %%%s", REG_NAME(R_EAX));
-		break;
-		default:
-		cpu.cr0.val = cpu.eax;
-		print_asm("mov %%cr0, %%%s", REG_NAME(R_EAX));
-		break;
-	}*/
-	return 2;
-}
-#endif
-
 
 #include "cpu/exec/template-end.h"
