@@ -3,7 +3,8 @@
 #include "../../lib-common/x86-inc/mmu.h"
 #include <stdio.h>
 
-uint32_t lnaddr_read(lnaddr_t addr, size_t len); 
+uint32_t lnaddr_read(lnaddr_t addr, size_t len);
+//uint8_t sreg_cache;
 
 void erode_sreg(uint8_t sreg) {
 	uint8_t tmp[8]; 
@@ -28,4 +29,8 @@ lnaddr_t seg_translate(swaddr_t addr, uint8_t sreg) {
 		base=cpu.SR_cache[sreg].base;
 	}
 	return base + addr;
+	//lnaddr_t segbase=lnaddr_read(cpu.GDTR.base+cpu.SR[sreg].INDEX*8, 4);
+//	printf("%x\n", cpu.GDTR.base);
+//	printf("%x\n", segbase);
+//	return segbase+addr;
 }
