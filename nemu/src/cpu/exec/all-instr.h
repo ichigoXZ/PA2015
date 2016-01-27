@@ -47,3 +47,4 @@
 #include "control/jcc.h"
 #include "control/ret.h"
 #include "control/lgdt.h"
+#include "control/ljmp.h"
