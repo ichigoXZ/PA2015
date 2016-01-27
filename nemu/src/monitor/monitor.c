@@ -81,9 +81,9 @@ void init_cr0() {
 	int i;
 	for (i=0; i<4; i++)
 		cpu.SR_cache[i].vaild=false;
-	cpu.SR_cache[1].vaild=true;
+	/*cpu.SR_cache[1].vaild=true;
 	cpu.SR_cache[1].base=0;
-	cpu.SR_cache[1].limit=0xffffffff;
+	cpu.SR_cache[1].limit=0xffffffff;*/
 }
 
 void restart() {
